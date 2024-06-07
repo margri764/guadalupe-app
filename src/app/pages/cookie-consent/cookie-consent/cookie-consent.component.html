@@ -1,0 +1,55 @@
+
+<div style="width: 100%; padding: 30px;">
+
+    <div>
+        <span class="font fs-8">
+            <p> <b>Bem-vindo ao nosso site!</b></p>
+            Utilizamos cookies para melhorar a sua experiência de navegação, mostrar-lhe conteúdos personalizados e analisar o tráfego do nosso site. Ao continuar a navegar no nosso website, aceita a utilização de cookies conforme descrito nesta <a class="selected" (click)="showMore = !showMore">Política de Cookies</a>
+        </span>
+
+        <span *ngIf="showMore">
+            <h3> <b> O que são cookies? </b> </h3>
+
+            <p>
+                Cookies são pequenos arquivos de texto armazenados em seu dispositivo quando você visita um site. Esses cookies podem coletar informações sobre sua atividade de navegação, como as páginas que você visita, o tempo que passa em cada página e as ações que realiza.
+            </p>
+            
+            
+            <h3> <b> Que tipos de cookies utilizamos? </b></h3>
+
+            <p>Utilizamos diferentes tipos de cookies em nosso site:</p>
+
+            <ul>
+                <li>
+                    <b> Cookies essenciais:</b> Estes cookies são necessários para o funcionamento básico do nosso site e não podem ser desativados. Permitem que você navegue em nosso site, utilize suas funções e acesse áreas seguras.
+                    Cookies de desempenho: Estes cookies coletam informações sobre como você utiliza nosso site, como as páginas que você visita com mais frequência e os erros que encontra. Esta informação é utilizada para melhorar o desempenho do nosso site e a sua experiência do usuário.
+
+                </li>
+
+                <li>
+                    <b>Cookies de funcionalidade:</b> Estes cookies permitem que o nosso site recorde as suas preferências, como o idioma que você escolheu ou o tamanho da letra que utiliza. Isso proporciona-lhe uma experiência de usuário mais personalizada.
+                    Cookies de marketing: Estes cookies são utilizados para lhe mostrar publicidade relevante para os seus interesses. Também podem ser utilizados para limitar o número de vezes que você vê um anúncio e para medir a efetividade das campanhas publicitárias.
+              </li>
+              
+            </ul>
+
+    <h3> <b> Como posso controlar os cookies?</b></h3>
+           
+        <p>
+            Você pode controlar os cookies que o nosso site utiliza através da configuração do seu navegador web. A maioria dos navegadores permite que você bloqueie todos os cookies, aceite apenas cookies de sites específicos ou aceite cookies apenas durante a sessão atual.
+        </p>
+
+        <p>    Para mais informações sobre como controlar cookies, consulte a documentação do seu navegador web.
+        </p>
+
+        </span>
+    </div>
+
+    <div class="d-flex justify-content-end align-items-center w-100">
+        <button mat-flat-button style="background-color: red; color: white;" (click)="declineCookies(); close()">Decline</button> &nbsp; &nbsp;
+        <button mat-flat-button color="primary" (click)="acceptCookies(); close()">Accept</button>
+    </div>
+</div>
+
+    
+

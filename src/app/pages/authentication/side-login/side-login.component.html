@@ -1,0 +1,101 @@
+<div class="blank-layout-container justify-content-center">
+  <div class="position-relative row w-100 h-100">
+    <div class="col-lg-7 col-xl-8 bg-gredient p-0">
+      <div class="p-24 h-100">
+        @if(options.theme === 'light') {
+
+          <div class="d-flex justify-content-center align-items-center w-100 mt-20">
+           <img src="./assets/images/logo-tomista-banner.jpg" class="align-middle m-2" alt="logo" [ngStyle]="phone ? {'display': 'block'}:{'display': 'none'}" />
+
+          </div>
+          
+        } @if(options.theme === 'dark') {
+        <img src="./assets/images/logo-tomista-banner.jpg" class="align-middle m-2" alt="logo" />
+
+   
+   
+        }
+
+        <div class="align-items-center justify-content-center img-height d-none d-lg-flex" >
+
+          <img src="./assets/images/logo-tomista.jpg" alt="login" style="max-width: 500px" />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5 col-xl-4 p-0">
+      <div class="p-32 d-flex align-items-start align-items-lg-center justify-content-center h-100" >
+        <div class="row justify-content-center w-100">
+          <div class="col-lg-9 max-width-form">
+            <h4 class="f-w-700 f-s-24 m-0">Bem-vindo!</h4>
+
+            <div style="height: 70px;" [ngStyle]="phone ? {'display': 'block'}:{'display': 'none'}"></div>
+           
+            <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()" >
+           
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block" style="font-family: poppins-regular !important;"
+                >E-mail</mat-label >
+              <mat-form-field appearance="outline" class="w-100" color="primary" >
+                <input matInput type="text" formControlName="email" style="font-family: poppins-regular !important; " />
+                @if(f['email'].touched && f['email'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if(f['email'].errors && f['email'].errors['required']) {
+                  <div class="text-error">campo requerido.</div>
+                  } 
+                @if(f['email'].errors && f['email'].errors['pattern']) {
+                  <div class="text-error font fs-9">Não possui um formato de e-mail válido.</div>
+                  }
+                
+                </mat-hint>
+                }
+              </mat-form-field>
+
+
+              <!-- password -->
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block " style="font-family: poppins-regular !important; margin-top: 30px;"
+                >Senha</mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary" >
+                <input matInput [type]="confirmVisible ? 'text' : 'password'" formControlName="password" style="font-family: poppins-regular !important;"/>
+                <button type="button" mat-icon-button  class="eye" (click)="togglePasswordVisibility('confirm')">
+                  <mat-icon>{{ confirmVisible ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button> 
+
+                @if(f['password'].touched && f['password'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if( f['password'].errors && f['password'].errors['required'])
+                  {
+                  <div class="text-error">campo requerido.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+
+              <div class="d-flex align-items-center m-b-12 mt-20">
+                <mat-checkbox color="primary" formControlName="rememberCredentials"
+                  >Lembre de minhas credenciais</mat-checkbox
+                >
+                <a
+                  [routerLink]="['/autenticacao/recuperar-senha']"
+                  class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14"
+                  >Esqueceu sua senha?</a
+                >
+              </div>
+              <button  type="submit" mat-flat-button  color="primary" class="w-100 mt-10"  >
+                Enviar
+              </button>
+              <!-- input -->
+            </form>
+            <span class="d-block f-w-500 d-block m-t-24" style="font-family: poppins-regular !important;"
+              >Não tem uma conta?
+              &nbsp;
+              <a  [routerLink]="['/autenticacao/registro']" class="text-decoration-none text-primary f-w-500 f-s-16" style="font-family: poppins-regular !important;"
+              > 
+              Criar uma conta</a
+              >
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

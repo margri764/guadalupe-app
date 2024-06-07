@@ -1,0 +1,51 @@
+
+  <div  class="topbar-dd "  >
+      <div class="p-x-32 p-y-16" style="overflow: hidden !important;">
+        <h6 class="f-s-16 f-w-600 m-0 font">Perfil de usuário</h6>
+
+        <div class="d-flex align-items-center p-b-24 b-b-1 m-t-16">
+          <img src="/assets/images/profile/user-1.jpg" class="rounded-circle" width="95" *ngIf="!user.filePath || user.filePath === ''" />
+          <img [src]="user.filePath | imagenPath" class="rounded-circle"
+          width="95" *ngIf="user.filePath && user.filePath !== ''"> 
+          <div class="m-l-16 font">
+            <h6 class="f-s-14 f-w-600 m-0 font">{{user?.fullName}}</h6>
+            <span class="f-s-14 d-block m-b-4">{{user?.profession}}</span>
+      
+            <span class="d-flex flex-wrap justify-content-start align-items-center" style="word-break: break-all;">
+              <i-tabler name="mail" class="icon-15 m-r-4" *ngIf="!isTextTruncated(user?.email)"></i-tabler>
+              {{user?.email}}
+            </span>
+          </div>
+        </div>
+        <form [formGroup]="myForm" class="w-100 mt-20">
+
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">Nome Completo</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+            <input matInput type="text" formControlName="fullName" readonly="true"  />
+            </mat-form-field>
+
+        
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block" style="margin-top: 20px;"> Endereço </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary"   >
+            <input matInput type="text" formControlName="address" readonly="true"  />
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block" style="margin-top: 20px;"> Telefone </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+            <input matInput type="text" formControlName="phone" readonly="true"  />
+            </mat-form-field>
+            
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block" style="margin-top: 20px;"> Profissão </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+            <input matInput type="text" formControlName="profession" readonly="true"  />
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block" style="margin-top: 20px;"> Aniversario </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+            <input matInput type="text" formControlName="anniversary" readonly="true"  />
+            </mat-form-field>
+        
+        </form>
+      </div>
+
+</div>

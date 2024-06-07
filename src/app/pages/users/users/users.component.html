@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-lg-12 back-white" >
+       
+        <div class="card col-12 table-responsive pd-20" >
+
+            <div class=" font d-flex justify-content-end mt-3" style=" margin-bottom: 40px;" >
+
+                <button type="button" class="mb-2 btn-hover-shine btn-shadow btn btn-primary font fs-10" (click)="openModalNewUser()" style="width: 120px; height: 40px;">
+                <i class="fas fa-plus "></i> &nbsp; Novo
+                </button>
+            </div>
+
+            <table class="col-sm-12 col-xs-12 col-md-12 mt-2 " style="padding: 0px !important;">
+                <tr>
+                    <th>Img</th>
+                    <th>Nome</th>
+                    <th>Endereço de email</th>
+                    <th *ngIf="loggedUser.role === 'webmaster'" >Propulsão</th>
+                    <th *ngIf="loggedUser.role === 'webmaster'" >Role</th>
+                    <th style="text-align: center;">Ativo</th>
+                </tr>
+            
+                <tbody *ngIf="users && users.length !== 0">
+                        
+                    <tr *ngFor="let user of users">
+                        <td> 
+                            <img [src]="user | imagenPath" class="img-fluid br-6" style="border-radius: 7px; width: 70px;" *ngIf="user.Ruta_Imagen !== '' && user.Ruta_Imagen !== null">
+                            <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="user.Ruta_Imagen == '' || !user.Ruta_Imagen">
+                         </td>
+                        <td *ngIf="user.Nome_Completo !== '' " class="selected" [routerLink]="['/painel/editar-usuario/', user.iduser]" >
+                               {{ user.Nome_Completo}} 
+                        </td>
+
+                        <td> {{ user.Email }} </td>
+
+                        <td *ngIf="loggedUser.role === 'webmaster'"> {{ user?.propulsao_name }} </td>
+                        <td *ngIf="loggedUser.role === 'webmaster'"> {{ user.role | role}} </td>
+                        
+                        <td style="text-align: center;"> 
+                            <span class="material-icons" style="color: rgb(0, 195, 0);" *ngIf="user.active">task_alt</span>
+                            <span class="material-icons" style="color: red;" *ngIf="!user.active">highlight_off</span>
+                        </td>
+                    </tr>
+                
+                </tbody>
+              
+  
+            </table>
+
+              
+        </div>
+    </div>
+</div>
+
+
+
+<div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div> 
+  
+  
+  
+  
+  
+  

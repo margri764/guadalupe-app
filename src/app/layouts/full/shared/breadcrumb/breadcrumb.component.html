@@ -1,0 +1,40 @@
+@if(pageInfo?.['title'] != 'Analytical' && pageInfo?.['title'] != 'eCommerce'){
+
+<div class="bg-light-primary rounded p-y-30 p-x-24 m-b-30 overflow-hidden customCard ">
+
+  
+  <div class="row">
+    <div class="col-sm-8 " >
+      <h4 class="d-flex justify-content-start align-items-center page-title m-0 f-s-20 f-w-600 m-b-16">
+
+        <div class="d-flex justify-content-center align-items-center " [ngClass]="back ? 'iconSelected':'iconDeselected' " (click)="goBack()" *ngIf="showBackArrow">
+          <span class="material-symbols-outlined  cursor">arrow_back_ios_new</span>
+      </div> &nbsp;
+        <!-- <span class="material-symbols-outlined cursor" style="font-size: 30px;"> arrow_back_ios</span> &nbsp; -->
+        {{ pageInfo?.['title'] }}
+      </h4>
+      <div class="d-flex align-items-center overflow-hidden">
+        <ul class="breadcrumb">
+          @for (url of pageInfo?.['urls']; track url.url;let index = $index, last = $last ) { @if(!last){
+
+          <li class="breadcrumb-item" [routerLink]="url.url">
+            <a [routerLink]="url.url">{{ url.title }}</a>
+          </li>
+          }@else {
+          <li class="breadcrumb-item">
+            <i-tabler name="circle-filled" class="icon-8"></i-tabler>
+          </li>
+          <li class="breadcrumb-item active">{{ url.title }}</li>
+          } }
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="col-sm-4 text-right ">
+      <div class="breadcrumb-icon align-items-center ">
+        <img src="/assets/images/breadcrumb/user.png" alt="breadcrumb" width="80"  *ngIf="pageInfo?.['title']=== 'Usuários' " class="mt-10"/>
+        <img src="/assets/images/breadcrumb/user-speaking.png" alt="breadcrumb" width="100"  *ngIf="pageInfo?.['title']=== 'Congressos' " style="margin-bottom: 60px;"/>
+      </div>
+    </div> -->
+  </div>
+</div>
+}

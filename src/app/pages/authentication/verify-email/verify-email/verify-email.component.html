@@ -1,0 +1,40 @@
+<div class="blank-layout-container justify-content-center" *ngIf="showTemplate">
+    <div class="row">
+      <div class="col-12 text-center">
+        <img src="/assets/images/backgrounds/maintenance.svg" alt="error-bg" />
+        <h2 class="auth-title f-w-600">Conta verificada com sucesso!</h2>
+        <h6 class="f-s-20 f-w-600 m-b-30">Nós precisamos que você complete um formulário com seus dados.!</h6>
+        <a mat-flat-button color="primary" [routerLink]="['/autenticacao/formulario']"> Ir al formulário</a>
+      </div>
+    </div>
+</div>
+
+<div class="blank-layout-container justify-content-center" *ngIf="showErrorTemplate">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="/assets/images/backgrounds/maintenance.svg" alt="error-bg" />
+      <h2 class="auth-title f-w-600">Sua conta já está verificada</h2>
+      <h6 class="f-s-20 f-w-600 m-b-30">Por favor, vá para o login</h6>
+      <a mat-flat-button color="primary" [routerLink]="['/autenticacao/login']"> Ir al login</a>
+    </div>
+  </div>
+</div>
+
+<div class="blank-layout-container justify-content-center" *ngIf="showError">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="/assets/images/backgrounds/maintenance.svg" alt="error-bg" />
+      <h2 class="auth-title f-w-600"> Ocorreu um erro na validação da conta </h2>
+      <h6 class="f-s-20 f-w-600 m-b-30">Por favor, tente novamente mais tarde ou entre em contato com nossos administradores</h6>
+      <button mat-raised-button color="primary" class="cursor font fs-11 " (click)="openDialog()"> Contate-nos</button>
+    </div>
+  </div>
+</div>
+
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <mat-spinner></mat-spinner>
+    </div>
+  </div> 
+  
+  

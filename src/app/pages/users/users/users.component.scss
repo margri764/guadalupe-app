@@ -1,0 +1,14 @@
+.selected:hover{
+    color: rgb(0, 128, 255);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .rotate:hover .fas.fa-plus{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    transition-duration: 0.8s;
+  }

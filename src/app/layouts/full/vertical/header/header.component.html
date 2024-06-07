@@ -1,0 +1,184 @@
+
+
+
+<mat-toolbar class="topbar">
+
+  <!-- --------------------------------------------------------------- -->
+  <!-- Desktop Menu -->
+  @if(showToggle) {
+  <button
+    mat-icon-button
+    (click)="toggleCollapsed.emit()"
+    class="d-flex justify-content-center"
+  >
+    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+  </button>
+  }
+
+  <!-- Mobile Menu -->
+  @if(!showToggle) {
+  <button
+    mat-icon-button
+    (click)="toggleMobileNav.emit()"
+    class="d-flex justify-content-center"
+  >
+    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+  </button>
+  }
+  <!-- --------------------------------------------------------------- -->
+
+  <!-- --------------------------------------------------------------- -->
+  <!--  Search -->
+  <!-- --------------------------------------------------------------- -->
+  <!-- <button
+    mat-icon-button
+    (click)="openDialog()"
+    class="d-flex justify-content-center"
+  >
+    <i-tabler name="search" class="icon-20 d-flex"></i-tabler>
+  </button> -->
+
+
+  <span class="flex-1-auto"></span>
+
+  <!-- Mobile Menu -->
+  <button
+    mat-icon-button
+    (click)="toggleMobileFilterNav.emit()"
+    class="d-flex d-lg-none justify-content-center"
+  >
+    <i-tabler name="grid-dots" class="icon-20 d-flex"></i-tabler>
+  </button>
+
+ 
+
+  <!-- --------------------------------------------------------------- -->
+  <!-- Notification Dropdown -->
+  <!-- --------------------------------------------------------------- -->
+  <button mat-icon-button [matMenuTriggerFor]="notificationmenu" aria-label="Notifications"  >
+    <i-tabler class="d-flex" name="bell" [matBadge]="numberNotification"  matBadgeColor="primary" ></i-tabler>
+  </button>
+
+
+  <mat-menu #notificationmenu="matMenu" class="topbar-dd cardWithShadow">
+
+    <div class="d-flex align-items-center p-x-32 p-y-16">
+      <h6 class="f-s-16 f-w-600 m-0 mat-subtitle-1">Notificaçãoes</h6>
+      <span class="m-l-auto">
+        <span class="bg-primary text-white p-x-8 p-y-4 f-w-500 rounded f-s-12" > {{numberNotification}} novo</span
+        >
+      </span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <ng-container *ngIf="arrNotifications.length > 0" >
+
+    <div class="d-flex justify-content-between align-items-center " style="padding: 10px;" *ngFor="let notif of arrNotifications">
+   
+        <div class="d-flex  align-items-center " style="padding: 10px;">
+          <img [src]="notif.filePath | imagenPath" class="rounded-circle" width="60" *ngIf="notif.filePath && notif.filePath !== ''"> 
+          <img src="assets/images/no-image.jpg" class="rounded-circle" width="60" *ngIf="!notif.filePath || notif.filePath === ''">  
+
+          <div class="font " style="margin-left: 10px;">
+            <p class="text-start " style="width: 100%; margin: 0;">{{notif.fullName}}</p>
+            <p class="text-start" style="font-size: 0.85em; margin: 0; color: gray;"> {{notif|typeNotification}}</p>
+            <div class="d-flex  justify-content-start align-items-start ">
+              <span class="material-symbols-outlined" style="transform: scale(0.85); color: gray; margin: 0;"> schedule </span> 
+              <span style="font-size: 0.85em; color: gray;">  {{notif.timestamp |timeAgoNotification}} </span> 
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-end ">
+          <button mat-mini-fab  color="primary" style="color: white; transform: scale(0.65);" (click)="openDialogUser(notif); markNotificationRead(notif.idnotification)" >
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-mini-fab  style="background-color: red; color: white; transform: scale(0.65);" (click)="deleteNotificationById(notif)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        
+        </div>
+     </div>
+    </ng-container>
+
+    <ng-container *ngIf="arrNotifications.length === 0" >
+    <div class="d-flex justify-content-between align-items-center " style="padding: 10px;" >
+      <span class="font fs-10" style="color: gray; margin-left: 20px;" > Sem notificaçãoes...</span>
+
+    </div>
+  </ng-container>
+    
+    <mat-divider></mat-divider>
+    <div class="p-y-12 p-x-32" *ngIf="arrNotifications.length > 1" >
+      <button mat-stroked-button color="primary" class="w-100"  (click)="bulkMarkNotificationRead()">
+        Marcar todas como lidas
+      </button>
+      
+    </div>
+
+    <div class="p-y-12 p-x-32" >
+      <button mat-stroked-button color="primary" class="w-100" routerLink="/painel/notificacoes">
+        Ver todas as notificações
+      </button>
+    </div>
+  </mat-menu>
+
+  <!-- --------------------------------------------------------------- -->
+  <!-- profile Dropdown -->
+  <!-- --------------------------------------------------------------- -->
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="profilemenu"
+    aria-label="Notifications"
+  >
+
+  <img [src]="user.filePath | imagenPath" class="rounded-circle object-cover icon-35 profile-dd"
+  width="35" *ngIf="user?.filePath && user?.filePath !== ''"> 
+  <img src="assets/images/no-image.jpg" class="rounded-circle object-cover icon-35 profile-dd"
+  width="35" *ngIf="!user?.filePath ||user?.filePath === ''"> 
+    <!-- <img
+      src="/assets/images/profile/user-1.jpg"
+      class="rounded-circle object-cover icon-35 profile-dd"
+      width="35"
+    /> -->
+
+  </button>
+ 
+  <span class="font" style="font-size: 0.8em;"> {{user?.name}} </span>
+
+  <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
+    <ng-scrollbar class="position-relative" style="height: 250px">
+      <div class="p-x-32 p-y-16">
+        <h6 class="f-s-16 f-w-600 m-0 mat-subtitle-1">User Profile</h6>
+
+        <div class="d-flex align-items-center p-b-24 b-b-1 m-t-16">
+          <img [src]="user?.filePath | imagenPath" class="rounded-circle "
+          width="90" *ngIf="user?.filePath && user?.filePath !== ''"> 
+          <img src="assets/images/no-image.jpg" class="rounded-circle "
+          width="90" *ngIf="!user?.filePath ||user?.filePath === ''"> 
+         
+          <div class="m-l-16">
+            <h6 class="f-s-14 f-w-600 m-0 mat-subtitle-1">{{user?.name}}</h6>
+            <span class="f-s-14 d-block m-b-4">{{user?.role}}</span>
+            <span class="d-flex align-items-center">
+              <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
+              {{user?.email}}
+            </span>
+          </div>
+        </div>
+      </div>
+    
+      <div class="p-y-12 p-x-32">
+        <a
+          routerLink='/autenticacao/login'
+          mat-stroked-button
+          color="primary"
+          class="w-100"
+          (click)="logout()"
+          >Sair</a
+        >
+      </div>
+    </ng-scrollbar>
+  </mat-menu>
+</mat-toolbar>
