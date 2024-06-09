@@ -1,0 +1,145 @@
+  <div class=" login-page font" [style.backgroundImage]="'url(' + backgroundImage + ')'" style="height: 100vh;">
+      <!-- <div class="col-sm-5 col-xs-5 col-md-4 border"> -->
+
+
+      <div class="row justify-content-center w-100 pd-10">
+
+        <div class="login-box col-sm-6 col-md-4 col-10">
+
+            <h4 class="f-w-700 f-s-24 m-0">Bem-vindo!</h4>
+
+           
+            <form class="m-t-30" [formGroup]="myForm" (ngSubmit)="login()" >
+           
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block" style="font-family: poppins-regular !important;"
+                >E-mail</mat-label >
+              <mat-form-field appearance="outline" class="w-100" color="primary" >
+                <input matInput type="text" formControlName="email" style="font-family: poppins-regular !important; " />
+                @if(f['email'].touched && f['email'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if(f['email'].errors && f['email'].errors['required']) {
+                  <div class="text-error">campo requerido.</div>
+                  } 
+                @if(f['email'].errors && f['email'].errors['pattern']) {
+                  <div class="text-error font fs-9">Não possui um formato de e-mail válido.</div>
+                  }
+                
+                </mat-hint>
+                }
+              </mat-form-field>
+
+
+              <!-- password -->
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block " style="font-family: poppins-regular !important; margin-top: 30px;"
+                >Senha</mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary" >
+                <input matInput [type]="confirmVisible ? 'text' : 'password'" formControlName="password" style="font-family: poppins-regular !important;"/>
+                <button type="button" mat-icon-button  class="eye" (click)="togglePasswordVisibility('confirm')">
+                  <mat-icon>{{ confirmVisible ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button> 
+
+                @if(f['password'].touched && f['password'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if( f['password'].errors && f['password'].errors['required'])
+                  {
+                  <div class="text-error">campo requerido.</div>
+                  }
+                </mat-hint>
+                }
+              </mat-form-field>
+
+              <div class="d-flex align-items-center m-b-12 mt-20 ">
+                <mat-checkbox color="primary" formControlName="rememberCredentials"  style="font-family: poppins-regular !important;"
+                  > <span class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14" > Lembre de minhas credenciais</span> </mat-checkbox>
+                <a  [routerLink]="['/autenticacao/recuperar-senha']"  class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14"
+                  >Esqueceu sua senha?</a>
+              </div>
+              <button  type="submit" mat-flat-button  color="primary" class="w-100 mt-10"  >
+                Enviar
+              </button>
+              <!-- input -->
+            </form>
+            <span class="d-block f-w-500 d-block m-t-24" style="font-family: poppins-regular !important;"
+              >Não tem uma conta?
+              &nbsp;
+              <a  [routerLink]="['/autenticacao/registro']" class="text-decoration-none text-primary f-w-500 f-s-16" style="font-family: poppins-regular !important;"
+              > 
+              Criar uma conta</a
+              >
+            </span>
+          </div>
+      </div>
+  </div>
+
+
+
+<!-- entre em contacto  -->
+    <div class="toggle-container d-flex flex-column shadow" [ngClass]="{ 'expanded': isDivVisible }">
+      <div class="d-flex justify-content-between font fs-10 p-2" >
+        <p >Entre em contato conosco</p>  
+        <span class="material-icons cursor" (click)="toggleDiv()" *ngIf="!position">add</span>
+        <span class="material-icons cursor" (click)="toggleDiv()" *ngIf="position">remove</span>
+
+      </div>
+
+      <div class="d-flex justify-content-center " style="background-color: white; padding: 3px;">
+
+        <form [formGroup]="myForm2" class="needs-validation font fs-10 w-100"  novalidate  [autocomplete]="false" >
+
+          <div class="input-group mb-3" [ngClass]="{'was-validated': submitted}">
+            <p class="custom-text w-100"> Nome <b style="color: red;">*</b></p>
+            <input type="text" class="form-control"  required [ngStyle]="( validField2('fullName')) ? {'border':'1px solid red'}:{}" formControlName="fullName" >
+            <div *ngIf="validField2('fullName')" class="invalid" > Dado obrigatório </div>
+          </div>
+
+         <div class="input-group mb-3 mt-1" >
+          <p class="custom-text w-100"> Ordem <b style="color: red;">*</b></p>
+            <select class="select w-100 cursor"  required  formControlName="headquarter">
+              <option selected="selected"> </option>
+              <option>Ordem primeira</option>
+              <option>Ordem segunda</option>
+          </select>
+          <div *ngIf="validField2('headquarter')" class="invalid" > Dado obrigatório </div>
+
+        </div>
+
+          <div class="input-group mb-3" [ngClass]="{'was-validated': submitted}">
+            <p class="custom-text w-100"> Digite seu email <b style="color: red;">*</b> </p>
+            <input type="email" class="form-control"  required [ngStyle]="( validField2('userEmail')) ? {'border':'1px solid red'}:{}" formControlName="userEmail">
+            <div *ngIf="validField2('userEmail')" class="invalid" > Dado obrigatório / Não tem formato de e-mail</div>
+          </div>
+
+
+          <div class="input-group mb-3" [ngClass]="{'was-validated': submitted}">
+            <p class="custom-text w-100"> Assunto <b style="color: red;">*</b></p>
+              <textarea class="form-control" formControlName="subject" [ngStyle]="( validField('description')) ? {'border':'1px solid red'}:{}" (input)="limitCharacters($event)"></textarea>
+            <div *ngIf="validField2('subject')" class="invalid" > Dado obrigatório </div>
+            <div class="d-flex justify-content-end w-100 mt-1 fs-8" [ngStyle]="{'color': remainingCharacters === 0 ? 'red' : 'black'}" >{{ remainingCharacters }} de 250 caracteres restantes</div>
+          </div>
+
+          <div class="custom-control custom-switch d-flex  align-items-center justify-content-start" >
+            <input type="checkbox" class="custom-control-input cursor " id="customSwitch1"  (change)="sendMeAnEmail($event)" [checked]="sendMeACopy" >
+            <label class="custom-control-label cursor font fs-10" for="customSwitch1" style="color: black; font-weight: 400; margin-left: 8px;" > Envie-me uma cópia para o meu email </label>
+          </div>
+
+          <div class="d-grid gap-2 mt-3">
+            <button type="submit" class="mb-2 me-2 btn custom-btn shadow "  (click)="contactUs()" *ngIf="!isSending"> Enviar</button>
+
+            <button class="btn custom-btn mb-2 me-2  shadow"  type="button" disabled *ngIf="isSending">
+              <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true" ></span>
+              Enviando...
+            </button>
+          
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+    <div class="loading-overlay" *ngIf="isLoading">
+      <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+        <mat-spinner></mat-spinner>
+      </div>
+    </div> 
+    

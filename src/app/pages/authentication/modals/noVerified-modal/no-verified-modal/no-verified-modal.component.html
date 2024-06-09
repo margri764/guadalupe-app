@@ -1,0 +1,51 @@
+
+
+<div style="padding: 30px; border-radius: 10px;" >
+
+    <div class="d-flex justify-content-end">
+        <span class="material-icons notranslate cursor" (click)="close()">close</span>
+    </div>
+
+    <div class="alert alert-warning alert-dismissible font fs-11 shadow mt-5" style="border-radius: 10px; " >
+        <div class="d-flex align-items-center">
+
+            <span class="material-icons">warning</span> &nbsp;&nbsp;&nbsp;
+            <span class="font fs-12">Email não verificado!</span>
+        </div>
+    </div>
+
+    <span class="font fs-12"> Já enviamos um email de confirmação. Precisa que enviemos novamente?</span>
+
+    <form [formGroup]="myFormResend" class="needs-validation mt-3"  novalidate  [autocomplete]="false" (ngSubmit)="verifyEmail()" >
+  
+        <div class="input-group" >
+
+          <input type="email" class="form-control fs-11" placeholder="Email" required [ngStyle]="( validFieldResend('resendEmail')) ? {'border':'1px solid red'}:{}" formControlName="resendEmail" (focus)="false" #emailInput>
+          
+          <div class="input-group-append">
+            <div class="input-group-text" style="height: 38px;">
+                <span class="fas fa-envelope" style="color: rgb(0, 123, 255); font-size: 1.3em;"></span>
+              </div>
+          </div>
+          <div *ngIf="validFieldResend('resendEmail')" class="invalid fs-10" > Dado obrigatório / Não tem formato de e-mail </div>
+        </div>
+
+        
+        <div class="d-grid gap-2 mt-5">
+
+                   
+          <button type="submit" class="mb-3 mt-3 me-2 btn-hover-shine btn-shadow btn btn-primary w-100 fs-10" style="font-family: poppins-regular; height: 45px;" *ngIf="!isLoading"> Enviar
+          </button>
+        
+            <button type="button" class="btn custom-btn mb-2 me-2 1 shadow" style="font-family: poppins-regular; height: 45px;"  disabled *ngIf="isLoading">
+              <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true" ></span>
+              Enviando...
+            </button>
+
+        </div>
+    
+      </form>
+
+
+  </div>
+  

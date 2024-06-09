@@ -1,67 +1,76 @@
-<div class="row">
-    <div class="col-lg-12 back-white" >
-       
-        <div class="card col-12 table-responsive pd-20" >
+<div class="row pd-20">
+        
+        <div class="d-flex justify-content-between align-items-center w-100">
 
-            <div class=" font d-flex justify-content-end mt-3" style=" margin-bottom: 40px;" >
+            <mat-form-field appearance="outline" color="primary" class="mt-20">
+                <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+              </mat-form-field>
 
-                <button type="button" class="mb-2 btn-hover-shine btn-shadow btn btn-primary font fs-10" (click)="openModalNewUser()" style="width: 120px; height: 40px;">
+            <button  type="button" mat-flat-button  color="primary" class="font fs-10 shadow" (click)="openModalNewUser()"  >
                 <i class="fas fa-plus "></i> &nbsp; Novo
-                </button>
-            </div>
-
-            <table class="col-sm-12 col-xs-12 col-md-12 mt-2 " style="padding: 0px !important;">
-                <tr>
-                    <th>Img</th>
-                    <th>Nome</th>
-                    <th>Endereço de email</th>
-                    <th *ngIf="loggedUser.role === 'webmaster'" >Propulsão</th>
-                    <th *ngIf="loggedUser.role === 'webmaster'" >Role</th>
-                    <th style="text-align: center;">Ativo</th>
-                </tr>
-            
-                <tbody *ngIf="users && users.length !== 0">
-                        
-                    <tr *ngFor="let user of users">
-                        <td> 
-                            <img [src]="user | imagenPath" class="img-fluid br-6" style="border-radius: 7px; width: 70px;" *ngIf="user.Ruta_Imagen !== '' && user.Ruta_Imagen !== null">
-                            <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="user.Ruta_Imagen == '' || !user.Ruta_Imagen">
-                         </td>
-                        <td *ngIf="user.Nome_Completo !== '' " class="selected" [routerLink]="['/painel/editar-usuario/', user.iduser]" >
-                               {{ user.Nome_Completo}} 
-                        </td>
-
-                        <td> {{ user.Email }} </td>
-
-                        <td *ngIf="loggedUser.role === 'webmaster'"> {{ user?.propulsao_name }} </td>
-                        <td *ngIf="loggedUser.role === 'webmaster'"> {{ user.role | role}} </td>
-                        
-                        <td style="text-align: center;"> 
-                            <span class="material-icons" style="color: rgb(0, 195, 0);" *ngIf="user.active">task_alt</span>
-                            <span class="material-icons" style="color: red;" *ngIf="!user.active">highlight_off</span>
-                        </td>
-                    </tr>
-                
-                </tbody>
-              
-  
-            </table>
-
-              
+            </button>
         </div>
-    </div>
-</div>
+
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+
+            <ng-container matColumnDef="img" >
+                <th mat-header-cell *matHeaderCellDef  > Img </th>
+                <td mat-cell *matCellDef="let user"> 
+                    <img [src]="user.filePath | imagenPath" class="img-fluid" style="border-radius: 50%; width: 70px;" *ngIf="user.filePath && user.filePath !== ''"> 
+                    <img src="assets/images/no-image.jpg" class="img-fluid" style="border-radius: 50%; width: 70px;" *ngIf="!user.filePath || user.filePath === ''"> 
+                </td>
+              </ng-container>
+
+            <ng-container matColumnDef="fullName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header > Nome </th>
+                <td mat-cell *matCellDef="let user"> 
+                    <span *ngIf="user.Nome_Completo !== '' " class="selected" [routerLink]="['/painel/editar-usuario/', user.iduser]" >
+                        {{ user.Nome_Completo}}  </span> 
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+                <td mat-cell *matCellDef="let user"> {{ user?.Email}}  </td>
+              </ng-container>
+
+              <ng-container matColumnDef="propulsao">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Propulsao </th>
+                <td mat-cell *matCellDef="let user"> {{ user?.propulsao_name}}</td>
+              </ng-container> 
+                  
+              <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+                <td mat-cell *matCellDef="let user"> {{ user?.role}}</td>
+              </ng-container>
+                  
+              <ng-container matColumnDef="ativo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Ativo </th>
+                <td mat-cell *matCellDef="let user"> 
+                    <span class="material-icons" style="color: rgb(0, 195, 0);" *ngIf="user?.active">task_alt</span>
+                    <span class="material-icons" style="color: red;" *ngIf="!user?.active">highlight_off</span>
+                </td>
+              </ng-container>
+              
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+
+        <br>
+        </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
 
 
-<div class="loading-overlay" *ngIf="isLoading">
-    <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div> 
-  
-  
-  
+    <div class="loading-overlay" *ngIf="isLoading">
+        <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+          <mat-spinner></mat-spinner>
+        </div>
+      </div> 
+      
+      
+        
   
   
   

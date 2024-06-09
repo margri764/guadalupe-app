@@ -1,0 +1,110 @@
+<div class="login-page font fs-10" [style.backgroundImage]="'url(' + backgroundImage + ')'" >
+
+  <div class="card " style="background-color: rgb(234, 243, 250, 0.9); width: 500px;">
+    <div class="card-header text-center justify-content-center " style="background-color: rgba(224, 232, 238, 0.9); padding: 30px; border-top: 4px solid #007bff; height: 90px; opacity: 0.83;">
+      <h1 class="text-center font " style="font-family: poppins-regular;"> Arcanjo Sao Rafael </h1>
+    </div>
+
+    <div class="card-body">
+  
+        <form [formGroup]="myForm" class="needs-validation fs-10"  novalidate  (ngSubmit)="register()">
+
+          <div class="input-group mb-3 " [ngClass]="{'was-validated': submitted}">
+
+            <input type="text" class="form-control" placeholder="Nome completo" formControlName="Nome_Completo" [ngStyle]="( validField('name')) ? {'border':'1px solid red'}:{}"  >
+
+            <div class="input-group-text" style="height: 40px;">
+              <span class="fas fa-user" style="color: rgb(0, 123, 255); font-size: 1.3em;"></span>
+            </div>
+      
+            <div *ngIf="validField('name')" class="invalid" > Dado obrigatório </div>
+          </div>
+
+
+          <div class="input-group mb-3" [ngClass]="{'was-validated': submitted}">
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" required [ngStyle]="( validField('email')) ? {'border':'1px solid red'}:{}">
+            <div class="input-group-append">
+              <div class="input-group-text" style="height: 40px;">
+                <span class="fas fa-envelope" style="color: rgb(0, 123, 255); font-size: 1.15em;"></span>
+              </div>
+            </div>
+            <div *ngIf="validField('email')" class="invalid" > Dado obrigatório / Não tem formato de e-mail </div>
+
+          </div>
+
+          <!-- <div class="input-group mb-3" [ngClass]="{'was-validated': submitted}">
+              <input type="text" placeholder="Data de nascimento" class="form-control datetimepicker-input" ngbDatepicker #d="ngbDatepicker"
+                formControlName="Data_Nascimento" required [ngStyle]="( validField('Data_Nascimento')) ? {'border':'1px solid red'}:{}" 
+                 [readonly]="true" 
+                 [minDate]="{year: 1900, month: 1, day: 1}"
+                 [maxDate]="{year: 2100, month: 1, day: 1}">
+                <div class="input-group-append">
+                    <div class="input-group-text cursor" style="height: 39px;" (click)="d.toggle()">
+                      <span class="fas fa-calendar"  style="color: rgb(0, 123, 255); font-size: 1.30em;"></span>
+                    </div>
+                </div>
+            <div *ngIf="validField('Data_Nascimento')" class="invalid" > Dado obrigatório </div>
+          </div>  -->
+          
+
+         <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Telefone" formControlName="Telefone1" required [ngStyle]="( validField('Telefone1')) ? {'border':'1px solid red'}:{}">
+            <div class="input-group-append">
+              <div class="input-group-text" style="height: 39px;">
+                <span class="fas fa-mobile-alt" style="color: rgb(0, 123, 255); font-size: 1.7em;"></span>
+              </div>
+            </div> 
+            <div *ngIf="validField('Telefone1')" class="invalid" > Dado obrigatório </div>
+
+          </div> 
+
+          <!-- sede -->
+        <p class="login-box-msg"> - Sede -</p>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nome da sede" required formControlName="Nome_da_sede" required [ngStyle]="( validField('Nome_da_sede')) ? {'border':'1px solid red'}:{}">
+        
+            <div *ngIf="validField('Nome_da_sede')" class="invalid" > Dado obrigatório </div>
+
+          </div>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Cidade da sede" formControlName="Cidade_da_sede" required [ngStyle]="( validField('Cidade_da_sede')) ? {'border':'1px solid red'}:{}">
+            <div *ngIf="validField('Cidade_da_sede')" class="invalid" > Dado obrigatório </div>
+
+          </div>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Pais da sede" formControlName="Pais_da_sede" required [ngStyle]="( validField('País_da_sede')) ? {'border':'1px solid red'}:{}">
+            <div *ngIf="validField('Pais_da_sede')" class="invalid" > Dado obrigatório </div>
+          </div>
+          <button type="submit" style="display: none;"></button>
+ 
+          <button type="submit" class="mb-3 mt-2 me-2 btn-hover-shine btn-shadow btn btn-primary w-100 fs-10" style="font-family: poppins-regular;" > Aceitar
+          </button>
+      
+    
+        </form>
+
+  
+         <div style="display: flex; align-items: end; justify-content: end;" >
+
+
+            <span class="mb-0"> <a routerLink="/login" class="text-center">  <i class="fas fa-sign-in-alt" style="margin-right: 2px;"></i>  Já tenho registro </a> </span>
+
+         </div>
+  
+      </div>
+      <!-- /.card-body -->
+  </div>
+</div>
+
+
+
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+    <span class="sr-only">Loading...</span>
+  </div>
+</div> 
+
+  

@@ -1,0 +1,23 @@
+.select{
+    height: 44px; 
+    border-color: rgb(151, 151, 151); 
+    font-size: 1.1em; 
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .mat-radio-button{
+    cursor: pointer;
+  }  
+
+  .vertical-radio-group {
+    display: flex; 
+    flex-direction: column; 
+    border-radius: 7px;
+    padding: 10px;
+
+    box-shadow: 3px 7px 10px 0px rgba(53,153,153, 0.75);
+    -webkit-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
+    -moz-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
+
+}

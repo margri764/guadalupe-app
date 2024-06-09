@@ -1,11 +1,17 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
-import { saveDataSS } from '../storage';
-import { ErrorService } from './error.service';
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable, OnInit, Renderer2 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { Observable, map, tap } from 'rxjs';
+import * as authActions from 'src/app/shared/redux/auth.actions'
+import Swal from 'sweetalert2';
+import { User } from '../shared/models/user.models';
+import { AppState } from '../shared/redux/app.reducer';
+import { LocalstorageService } from './localstorage.service';
+import { saveDataSS } from '../shared/storage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +19,68 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class AuthService {
 
-  authDeleteUser$ : EventEmitter<boolean> = new EventEmitter<boolean>; 
+  closeLoginWebmaster$ : EventEmitter<boolean> = new EventEmitter<boolean>; 
+  editNameInBradcrumb$ : EventEmitter<any> = new EventEmitter<any>; 
+  successLoginAs$ : EventEmitter<any> = new EventEmitter<any>; 
 
-  // user! : User;
-  user! : any;
+
+  token : string = '';
+  user! : User;
   private baseUrl = environment.baseUrl;
   notAnswer : boolean = true;
+  // private gMapKey = environment.googleMaps;
+
 
   constructor(
                 private http : HttpClient,
-                private errorService : ErrorService,
+                private store : Store <AppState>,
                 private cookieService: CookieService,
-             ) 
-  {
+                private localStorageService : LocalstorageService,
+                private router : Router
+  ) { }
 
-   }
 
+
+  getUserLogs( id:any ){
+  
+    return this.http.get<any>(`${this.baseUrl}api/auth/getUserLogs/${id}`) 
+    
+    .pipe(
+      tap( ( res) =>{
+                    console.log("from ipgetUserLogsInfo service: ",res);
+                }  
+      ),            
+      map( res => res )
+    )
+  }
+
+  setUserLogs( body:any ){
+  
+    return this.http.post<any>(`${this.baseUrl}api/auth/setUserLogs`, body) 
+    
+    .pipe(
+      tap( ( res) =>{
+                    console.log("from setUserLogs service: ",res);
+                }  
+      ),            
+      map( res => res )
+    )
+  }
+
+  simpleCode( body : any){
+  
+    return this.http.patch<any>(`${this.baseUrl}api/auth/simpleCode`, body) 
+    
+    .pipe(
+      tap( ( res) =>{
+                    console.log("from simpleCode service: ",res);
+                }  
+      ),            
+      map( res => res )
+    )
+  }
 
   login( body:any){
- 
-    this.errorService.closeNotAnswerLogin$.subscribe( (emmited)=>{ if(emmited){ this.notAnswer = false} })
 
     const intervalId = setInterval(() => {
       if (this.notAnswer) {
@@ -41,40 +89,75 @@ export class AuthService {
       clearInterval(intervalId); 
     }, 10000); 
 
-    return this.http.post<any>(`${this.baseUrl}api/auth/login`, body) 
-    .pipe(
-      tap( ( {user, success }) =>{
-            this.notAnswer = false;
-            if(success ){
-              this.user = user;
-              const userToSS = { name: user.fullName, role:user.role, email: user.email, filePath: user.filePath};
-              saveDataSS('user', userToSS);
-              saveDataSS('session', "true");
 
+    return this.http.post<any>(`${this.baseUrl}api/auth/login`, body) 
+    
+    .pipe(
+      tap( ( {user, token, success, firstlogin, webmaster}) =>{
+
+              this.notAnswer = false;
+
+            //si es el primer login el back devuelve el user sino no lo devuelve xq espera q se autentique con el codigo
+            if(success && firstlogin === "true"){
+
+              if (this.cookieService.check('token')) {
+                this.cookieService.delete('token', '/');    
+              }
+              if (this.cookieService.check('token')) {
+                const title = 'Erro interno do navegador';
+                const msg = 'No foi possível concluir esta ação, tente novamente';
+                const footer = 'Por favor, tente novamente';
+                this.showErrorSwal( title, msg, footer );
+              }else{
+                  this.token = token;
+                  this.cookieService.set('token', token, {path:'/'});
+                  this.user = user;
+                  this.store.dispatch(authActions.setUser({user}));
+                  const userToSS = { name: user.Nome_Completo, role:user.role, email: user.Email, Ruta_Imagen: user.Ruta_Imagen, iduser:user.iduser, idpropulsao: user.idpropulsao};
+                  saveDataSS('user', userToSS);
+
+                }
+                          
             }
-          }  
+                    
+       }  
       ),            
       map( res => {console.log("from login Service: ",res);return res} )
     )
   }
 
-  checkJsonWebToken( token:any ){
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
-
-    return this.http.post<any>(`${this.baseUrl}api/auth/checkJsonWebToken`, null ,{headers}) 
+  doubleAuth( body:any ){
+  
+    return this.http.post<any>(`${this.baseUrl}api/auth/doubleAuth`, body) 
+    
     .pipe(
-      tap( ( res) =>{
-                    console.log("from checkJsonWebToken Service: ",res);
+      tap( ( {user, token, success}) =>{
+                      if(success){
+                        if (this.cookieService.check('token')) {
+                          this.cookieService.delete('token', '/');    
+                        }
+                        if (this.cookieService.check('token')) {
+                          const title = 'Erro interno do navegador';
+                          const msg = 'No foi possível concluir esta ação, tente novamente';
+                          const footer = 'Por favor, tente novamente';
+                          this.showErrorSwal( title, msg, footer );
+                        }else{
+                            this.token = token;
+                            this.cookieService.set('token', token, {path:'/'});
+                            this.user = user;
+                            this.store.dispatch(authActions.setUser({user}));
+                            const userToSS = { name: user.Nome_Completo, role:user.role, email: user.Email, Ruta_Imagen: user.Ruta_Imagen, iduser:user.iduser, idpropulsao: user.idpropulsao};
+                            saveDataSS('user', userToSS);
+          
+                          }
+                      }
                 }  
       ),            
-      map( (res: any) => res )
+      map( res => {console.log("from doubleAuth Service: ",res);return res} )
     )
   }
 
-  signUp(body:any){
+  signUp(body:User){
     
     return this.http.post<any>(`${this.baseUrl}api/auth/signUp`, body) 
     
@@ -84,68 +167,34 @@ export class AuthService {
                     console.log("from signUp Service: ",res);
                 }  
       ),            
-      map( (res: any) => res )
+      map( res => res )
     )
   }
 
-  createProfile( body:any, file : any  ){
-
-    const JSONbody = JSON.stringify(body)
-    const formData = new FormData();
-    formData.append('file', file )
-    formData.append('body', JSONbody )
+  resendPasword(email: string){
+    const body = {email}
+  
+    return this.http.post<any>(`${this.baseUrl}api/auth/resendPassword`, body) 
     
-    return this.http.post<any>(`${this.baseUrl}api/user/createProfile`, formData) 
-    
-    .pipe(
-      tap( ( res) =>{console.log("from createProfile Service: ", res);  }  
-      ),            
-      map( (res: any) => res )
-    )
-  }
-
-  deleteUserById( id:any  ){
-
-    
-    return this.http.delete<any>(`${this.baseUrl}api/user/deleteUserById/${id}`) 
-    
-    .pipe(
-      tap( ( res) =>{console.log("from deleteUserById Service: ", res);  }  
-      ),            
-      map( (res: any) => res )
-    )
-  }
-
-  activePauseUser( id:any, action:any ){
-    return this.http.patch<any>(`${this.baseUrl}api/user/activePauseUser/${id}?action=${action}`, null) 
     .pipe(
       tap( ( res) =>{
-                    console.log("from activePauseUser service: ",res);
+                    console.log("from resendPasword service: ",res);
                 }  
       ),            
       map( res => res )
     )
   }
 
-  getAllUsers(){
+  contactUs(body: string){
 
-    return this.http.get<any>(`${this.baseUrl}api/user/getAllUsers`) 
+    return this.http.post<any>(`${this.baseUrl}api/auth/adminContactUs`, body) 
     
     .pipe(
-      tap( ( res) =>{console.log("from getAllUsers Service: ", res);  }  
+      tap( ( res) =>{
+                    console.log("from contactUs service: ",res);
+                }  
       ),            
-      map( (res: any) => res )
-    )
-  }
-
-  changeRole( id:any, body:any){
-
-    return this.http.patch<any>(`${this.baseUrl}api/user/changeRole/${id}`, body) 
-    
-    .pipe(
-      tap( ( res) =>{console.log("from changeRole Service: ", res);  }  
-      ),            
-      map( (res: any) => res )
+      map( res => res )
     )
   }
 
@@ -162,44 +211,79 @@ export class AuthService {
     )
   }
 
-  adminContactUs(body: any){
+  verifyEmail( email: string){
 
-    return this.http.post<any>(`${this.baseUrl}api/auth/adminContactUs`, body) 
+    const body = { email}
+
+    return this.http.post<any>(`${this.baseUrl}api/auth/verifyEmail`, body) 
     
     .pipe(
       tap( ( res) =>{
-                    console.log("from adminContactUs service: ",res);
+                    console.log("from verifyEmail service: ",res);
                 }  
       ),            
       map( res => res )
     )
   }
 
-  resendPasword(email: any){
-    const body = {email}
-  
-    return this.http.post<any>(`${this.baseUrl}api/auth/resendPassword`, body) 
+  activeAccount(email:string, active:string){
+
+    const body = { email }
+
+    return this.http.post<any>(`${this.baseUrl}api/auth/activeAccount?active=${active}`, body) 
     
     .pipe(
       tap( ( res) =>{
-                    console.log("from resendPasword service: ",res);
+                    console.log("from activeAccount service: ",res);
                 }  
       ),            
       map( res => res )
     )
   }
 
-  getProgramByConferenceId(id: any){
   
-    return this.http.get<any>(`${this.baseUrl}api/user/getProgramByConferenceId/${id}`) 
+
+  userWebAccess(email:string, webAccess:string){
+
+    const body = { email }
+
+    return this.http.patch<any>(`${this.baseUrl}api/auth/userWebAccess?access=${webAccess}`, body) 
     
     .pipe(
       tap( ( res) =>{
-                    console.log("from getProgramByConferenceId service: ",res);
+                    console.log("from userWebAccess service: ",res);
                 }  
       ),            
       map( res => res )
     )
+  }
+
+
+  getRequestedPermissions(){
+
+    return this.http.get<any>(`${this.baseUrl}api/auth/checkRegistrationPermission`) 
+    
+    .pipe(
+      tap( ( res) =>{
+                    console.log("from getRequestedPermissions service: ",res);
+                }  
+      ),            
+      map( res => res )
+    )
+  }
+
+  onOffPropulsaoWebmaster( propulsao:any ){
+    
+    return this.http.patch<any>(`${this.baseUrl}api/webmaster/onOffPropulsaoWebmaster?propulsao=${propulsao}`, null) 
+    
+    .pipe(
+      tap( ( res) =>{
+                    console.log("from onOffPropulsaoWebmaster service: ",res);
+                }  
+      ),            
+      map( res => res )
+    )
+
   }
 
   showErrorSwal( title : string, msg : string, footer : string) {
@@ -217,4 +301,21 @@ export class AuthService {
     });
   }
 
+  // getAddressByCoords ( lat: string, lng : string) {
+
+  //   return this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.gMapKey}`)
+  //   .pipe(
+  //    map( res =>  res)
+  //        );
+  //  }
+   
+  
+
+  getToken(){
+    return this.token
+  }
+  
+  getCookieToken() {
+    return this.cookieService.get('token');
+  }
 }

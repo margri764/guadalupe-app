@@ -30,14 +30,14 @@ interface addedPerson{
 
 export interface Auth {
     user: any | null; 
-    documents : any [];
-    dioceses : any [];
-    results : any [];
-    admins : any [];
-    fonts : any [];
-    formAddress : any [];
-    formEmails : any [];
-    formPhones : any [];
+    documents : any [] | null;
+    dioceses : any [] | null;
+    results : any [] | null;
+    admins : any [] | null;
+    fonts : any [] | null;
+    formAddress : any [] | null;
+    formEmails : any [] | null;
+    formPhones : any [] | null;
     country : any;
     propulsao: any | null;
     formUnity: any | null;
@@ -47,9 +47,9 @@ export interface Auth {
     formFixedDeposit: any | null;
     formPaymentMethod: any | null;
     formBank: any | null;
-    banks : any [];
-    formBankAccount : bankAccount;
-    formCreditcard : creditCard;
+    banks : any [] | null;
+    formBankAccount : bankAccount | null;
+    formCreditcard : creditCard| null;
     formAddedPerson : addedPerson [] | null;
 
    
@@ -90,52 +90,52 @@ const _authReducer = createReducer(initialState,
 
     on( setUserDocuments, (state, { documents }) => ({ ...state, documents: [...documents]  })),
     on( unSetUserDocuments, state => ({ ...state, documents: null  })),
-    on(deleteUserDocument, (state, { id }) => {
-        const updatedDocuments = state.documents.filter(document => document.iddocument !== id);
-        return { ...state, documents: updatedDocuments };
-      }),
+    // on(deleteUserDocument, (state, { id }) => {
+    //     const updatedDocuments = state.documents.filter(document => document.iddocument !== id);
+    //     return { ...state, documents: updatedDocuments };
+    //   }),
 
-      on(bulkDeleteUserDocuments, (state, { ids }) => {
-        const updatedDocuments = state.documents.filter(document => {
-          let deleteDocument = true;
-          ids.forEach(id => {
-            if (document.iddocument === id) {
-              deleteDocument = false;
-            }
-          });
-          return deleteDocument;
-        });
+      // on(bulkDeleteUserDocuments, (state, { ids }) => {
+      //   const updatedDocuments = state.documents.filter(document => {
+      //     let deleteDocument = true;
+      //     ids.forEach(id => {
+      //       if (document.iddocument === id) {
+      //         deleteDocument = false;
+      //       }
+      //     });
+      //     return deleteDocument;
+      //   });
       
-        return { ...state, documents: updatedDocuments };
-      }),
+      //   return { ...state, documents: updatedDocuments };
+      // }),
 
       on( addDiocesesToPropulsao, (state, { dioceses }) => ({ ...state, dioceses: [...dioceses]  })),
       on( unSetDiocesesPropulsao, state => ({ ...state, dioceses: null  })),
-      on( deleteDioceseFromPropulsao, (state, { iddiocese }) => {
-        const updatedDioceses = state.dioceses.filter(diocese => diocese.iddiocese !== iddiocese);
-        return { ...state, dioceses: updatedDioceses };
-      }),
+      // on( deleteDioceseFromPropulsao, (state, { iddiocese }) => {
+      //   const updatedDioceses = state.dioceses.filter(diocese => diocese.iddiocese !== iddiocese);
+      //   return { ...state, dioceses: updatedDioceses };
+      // }),
 
       on( addResultsToPropulsao, (state, { results }) => ({ ...state, results: [...results]  })),
       on( unSetResultsPropulsao, state => ({ ...state, results: null  })),
-      on( deleteResultFromPropulsao, (state, { idresult }) => {
-        const updatedResults = state.dioceses.filter(results => results.idresult !== idresult);
-        return { ...state, results: updatedResults };
-      }),
+      // on( deleteResultFromPropulsao, (state, { idresult }) => {
+      //   const updatedResults = state.dioceses.filter(results => results.idresult !== idresult);
+      //   return { ...state, results: updatedResults };
+      // }),
 
       on( addAdminsToPropulsao, (state, { admins }) => ({ ...state, admins: [...admins]  })),
       on( unSetAdminsPropulsao, state => ({ ...state, admins: null  })),
-      on( deleteAdminFromPropulsao, (state, { idadmin }) => {
-        const updatedAdmins = state.admins.filter(admin => admin.iduser !== idadmin);
-        return { ...state, admins: updatedAdmins };
-      }),
+      // on( deleteAdminFromPropulsao, (state, { idadmin }) => {
+      //   const updatedAdmins = state.admins.filter(admin => admin.iduser !== idadmin);
+      //   return { ...state, admins: updatedAdmins };
+      // }),
 
       on( addFontsToPropulsao, (state, { fonts }) => ({ ...state, fonts: [...fonts]  })),
       on( unSetFontsPropulsao, state => ({ ...state, fonts: null  })),
-      on( deleteFontFromPropulsao, (state, { idfonte }) => {
-        const updatedFonts = state.admins.filter(font => font.idfonte !== idfonte);
-        return { ...state, fonts: updatedFonts };
-      }),
+      // on( deleteFontFromPropulsao, (state, { idfonte }) => {
+      //   const updatedFonts = state.admins.filter(font => font.idfonte !== idfonte);
+      //   return { ...state, fonts: updatedFonts };
+      // }),
 
       on( addCountryToPropulsao, (state, { country }) => ({ ...state, country : country  })),
       on( unSetCountryPropulsao, state => ({ ...state, country: null  })),
@@ -143,17 +143,17 @@ const _authReducer = createReducer(initialState,
 
       on( addBankToAssociation, (state, { banks }) => ({ ...state, banks: [...banks]  })),
       on( unSetBankAssociation, state => ({ ...state, banks: null  })),
-      on( deleteBankFromAssociation, (state, { idbankaccount }) => {
-        const updatedBanks = state.admins.filter(font => font.idfonte !== idbankaccount);
-        return { ...state, fonts: updatedBanks };
-      }),
+      // on( deleteBankFromAssociation, (state, { idbankaccount }) => {
+      //   const updatedBanks = state.admins.filter(font => font.idfonte !== idbankaccount);
+      //   return { ...state, fonts: updatedBanks };
+      // }),
 
       on( addFormAddress, (state, { formAddress }) => ({ ...state, formAddress: [...formAddress]  })),
       on( unSetFormAddress, state => ({ ...state, formAddress: null  })),
-      on( deleteFormAddress, (state, { idformaddress }) => {
-        const updatedFormAddress = state.formAddress.filter(address => address.idformaddress !== idformaddress);
-        return { ...state, idformaddress: updatedFormAddress };
-      }),
+      // on( deleteFormAddress, (state, { idformaddress }) => {
+      //   const updatedFormAddress = state.formAddress.filter(address => address.idformaddress !== idformaddress);
+      //   return { ...state, idformaddress: updatedFormAddress };
+      // }),
       
       on( addFormEmails, (state, { formEmails }) => ({ ...state, formEmails: [...formEmails]  })),
       on( unSetFormEmails, state => ({ ...state, formEmails: null  })),

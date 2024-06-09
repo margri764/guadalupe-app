@@ -1,0 +1,51 @@
+body .bs-datepicker-container .bs-datepicker-head {
+    background-color: #f10d0d;
+  }
+  body .bs-datepicker-container .bs-datepicker-head * {
+    color: #830909;
+  }
+
+  .form-control{
+    font-size: 1em;
+  }
+
+  .login-page {
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #e9ecef;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  .invalid{
+    color: red; 
+    margin-top: 5px;
+    width: 100%;
+    margin-left: 5px;
+  }
+
+  input[readonly] {
+    background-color: inherit;
+  }
+
+  
+
+  @media (max-width: 576px) {
+  
+  
+  }
+
+  @media (min-width: 576px) {
+    .register-box {
+      width: 500px;
+    }
+  }

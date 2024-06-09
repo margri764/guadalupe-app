@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog } from '@angular/material/dialog';
-import { ContactusModalComponent } from '../pages/authentication/modals/contactus-modal/contactus-modal/contactus-modal.component';
 
 interface response  {
   emmited: boolean,
@@ -310,9 +309,9 @@ if (error.status === 500 && error.error.error === 'Ocorreu um erro fora do nosso
   }
 
   openDialogContactUs() {
-    this.dialog.open(ContactusModalComponent, {
-      width: '500px',
-    });
+    // this.dialog.open(ContactusModalComponent, {
+    //   width: '500px',
+    // });
   }
  
 

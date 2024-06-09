@@ -80,14 +80,14 @@
           <img [src]="notif.filePath | imagenPath" class="rounded-circle" width="60" *ngIf="notif.filePath && notif.filePath !== ''"> 
           <img src="assets/images/no-image.jpg" class="rounded-circle" width="60" *ngIf="!notif.filePath || notif.filePath === ''">  
 
-          <div class="font " style="margin-left: 10px;">
+          <!-- <div class="font " style="margin-left: 10px;">
             <p class="text-start " style="width: 100%; margin: 0;">{{notif.fullName}}</p>
             <p class="text-start" style="font-size: 0.85em; margin: 0; color: gray;"> {{notif|typeNotification}}</p>
             <div class="d-flex  justify-content-start align-items-start ">
               <span class="material-symbols-outlined" style="transform: scale(0.85); color: gray; margin: 0;"> schedule </span> 
               <span style="font-size: 0.85em; color: gray;">  {{notif.timestamp |timeAgoNotification}} </span> 
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="d-flex justify-content-end align-items-end ">

@@ -319,12 +319,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
   
     .select{
-      border: 1px solid rgb(201, 201, 201);
-      border-radius: 3px;
-      font-family: 'poppins-regular';
-      font-size: 1em;
-  
+      height: 44px; 
+      border-color: rgb(151, 151, 151); 
+      font-size: 1.1em; 
+      border-radius: 5px;
+      width: 100%;
     }
+    
+    
     
     .rectangule{
       background-color: white; 
@@ -356,11 +358,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       filter: grayscale(0.9);
       opacity: 0.6;
     }
-  
+
+    .mat-mdc-dialog-container {
+      --mdc-dialog-container-shape: 13px;
+    }
+
+   
     .customCard{
       box-shadow: 5px 10px 17px 0px rgba(53,153,153, 0.75);
       -webkit-box-shadow: 5px 10px 17px 0px rgba(153,153,153,0.75);
       -moz-box-shadow: 5px 10px 17px 0px rgba(153,153,153,0.75);
+    }
+
+    .shadow{
+      box-shadow: 3px 7px 10px 0px rgba(53,153,153, 0.75);
+      -webkit-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
+      -moz-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
     }
   
     .customShadow{

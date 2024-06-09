@@ -1,0 +1,38 @@
+
+.invalid{
+     color: red; 
+     margin-top: 5px;
+     width: 100%;
+     margin-left: 5px;
+   }
+
+
+
+   .selectedTD{
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+
+.canvasWidth{
+    width: 70%;
+  }
+  
+    //Extra small devices (phones, 600px and down) */
+  
+    @media only screen and (max-width: 600px) {
+     
+      .canvasWidth{
+        width: 100%;
+      }
+      
+    }
+    @media only screen and (min-width: 1000px) {
+     
+      .canvasWidth{
+        width: 50%;
+      }
+      
+    }

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Subject, Subscription, delay } from 'rxjs';
+import { delay } from 'rxjs';
 import { User } from 'src/app/shared/models/user.models';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
@@ -9,19 +9,40 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { ImagenPathPipe } from "../../../pipe/imagen-path.pipe";
 import { RolePipe } from "../../../pipe/role.pipe";
+import { RouterModule } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { NewUserModalComponent } from '../../modals/new-user-modal/new-user-modal/new-user-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+
+interface Users {
+  img : string, 
+  fullName: string, 
+  email: string,
+  propulsao: string,
+  role: string,
+  ativo: string,
+
+}
+
 
 @Component({
     selector: 'app-users',
     standalone: true,
+    imports: [CommonModule, MatSortModule, MaterialModule, RouterModule, ImagenPathPipe, RolePipe, ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss',
-    imports: [CommonModule, MaterialModule, ImagenPathPipe, RolePipe]
 })
-export class UsersComponent implements OnInit  {
+export class UsersComponent implements OnInit, AfterViewInit  {
 
-  users : User []=[];
+  displayedColumns: string[] = ['img','fullName','email','propulsao','role','ativo'];
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  users : User[]=[];
   isLoading : boolean = false;
-
+  phone : boolean = false;
   loggedUser : any;
  
 
@@ -29,8 +50,11 @@ export class UsersComponent implements OnInit  {
               private userService : UserService,
               private errorService : ErrorService,
               private toastr: ToastrService,
+              private dialog : MatDialog
   ) { 
 
+    this.dataSource = new MatTableDataSource();
+    (screen.width < 800) ? this.phone = true : this.phone = false;
   }
 
 
@@ -38,6 +62,7 @@ export class UsersComponent implements OnInit  {
 
     this.initialUsers();
     this.errorService.closeIsLoading$.pipe(delay(700)).subscribe(emitted => emitted && (this.isLoading = false));
+
 
     const user = getDataSS('user');
     if(user){
@@ -50,30 +75,65 @@ export class UsersComponent implements OnInit  {
     this.userService.getAllUsers().subscribe(
       ( {success, users} )=>{
           if(success){
-            if(users){
-              this.users = users;
+            if(users && users.length > 0){
+              this.dataSource.data = users;
+              this.dataSource.sortingDataAccessor = (item, property) => {
+                switch (property) {
+                  case 'fullName': return item.Nome_Completo;
+                  case 'email': return item.Email;
+                  case 'propulsao': return item.propulsao_name;
+                  case 'role': return item.role;
+                  case 'ativo': return item.active;
+                  default: return '';
+                }
+              };
             }
-            setTimeout(()=>{ this.isLoading = false },700)
+            setTimeout(()=>{ this.isLoading = false }, 1000)
           }
       })
 
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  
+    const savedPageSize = localStorage.getItem('userPageSize');
+    if (savedPageSize) {
+      this.paginator.pageSize = +savedPageSize;
+    }
+  
+    this.paginator.page.subscribe((event) => {
+      localStorage.setItem('userPageSize', event.pageSize.toString());
+    });
+  }
+  
   openModalNewUser(){
 
-    // const modalRef = this.modalService.open(NewUserModalComponent,{
-    //   backdrop: 'static', 
-    //   keyboard: false,  
-    //   size: "lg"
-    // });
-    // modalRef.result.then(
-    //   (result) => {
-    //     if(result === 'new-user'){
-    //       this.initialUsers();
-    //     }
-    //   },
-    // );
+    const dialogRef = this.dialog.open(NewUserModalComponent,{
+      maxWidth: (this.phone) ? "97vw": '800px',
+      maxHeight: (this.phone) ? "90vh": '90vh',
+      // panelClass: ['custom-container' ], 
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+  
+        if(result === 'new-user'){
+                this.initialUsers();
+              }
+      } else {
+        console.log('El modal se cerró sin devolver datos');
+      }
+    });
   }
 
 

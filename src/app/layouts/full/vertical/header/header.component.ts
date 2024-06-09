@@ -20,9 +20,6 @@ import { ErrorService } from 'src/app/services/error.service';
 import { ImagenPathPipe } from "../../../../pipe/imagen-path.pipe";
 import { getDataSS } from 'src/app/storage';
 import { NotificationService } from 'src/app/services/notification.service';
-import { TypeNotificationPipe } from "../../../../pipe/type-notification.pipe";
-import { UserModalComponent } from 'src/app/pages/user-modal/user-modal/user-modal.component';
-import { TimeAgoNotificationPipe } from "../../../../pipe/time-ago-notification.pipe";
 
 
 interface notifications {
@@ -59,7 +56,7 @@ interface quicklinks {
     standalone: true,
     templateUrl: './header.component.html',
     encapsulation: ViewEncapsulation.None,
-    imports: [RouterModule, CommonModule, NgScrollbarModule, TablerIconsModule, MaterialModule, ImagenPathPipe, TypeNotificationPipe, TimeAgoNotificationPipe]
+    imports: [RouterModule, CommonModule, NgScrollbarModule, TablerIconsModule, MaterialModule, ImagenPathPipe],
 })
 export class HeaderComponent implements OnInit {
 
@@ -133,22 +130,22 @@ export class HeaderComponent implements OnInit {
 
   getInitData(){
 
-    this.notificationService.getAllNotificationsUnread().subscribe(
-      ( {success, notifications} )=>{
-        if(success){
-          this.numberNotification = notifications.length;
-          this.arrNotifications= notifications;
-          this.arrNotifications = this.arrNotifications.filter( element => element.status !== 'read');
-          this.arrNotifications.sort((a, b) => {
-            const dateA = new Date(a.timestamp).getTime();
-            const dateB = new Date(b.timestamp).getTime();
-            return dateB - dateA; // Ordenar en orden descendente
-          });
+    // this.notificationService.getAllNotificationsUnread().subscribe(
+    //   ( {success, notifications} )=>{
+    //     if(success){
+    //       this.numberNotification = notifications.length;
+    //       this.arrNotifications= notifications;
+    //       this.arrNotifications = this.arrNotifications.filter( element => element.status !== 'read');
+    //       this.arrNotifications.sort((a, b) => {
+    //         const dateA = new Date(a.timestamp).getTime();
+    //         const dateB = new Date(b.timestamp).getTime();
+    //         return dateB - dateA; // Ordenar en orden descendente
+    //       });
 
-          this.arrNotifications = this.arrNotifications.slice(0, 3);
+    //       this.arrNotifications = this.arrNotifications.slice(0, 3);
 
-        }
-      })
+    //     }
+    //   })
   }
 
   markNotificationRead(id:any){
@@ -170,15 +167,15 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialogUser( user:any) {
-    const dialogRef = this.dialog.open(UserModalComponent,{
-      maxWidth: (this.phone) ? "99vw": '600px',
-      maxHeight: (this.phone) ? "98vh": '800px',
-      data: {...user, fromNotification:true}
-    });
+    // const dialogRef = this.dialog.open(UserModalComponent,{
+    //   maxWidth: (this.phone) ? "99vw": '600px',
+    //   maxHeight: (this.phone) ? "98vh": '800px',
+    //   data: {...user, fromNotification:true}
+    // });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
   }
 
   deleteNotificationById(notification:any){

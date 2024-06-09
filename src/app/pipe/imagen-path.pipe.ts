@@ -6,18 +6,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ImagenPathPipe implements PipeTransform {
 
-  transform(imagen: any): string {
+  transform(user: any): string {
 
-    if (imagen && imagen !== '') {
+    if (user && user.Ruta_Imagen !== '') {
 
-      console.log(imagen);
 
-      if(imagen.startsWith('/var/www')){
-        const fileName = imagen.split('/').pop();
+      if(user.Ruta_Imagen.startsWith('/var/www')){
+        const fileName = user.Ruta_Imagen.split('/').pop();
         const serverURL = 'https://comissaoguadalupe.org/profile/';
         return `${serverURL}${fileName}`;
       }else{
-        return imagen;
+        return '';
 
       }
       

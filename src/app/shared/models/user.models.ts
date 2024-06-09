@@ -36,6 +36,7 @@ export class User {
         public Data_Habito_Com_Capuz? : string,
         public Data_Habito_Sem_Capuz? : string,
         public idpropulsao? : any,
+        public propulsao_name? : any,
         )
         {}
   

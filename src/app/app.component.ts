@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './services/auth.service';
-import { Router } from '@angular/router';
+import { ActivationEnd, Router } from '@angular/router';
 import { getDataSS, saveDataSS } from './storage';
-import { Subscription } from 'rxjs';
+import { Subscription, filter, take } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { CookieConsentComponent } from './pages/cookie-consent/cookie-consent/cookie-consent.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { LocalstorageService } from './services/localstorage.service';
 
 @Component({
   selector: 'app-root',
@@ -16,59 +16,55 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 export class AppComponent implements OnInit {
 
-  title = 'Modernize Angular Admin Tempplate';
+  title = 'Guadalupe';
+  isLoading : boolean = false;
+  user: any;
+  msg : string = '';
+  phone : boolean = false; 
+  remainingAttemps : number = 0;
   
+  show400 : boolean = false;
+  show401 : boolean = false;
+  show404 : boolean = false;
+  show429 : boolean = false;
+  show500 : boolean = false;
+  showBackDown : boolean = false;
+
   constructor(
-              private cookieService : CookieService,
-              private authService : AuthService,
-              private router : Router,
-              private _bottomSheet: MatBottomSheet,
+                public router : Router,
+                private localStorageService : LocalstorageService,
 
-             )
+){
+
+
   
-  {
+  (screen.width <= 800) ? this.phone = true : this.phone = false;
 
-  }
+
   
-  ngOnInit(): void {
-
-
-    this.initCookies()
-  const token = this.cookieService.get('token');
-  const session = getDataSS('session')
-
-  //quiere decir q tiene la opcion de guardar las credenciales y que no esta en la misma session
-    if (token &&  !session) {
-        this.authService.checkJsonWebToken(token).subscribe(
-          ({message, user})=>{
-            if(message === 'Token válido.' && user.role === 'admin'){
-              this.router.navigateByUrl('dashboards/dashboard1');
-              saveDataSS('session', 'true')
-            }else if(message === 'Token válido.' && user.role === 'user'){
-              saveDataSS('user', user )
-              this.router.navigateByUrl('formulario');
-            }
-          })
-    }
-
-   
-
-  }
-
- initCookies(): void {
-    const consent = this.cookieService.get('CookieConsent');
-    console.log(consent);
-    if (consent === 'accepted') {
-      this.cookieService.set('NonEssentialCookie', 'value', 365, '/'); // Set non-essential cookies
-    }else if(!consent){
-      this._bottomSheet.open(CookieConsentComponent),{
-        panelClass: 'full-screen-bottom-sheet'
-      };
-
+  this.router.events.pipe(
+    filter(event => event instanceof ActivationEnd),
+    take(1)
+    ).subscribe((event) => {
+      const activationEndEvent = event as ActivationEnd; 
+      const url = activationEndEvent.snapshot.url.toString(); // Obtener la URL como string
+      const user = getDataSS('user');
     
-    }
-  }
+    if (!url.includes('verificar-email')) {
+      if (!user) {
+        this.router.navigateByUrl('/login');
+      }
+    } 
+  });
 
+
+}
+
+ngOnInit(): void {
+
+  this.localStorageService.loadInitialState();
+  
+}
 
 
 

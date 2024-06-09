@@ -37,13 +37,14 @@ import { appReducers } from './shared/redux/app.reducer';
 
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './services/interceptor.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, BlankComponent, FilterPipe],
+  declarations: [AppComponent, BlankComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -70,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    NgbModule,
 
   ],
   providers:[

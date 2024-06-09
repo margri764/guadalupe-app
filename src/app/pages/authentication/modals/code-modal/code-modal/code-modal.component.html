@@ -1,0 +1,86 @@
+
+
+     <div class="mat-dialog-container border" style="padding: 20px;">     
+
+          <form [formGroup]="myFormCode" class="needs-validation font fs-10"  novalidate  [autocomplete]="false"  (ngSubmit)="doubleAuth()">
+  
+            <div class="alert alert-success alert-dismissible  shadow" style="border-radius: 10px; background-color: green; padding: 20px; opacity: 0.7; color: white;" >
+              
+                <div class="d-flex align-items-center mt-3">
+                    <span class="material-icons"> verified</span>  &nbsp;&nbsp;
+                    <span class="font fs-11">Código de acceso enviado!</span >
+                </div>
+      
+                
+                <p class=" mt-1">  Um NOVO código de acceso foi enviado para o seu e-mail. <br>
+                (Cada vez que for acessar a página, será enviado um código diferente). </p>
+            </div>
+            
+  
+            <div class="input-group mb-3 mt-20" >
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block" style="font-family: poppins-regular !important;"
+              ><b>Insira este código no quadro abaixo para continuar </b> </mat-label >
+            <mat-form-field appearance="outline" class="w-100" color="primary" >
+              <input matInput type="text" formControlName="code" style="font-family: poppins-regular !important; " />
+              @if(f['code'].touched && f['code'].invalid) {
+              <mat-hint class="m-b-16 error-msg">
+                @if(f['code'].errors && f['code'].errors['required']) {
+                <div class="text-error">campo requerido.</div>
+                } 
+              @if(f['code'].errors && f['code'].errors['pattern']) {
+                <div class="text-error font fs-9">Não possui um formato de e-mail válido.</div>
+                }
+              
+              </mat-hint>
+              }
+            </mat-form-field>
+             
+  
+            </div>
+            <div *ngIf="showCron">
+              <p *ngIf="codeTimeRemaining && codeTimeRemaining !== 0"> <b> Faltam {{codeTimeRemaining | date: 'mm:ss'}} minutos para expirar o código. </b> </p>
+              <p style="color: red;" *ngIf="codeTimeRemaining === 0">
+                <b>O código expirou. Por favor, solicite um novo código.</b>
+              </p>
+            </div>
+
+            <div class="d-grid gap-2 mt-20">
+
+          
+              <button type="submit" mat-flat-button  color="primary" class="w-100 mt-10" *ngIf="!sendingAuth">
+                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true" ></span>
+                Enviar
+              </button>
+            
+  
+              <button type="submit" mat-flat-button  color="primary" class="w-100 mt-10"  *ngIf="sendingAuth">
+                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true" ></span>
+                Enviando...
+              </button>
+              </div>
+             
+             
+          </form>
+
+  
+          <div class="d-flex justify-content-start w-100" *ngIf="wrongCode">
+          <i class="icon fas fas fa-user-lock" style="color: red;"></i> &nbsp;
+            <span class="font fs-10" style="color: red;"> {{ msg }} </span> 
+          </div>
+
+          <div class="d-flex justify-content-end b-3" style="margin-top: 30px;">
+            
+              <span class="mb-0" > <a class="text-center cursor selected" (click)="resendCode()"> 
+                <i class="fas fa-reply-all fa-flip-horizontal"></i>
+                Reenviar</a> 
+              </span>
+          
+              &nbsp; &nbsp; &nbsp;
+
+              <span class="mb-0" > <a class="text-center cursor selected" (click)="closeModal()"> 
+                <i class="fas fa-times"></i> Cancelar</a> 
+              </span>
+             
+         </div>
+    </div>  
+

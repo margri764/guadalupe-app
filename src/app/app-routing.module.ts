@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
-import { FormCongressComponent } from './pages/form-congress/form-congress/form-congress.component';
-import { AppSideLoginComponent } from './pages/authentication/side-login/side-login.component';
 import { AppErrorComponent } from './pages/authentication/error/error.component';
-import { HomePhoneComponent } from './pages/home-phone/home-phone/home-phone.component';
+import { LoginComponent } from './pages/authentication/login/login.component';
+import { RegisterComponent } from './pages/authentication/register/register.component';
 
 const routes: Routes = [
   {
@@ -23,8 +22,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'autenticacao',
-    component: BlankComponent,
+    path: 'autenticacao', component: BlankComponent,
     children: [
       {
         path: '',
@@ -36,14 +34,10 @@ const routes: Routes = [
     ],
   },
 
-  {
-    path: 'formulario', component: FormCongressComponent,  data: { title: 'Formulario' },
-  },
-  {
-    path: 'home-app', component: HomePhoneComponent,  data: { title: 'Formulario' },
-  },
  
-  { path: "login", component: AppSideLoginComponent },
+  { path: 'login', component: LoginComponent,  data: { title: 'login' } },
+  // { path: 'registro', component: RegisterComponent,  data: { title: 'registro' } },
+ 
   { path: "error", component: AppErrorComponent },
   { path: "", redirectTo: "/login", pathMatch: 'full' },
   { path: '**', redirectTo: '/error' } // redirigir a una página de error 404 para rutas no encontradas
