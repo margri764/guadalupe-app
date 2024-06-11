@@ -121,7 +121,6 @@ export class UsersComponent implements OnInit, AfterViewInit  {
     const dialogRef = this.dialog.open(NewUserModalComponent,{
       maxWidth: (this.phone) ? "97vw": '800px',
       maxHeight: (this.phone) ? "90vh": '90vh',
-      // panelClass: ['custom-container' ], 
     });
 
     dialogRef.afterClosed().subscribe(result => {

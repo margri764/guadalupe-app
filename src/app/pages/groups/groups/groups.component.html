@@ -1,0 +1,68 @@
+
+<div class="row pd-20">
+        
+    <div class="d-flex justify-content-between align-items-center w-100">
+
+        <mat-form-field appearance="outline" color="primary" class="mt-20">
+            <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+          </mat-form-field>
+
+        <button  type="button" mat-flat-button  color="primary" class="font fs-10 shadow" (click)="openModalGroupAlarm()"  >
+            <i class="fas fa-plus "></i> &nbsp; Novo
+        </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 mt-20"  >
+
+        <ng-container matColumnDef="name" >
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Nome </th>
+            <td mat-cell *matCellDef="let group" class="selected " (click)="getUsersGroup(group)"> 
+                {{ group.name }}
+           </td>
+          </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header > Descrição </th>
+            <td mat-cell *matCellDef="let group"> 
+                 {{ group.description }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="membersNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> N. Membros  </th>
+            <td mat-cell *matCellDef="let group"> {{group.quantity}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="propulsao" *ngIf="loggedUser.role === 'webmaster'">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Propulsao </th>
+            <td  mat-cell *matCellDef="let group" >
+                {{ group.propulsao_name.join(',  ') }}
+            </td>
+          </ng-container> 
+              
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef >  Ação </th>
+
+            <td  mat-cell *matCellDef="let group" >
+
+                <div class="d-flex justify-content-center align-items-center " >
+                    <span class="material-icons edit"  (click)="editGroup(group)" [matTooltip]="'Editar grupo'">edit</span>
+                    <span class="material-icons  delete"  [matTooltip]="'Excluir grupo'" (click)="onRemove(group)">delete</span>
+                    <span class="material-icons  add"  [matTooltip]="'Adicionar usúarios ao grupo'" (click)="newUsersGroup(group)" *ngIf="loggedUser.role !== 'webmaster'">person_add</span>
+                    <span class="material-icons cursor add"  [matTooltip]="'Adicionar propulsões'" (click)="assignPropulsao(group)" *ngIf="loggedUser.role === 'webmaster'">lan</span>
+                </div>
+
+              </td>
+          </ng-container>
+              
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <br>
+    </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  
+  

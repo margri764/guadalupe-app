@@ -1,289 +1,264 @@
-<div style="padding: 20px;">
 
-    <div class="d-flex justify-content-end mt-3">
+<div class="d-flex justify-content-between align-items-center pd-10">
+    <h1 mat-dialog-title style="font-family: poppins-regular;">Novo Usuário </h1>
+    <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+ </div>
+
+<div class="d-flex justify-content-center w-100 pd-20">
+    <div class="border w-100"></div>
+</div>    
+
   
-      <div class="iconSelected">
-          <span class="material-icons cursor " (click)="closeModal()">close</span>
-      </div>
-    </div>
-  
-    <!-- <mat-divider class="mt-30"></mat-divider> -->
-  
+<mat-dialog-content style="padding: 20px;">
     
-            
-            <mat-card class="cardWithShadow w-100 animate__animated animate__fadeIn "  style="margin-top: 20px; " >
-                
-                <mat-card-content class="p-10" style="margin-top: 20px; height: 90vh; " [ngStyle]="phone ? {'width':'85vw'}:{'width':'700px'}" >
-                   <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms" #tabGroup >
-                      <mat-tab >
-                        <ng-template mat-tab-label >
+    <mat-card class="cardWithShadow w-100 animate__animated animate__fadeIn"  >
+        
+        <mat-card-content class="p-10" style="height: 90vh;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'700px'}" >
+            <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms" #tabGroup >
+                <mat-tab >
+                <ng-template mat-tab-label >
 
-                            <div class="d-flex  justify-content-center align-items-center">
-                                <i-tabler name="user-circle" class="icon-20 m-r-8" style="transform: scale(1.2);"></i-tabler>
-                                <span class="font fs-12"> Nova Conta </span>
-                            </div>
-                            
-                        </ng-template>
-                        <mat-card-content  style="margin-top: 30px; padding: 5px !important;overflow-x: hidden !important;" >
-                            <form [formGroup]="myForm" class="needs-validation mt-1 font fs-10 w-100"  novalidate  [autocomplete]="false" (ngSubmit)="onSave()" >
-                            <!-- <div #topMain></div> -->
+                    <div class="d-flex  justify-content-center align-items-center">
+                        <i-tabler name="user-circle" class="icon-20 m-r-8" style="transform: scale(1.2);"></i-tabler>
+                        <span class="font fs-12"> Nova Conta </span>
+                    </div>
+                    
+                </ng-template>
+                <mat-card-content  style="margin-top: 30px; padding: 5px !important;overflow-x: hidden !important;" >
+                    <form [formGroup]="myForm" class="needs-validation mt-1 font fs-10 w-100"  novalidate  [autocomplete]="false"  >
 
-                            <div class="row">
+                    <div class="row">
 
-                                <div class="col-sm-12 col-12 col-md-12 mt-30" >
-                                    <mat-label class="font f-w-600 m-b-8 d-block">Nome Completo</mat-label>
-                                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                    <input matInput type="text"  formControlName="Nome_Completo" [readonly]="readonlyFields['Nome_Completo'] || isLinkedToCongregatio"   />
-                                <div class="d-flex justify-content-center align-items-center cursor font" matSuffix style="background-color: rgb(0, 110, 255); width: 120px; height: 44px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" (click)="searchCongregatio()">  <i class="fas fa-search"></i> &nbsp; Congregatio</div>
-                                    <!-- <mat-icon matSuffix>search</mat-icon> -->
-                                    <!-- <button type="button" class="btn btn-primary btn-block" style="width: 150px; font-size: 1em; line-height: 20px;" (click)="searchCongregatio()" >
-                                        <i class="fas fa-search"></i> &nbsp; Congregatio
-                                    </button> -->
-                                    @if(f['Nome_Completo'].touched && f['Nome_Completo'].invalid) {
-                                        <mat-hint class="m-b-16 error-msg">
-                                        @if(f['Nome_Completo'].errors && f['Nome_Completo'].errors['required']) {
-                                        <div class="error">campo requerido.</div>
+                        <div class="col-sm-12 col-12 col-md-12 mt-30" >
+                            <mat-label class="font f-w-600 m-b-8 d-block">Nome Completo</mat-label>
+                            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                            <input matInput type="text"  formControlName="Nome_Completo" [readonly]="readonlyFields['Nome_Completo'] || isLinkedToCongregatio"   />
+                        <div class="d-flex justify-content-center align-items-center cursor font" matSuffix style="background-color: rgb(0, 110, 255); width: 120px; height: 44px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" (click)="searchCongregatio()">  <i class="fas fa-search"></i> &nbsp; Congregatio</div>
+                            @if(f['Nome_Completo'].touched && f['Nome_Completo'].invalid) {
+                                <mat-hint class="m-b-16 error-msg">
+                                @if(f['Nome_Completo'].errors && f['Nome_Completo'].errors['required']) {
+                                <div class="error">Dado obrigatorio.</div>
+                                } 
+                                </mat-hint>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+    
+                        <div class="row">
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Ordem </mat-label>
+                                <select class="select" formControlName="ordem" [attr.disabled]="(disableOrdem) ? '' : null" >
+                                   <option *ngFor="let  ord of ordem" [ngValue]="ord">{{ ord }}</option>
+                                </select>
+                                @if(f['ordem'].touched && f['ordem'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                        @if(f['ordem'].errors && f['ordem'].errors['required']) {
+                                            <div class="error">Dado obrigatorio.</div>
                                         } 
+                                    </mat-hint>
+                                }
+                           </div>
+                        </div>
+                
+                        <div class="row">
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Telefone</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Telefone1" [ngStyle]="( validField('Telefone1')) ? {'border':'1px solid red'}:{}"  [readonly]="readonlyFields['Telefone1']  && isLinkedToCongregatio && telephone !== ''"   />
+                        
+                                @if(f['Telefone1'].touched && f['Telefone1'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Telefone1'].errors && f['Telefone1'].errors['required']) {
+                                    <div class="error">Dado obrigatorio.</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+
+                                <mat-label class="font f-w-600 m-b-8 d-block">Data de Nascimento</mat-label>
+                                <mat-form-field appearance="outline"  class="w-100" color="primary">
+                                    <input matInput [matDatepicker]="picker1" formControlName="Data_Nascimento" >
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker1" [disabled]="!showDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    @if(f['Data_Nascimento'].touched && f['Data_Nascimento'].invalid) {
+                                        <mat-hint class="m-b-16 error-msg">
+                                        @if(f['Data_Nascimento'].errors && f['Data_Nascimento'].errors['required']) {
+                                        <div class="error"> Dado obrigatorio</div>
+                                        } 
+                                
                                         </mat-hint>
                                         }
-                                    </mat-form-field>
-                                </div>
+                                </mat-form-field>
+                                <!-- [min]="minDate" [max]="maxDate" -->
+                    
                             </div>
+                        </div>
+    
+                        <div class="row">
 
-            
-                                <div class="row">
-
-                                    <!-- <div class="col-sm-12 col-xs-12 col-md-12 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Ordem</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="ordem" [readonly]="readonlyFields['Nome_Completo'] || isLinkedToCongregatio"   />
-                                
-                                        @if(f['ordem'].touched && f['ordem'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['ordem'].errors && f['ordem'].errors['required']) {
-                                            <div class="error">campo requerido.</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div> -->
-
-                                        <!-- <div class=" mt-3 col-sm-12 col-xs-12 col-md-6" >
-                                        <label class="text w-100" >Ordem</label>
-                                        <select class="select w-100 cursor" style="height: 38px; font-family: poppins-regular;" formControlName="ordem" [ngStyle]="( validField('ordem')) ? {'border':'1px solid red'}:{}"  [attr.disabled]="(disableOrdem) ? '' : null">
-                                            <option *ngFor="let ord of ordem" [value]="ord"  > &nbsp; &nbsp;{{ ord }} </option>
-                                        </select>
-                                            <div *ngIf="validField('ordem')" class="invalid" > Dado obrigatório </div>
-                                        </div> -->
-                                </div>
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Email</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Email" />
                         
-                                <div class="row">
-
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Telefone</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Telefone1" [ngStyle]="( validField('Telefone1')) ? {'border':'1px solid red'}:{}"  [readonly]="readonlyFields['Telefone1']  && isLinkedToCongregatio && telephone !== ''"   />
-                                
-                                        @if(f['Telefone1'].touched && f['Telefone1'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Telefone1'].errors && f['Telefone1'].errors['required']) {
-                                            <div class="error">campo requerido.</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-            
-                                    <div class="mb-3 mt-3 col-sm-12 col-xs-12 col-md-6" >
-                                        <!-- <div class="input-group date" >
-                                        <label class="text w-100 "> Data de nascimento </label>
-                                        <input type="text"  class="form-control datetimepicker-input inputDate" ngbDatepicker #d="ngbDatepicker"
-                                        formControlName="Data_Nascimento" [ngStyle]="( validField('Data_Nascimento')) ? {'border':'1px solid red'}:{}" [readonly]="true"
-                                        [minDate]="{year: 1900, month: 1, day: 1}"
-                                        [maxDate]="{year: 2100, month: 1, day: 1}" >
-                                        <div class="input-group-append">
-                                            <div class="input-group-text cursor" style="height: 39px;" (click)="d.toggle()">
-                                                <span class="fas fa-calendar"  style="color: rgb(0, 123, 255); font-size: 1.30em;"></span>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="validField('Data_Nascimento')" class="invalid" > Dado obrigatório </div>
-                                        <div *ngIf="isLinkedToCongregatio" style="color: green; width: 100%;"> Corroborar o ano de nascimento </div>
-                                        </div>  -->
-                                    </div> 
-            
-                            
-                                </div>
-            
-                                <div class="row">
-
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Email</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Email" />
-                                
-                                        @if(f['Email'].touched && f['Email'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Email'].errors && f['Email'].errors['required']) {
-                                            <div class="error">Campo requerido / Não tem formato de e-mail.</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" *ngIf="linkCongregatio === 1">
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Email Congregatio</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  [readonly]="readonlyFields['emailCongregatio'] || isLinkedToCongregatio || user.linkCongregatio === 0" formControlName="emailCongregatio" />
-    <!--                             
-                                        @if(f['emailCongregatio'].touched && f['emailCongregatio'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['emailCongregatio'].errors && f['emailCongregatio'].errors['required']) {
-                                            <div class="error">Campo requerido / Não tem formato de e-mail.</div>
-                                            } 
-                                            </mat-hint>
-                                            } -->
-                                        </mat-form-field>
-                                    </div>
-
-                                    
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Residência atual</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Residencia_atual" [readonly]="readonlyFields['Residencia_atual'] || isLinkedToCongregatio" />
-                                        @if(f['Residencia_atual'].touched && f['Residencia_atual'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Residencia_atual'].errors && f['Residencia_atual'].errors['required']) {
-                                            <div class="error">Campo requerido / Não tem formato de e-mail.</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Nacionalidade</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Nacionalidade" [readonly]="readonlyFields['Nacionalidade'] || isLinkedToCongregatio" />
-                                        @if(f['Nacionalidade'].touched && f['Nacionalidade'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Nacionalidade'].errors && f['Nacionalidade'].errors['required']) {
-                                            <div class="error">Campo requerido / Não tem formato de e-mail.</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-            
-                                </div>
-            
-                                <mat-divider  style="margin-top: 30px; background-color: rgb(0, 85, 255) !important;"></mat-divider>
-
-                                <h3 class="mt-3 font">Sede</h3>
-
-                                <div class="row mt-3 font fs-10">
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> País da sede</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Pais_da_sede" />
-                                        @if(f['Pais_da_sede'].touched && f['Pais_da_sede'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Pais_da_sede'].errors && f['Pais_da_sede'].errors['required']) {
-                                            <div class="error">Campo requerido</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Cidade da sede</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Cidade_da_sede" />
-                                        @if(f['Cidade_da_sede'].touched && f['Cidade_da_sede'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Cidade_da_sede'].errors && f['Cidade_da_sede'].errors['required']) {
-                                            <div class="error">Campo requerido</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-
-                                    <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                                        <mat-label class="font f-w-600 m-b-8 d-block"> Nome da sede</mat-label>
-                                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
-                                        <input matInput type="text"  formControlName="Nome_da_sede" [readonly]="readonlyFields['Nome_da_sede'] "/>
-                                        @if(f['Nome_da_sede'].touched && f['Nome_da_sede'].invalid) {
-                                            <mat-hint class="m-b-16 error-msg">
-                                            @if(f['Nome_da_sede'].errors && f['Nome_da_sede'].errors['required']) {
-                                            <div class="error">Campo requerido</div>
-                                            } 
-                                            </mat-hint>
-                                            }
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-
-
-                                <h3 class="font mt-4" *ngIf="role !== 'webmaster'"> Propulsão </h3>
-            
-                                <div class="row">
-                                    <div class="mt-3 col-sm-12 col-12 col-md-6 " *ngIf="role !== 'webmaster'">
-                                        <select class="select" formControlName="idpropulsao" >
-                                        <option *ngFor="let prop of propulsaos" [ngValue]="prop">{{ prop.name }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-            
-                                <div class="d-flex justify-content-end align-items-center mb-30 mt-30 w-100 ">
-
-                                    <button  type="submit" mat-flat-button class="font fs-10 shadow" style="background-color: red; color: white;" >
-                                        <i class="fas fa-times "></i> &nbsp; Cancelar 
-                                    </button> &nbsp; &nbsp;
-
-                                    <button  type="submit" mat-flat-button  color="primary" class="font fs-10 shadow" >
-                                        <i class="fas fa-save "></i> &nbsp; Criar usuário
-                                    </button> &nbsp;
-                                
-                                </div>
-                            </form>
-                        </mat-card-content>
-                      </mat-tab>
-
-                      <mat-tab >
-                        <ng-template mat-tab-label >
-                           
-                            <div class="d-flex  justify-content-center align-items-center">
-                                <i-tabler name="shield" class="icon-20 m-r-8" style="transform: scale(1.2);"></i-tabler>
-                                <span class="font fs-12"> Roles </span>
+                                @if(f['Email'].touched && f['Email'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Email'].errors && f['Email'].errors['required']) {
+                                    <div class="error">Dado obrigatorio / Não tem formato de e-mail.</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
                             </div>
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" *ngIf="linkCongregatio === 1">
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Email Congregatio</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  [readonly]="readonlyFields['emailCongregatio'] || isLinkedToCongregatio || (user && user.linkCongregatio === 0)" formControlName="emailCongregatio" />
+                                </mat-form-field>
+                            </div>
+
                             
-                        </ng-template>
-                        <mat-card-content  style="margin-top: 35px; padding: 20px !important; overflow-x: hidden !important; "  >
-                        <!-- <mat-card-content  style="margin-top: 35px; padding: 20px !important; overflow-x: hidden !important; height: 90vh;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'705px'}" > -->
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Residência atual</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Residencia_atual" [readonly]="readonlyFields['Residencia_atual'] || isLinkedToCongregatio" />
+                                @if(f['Residencia_atual'].touched && f['Residencia_atual'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Residencia_atual'].errors && f['Residencia_atual'].errors['required']) {
+                                    <div class="error">Dado obrigatorio.</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Nacionalidade</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Nacionalidade" [readonly]="readonlyFields['Nacionalidade'] || isLinkedToCongregatio" />
+                                @if(f['Nacionalidade'].touched && f['Nacionalidade'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Nacionalidade'].errors && f['Nacionalidade'].errors['required']) {
+                                    <div class="error">Dado obrigatorio.</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
+                            </div>
+    
+                        </div>
+                  
+    
+                        <mat-divider  style="margin-top: 30px;"></mat-divider>
+
+                        <h3 class="mt-3 font">Sede</h3>
+
+                        <div class="row mt-3 font fs-10">
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> País da sede</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Pais_da_sede" />
+                                @if(f['Pais_da_sede'].touched && f['Pais_da_sede'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Pais_da_sede'].errors && f['Pais_da_sede'].errors['required']) {
+                                    <div class="error">Dado obrigatorio</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Cidade da sede</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Cidade_da_sede" />
+                                @if(f['Cidade_da_sede'].touched && f['Cidade_da_sede'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Cidade_da_sede'].errors && f['Cidade_da_sede'].errors['required']) {
+                                    <div class="error">Dado obrigatorio</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                                <mat-label class="font f-w-600 m-b-8 d-block"> Nome da sede</mat-label>
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                <input matInput type="text"  formControlName="Nome_da_sede" [readonly]="readonlyFields['Nome_da_sede'] "/>
+                                @if(f['Nome_da_sede'].touched && f['Nome_da_sede'].invalid) {
+                                    <mat-hint class="m-b-16 error-msg">
+                                    @if(f['Nome_da_sede'].errors && f['Nome_da_sede'].errors['required']) {
+                                    <div class="error">Dado obrigatorio</div>
+                                    } 
+                                    </mat-hint>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
 
 
-                                <mat-radio-group  class="vertical-radio-group" [(ngModel)]="roleSelected" (change)="handleRoleChange()">
-            
-                                    <mat-radio-button value="user"> <span class="mat-radio-button">Usúario </span></mat-radio-button> &nbsp;&nbsp;
-                                    
-                                    <mat-radio-button value="admin" *ngIf="loggedUser?.role === 'webmaster' || loggedUser?.role === 'super_admin'"><span class="mat-radio-button"> Administrador </span></mat-radio-button> &nbsp;&nbsp;
-                                    
-                                    <mat-radio-button value="super_admin" *ngIf="loggedUser?.role === 'webmaster'"> <span class="mat-radio-button"> Super Administrador </span> </mat-radio-button> &nbsp;&nbsp;
-                                    
-                                    <mat-radio-button value="webmaster" *ngIf="loggedUser?.role === 'webmaster'"> <span class="mat-radio-button"> Webmaster </span> </mat-radio-button>
-                                </mat-radio-group>
-
-                              
-                        </mat-card-content>
-                      </mat-tab>
-                    </mat-tab-group>
+                        <h3 class="font mt-4" *ngIf="role !== 'webmaster'"> Propulsão </h3>
+    
+                        <div class="row">
+                            <div class="mt-3 col-sm-12 col-12 col-md-6 " *ngIf="role !== 'webmaster'">
+                                <select class="select" formControlName="idpropulsao" >
+                                <option *ngFor="let prop of propulsaos" [ngValue]="prop">{{ prop.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                  
+                    </form>
                 </mat-card-content>
-            </mat-card>
-</div>            
-  
-  
+                </mat-tab>
+
+                <mat-tab >
+                <ng-template mat-tab-label >
+                    
+                    <div class="d-flex  justify-content-center align-items-center">
+                        <i-tabler name="shield" class="icon-20 m-r-8" style="transform: scale(1.2);"></i-tabler>
+                        <span class="font fs-12"> Roles </span>
+                    </div>
+                    
+                </ng-template>
+                <mat-card-content  style="margin-top: 35px; padding: 20px !important; overflow-x: hidden !important; "  >
+                <!-- <mat-card-content  style="margin-top: 35px; padding: 20px !important; overflow-x: hidden !important; height: 90vh;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'705px'}" > -->
+
+
+                        <mat-radio-group  class="vertical-radio-group" [(ngModel)]="roleSelected" (change)="handleRoleChange()">
+    
+                            <mat-radio-button value="user"> <span class="mat-radio-button">Usúario </span></mat-radio-button> &nbsp;&nbsp;
+                            
+                            <mat-radio-button value="admin" *ngIf="loggedUser?.role === 'webmaster' || loggedUser?.role === 'super_admin'"><span class="mat-radio-button"> Administrador </span></mat-radio-button> &nbsp;&nbsp;
+                            
+                            <mat-radio-button value="super_admin" *ngIf="loggedUser?.role === 'webmaster'"> <span class="mat-radio-button"> Super Administrador </span> </mat-radio-button> &nbsp;&nbsp;
+                            
+                            <mat-radio-button value="webmaster" *ngIf="loggedUser?.role === 'webmaster'"> <span class="mat-radio-button"> Webmaster </span> </mat-radio-button>
+                        </mat-radio-group>
+
+                        
+                </mat-card-content>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+ <button mat-raised-button mat-dialog-close style="background-color: rgb(255, 0, 0); color: white; font-family: poppins-regular;">Cancelar</button>
+  <button mat-raised-button  cdkFocusInitial style="background-color: rgb(0, 119, 255); color: white; font-family: poppins-regular" (click)="onSave()">Criar usuário</button> 
+</mat-dialog-actions>
+
      
    
   

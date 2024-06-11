@@ -19,12 +19,6 @@ td{
   font-size: 0.85em;
 }
 
-th{
-  font-family: 'poppins-regular';
-  font-size: 1em;
-  font-weight: bold;
-}
-
 .table-container {
   overflow-x: auto;
   width: 80%;
@@ -35,6 +29,12 @@ th{
   width: 100%;
 
 }
+th{
+    font-family: 'poppins-regular';
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
 
 .customCard{
   box-shadow: 5px 10px 17px 0px rgba(53,153,153, 0.60);

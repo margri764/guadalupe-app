@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { User } from 'src/app/shared/models/user.models';
 import { Subject, debounceTime, delay, take } from 'rxjs';
@@ -14,17 +14,22 @@ import { PropulsaoService } from 'src/app/services/propulsao.service';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
 import { RouterModule } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { TablerIconsModule } from 'angular-tabler-icons';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter'
+import { SearchCongregatioComponent } from 'src/app/pages/search-congregatio/search-congregatio/search-congregatio.component';
+
 
 
 @Component({
   selector: 'app-new-user-modal',
   standalone: true,
-  imports: [ CommonModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule, TablerIconsModule],
+  imports: [ CommonModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule, TablerIconsModule, MatMomentDateModule],
   templateUrl: './new-user-modal.component.html',
-  styleUrl: './new-user-modal.component.scss'
+  styleUrl: './new-user-modal.component.scss',
+  providers: [provideNativeDateAdapter()],
 })
 export class NewUserModalComponent {
 
@@ -49,6 +54,8 @@ export class NewUserModalComponent {
     isClientFound : boolean = false;
     labelNoFound : boolean = false;
     phone : boolean = false;
+    backClose : boolean = false;
+
     // end search
 
     myFormSearch!: FormGroup;
@@ -56,10 +63,6 @@ export class NewUserModalComponent {
 
     myForm! : FormGroup;
     ordem :any[] = ["Primeira","Segunda", "Terceira" ];
-    bsValue = new Date();
-    bsRangeValue!:Date[];
-    maxDate = new Date();
-    minDate = new Date();
     isLoading : boolean = false;
     showSuccess : boolean = false;
     showLabelNoRole : boolean = false;
@@ -74,10 +77,12 @@ export class NewUserModalComponent {
     readonlyFields: { [key: string]: boolean } = {};
     @ViewChild('closebutton') closebutton! : ElementRef;
     disableOrdem:boolean = false;
+    showDatePicker:boolean = true;
     linkCongregatio : any = 0;
     loggedUser :any;
     propulsaos : any []=[];
     role : any | null; 
+
   
     constructor(
                 private fb : FormBuilder,
@@ -87,16 +92,17 @@ export class NewUserModalComponent {
                 private validatorService : ValidateService,
                 private toastr: ToastrService,
                 private propulsaoService : PropulsaoService,
-                private dialogRef : MatDialogRef<NewUserModalComponent>
+                private dialogRef : MatDialogRef<NewUserModalComponent>,
+                private dialog : MatDialog
     ) {
 
       (screen.width <= 800) ? this.phone = true : this.phone = false;
 
       this.myForm = this.fb.group({
         ordem: [ '', [Validators.required] ],
-        Nome_Completo:  [ '' ],
+        Nome_Completo:  [ '', [Validators.required] ],
         Telefone1:  [ '', [Validators.required]],
-        Data_Nascimento:  [ '', [Validators.required] ],
+        Data_Nascimento:  [null, [Validators.required]],
         Email:     [ '', [Validators.required, Validators.pattern(this.validatorService.emailPattern)] ],
         emailCongregatio:  [ null ],
         Nacionalidade:  [ '', [Validators.required] ],
@@ -115,9 +121,11 @@ export class NewUserModalComponent {
       if(user){
         this.loggedUser = user;
       }
+
       
      }
-  
+
+
     ngOnInit(): void {
 
       this.errorService.closeIsLoading$.pipe(delay(700)).subscribe(emitted => emitted && (this.isLoading = false));
@@ -148,6 +156,7 @@ export class NewUserModalComponent {
     get f(){
       return this.myForm.controls;
     }
+
 
 
 getInitialPropulsaos() {
@@ -182,13 +191,12 @@ onSave(){
       this.showLabelNoRole = false;
    
       const Data_Nascimento = this.myForm.get('Data_Nascimento')?.value;
-      const momentDate = new Date( Data_Nascimento.year, Data_Nascimento.month - 1, Data_Nascimento.day );
-
+      const momentDate = new Date(Data_Nascimento);
       let birthdayFormatted = null;
-      if(Data_Nascimento !== null && Data_Nascimento !== ''){
+      if (!isNaN(momentDate.getTime())) {
         birthdayFormatted = moment(momentDate).format('YYYY-MM-DD');
-      }else{
-        birthdayFormatted = null;
+      } else {
+          birthdayFormatted = null;
       }
 
       let body: User;
@@ -223,7 +231,6 @@ onSave(){
         idpropulsao : (!selectedPropulsao && !selectedPropulsao.idpropulsao) ? null : selectedPropulsao.idpropulsao,
         role : this.role
       }
-
 
       }
 
@@ -263,27 +270,28 @@ closeToast(){
 }
 
 searchCongregatio(){
- 
-  // const modalRef = this.modalService.open(SearchCongregatioComponent,{
-  //   keyboard: true, 
-  //   backdrop: 'static',
-  //   size: 'xl' 
-  // });
-  // modalRef.result.then(
-  //   (user) => {
 
-  //     if(user.Ordem === 'Falecido' || user.Ordem === 'falecido'){
-  //       const title = 'Usúario falecido';
-  //       const msg = '';
-  //       const footer = 'Por favor, tente com outro usuário';
-  //       this.showErrorSwal( title, msg, footer )
-  //     }else{
-  //       this.selectUser(user);
-  //     }
-     
-  //   },
-   
-  // );
+  
+  const dialogRef = this.dialog.open(SearchCongregatioComponent,{
+    maxWidth: (this.phone) ? "97vw": '800px',
+    maxHeight: (this.phone) ? "90vh": '95vh',
+  });
+
+  dialogRef.afterClosed().subscribe(user => {
+    if (user) {
+
+            if(user.Ordem === 'Falecido' || user.Ordem === 'falecido'){
+              const title = 'Usúario falecido';
+              const msg = '';
+              const footer = 'Por favor, tente com outro usuário';
+              this.showErrorSwal( title, msg, footer )
+            }else{
+              this.selectUser(user);
+            }
+          }
+  });
+ 
+
 }
 
 showErrorSwal( title : string, msg : string, footer : string) {
@@ -307,7 +315,6 @@ selectUser(user: any){
 
   console.log(user);
 
-//  user = { ...user, iduser: this.user.iduser};
   this.userCongregatio = user;
   this.linkCongregatio = 1;
   this.isLinkedToCongregatio = true;
@@ -326,19 +333,11 @@ selectUser(user: any){
 
   this.telephone = backPhone;
   
-  // NgbDate necesita 3 argumentos
-  backBirthday = moment(backBirthday, 'DD/MM/YY').format('YYYY-MM-DD HH:mm:ss'); //viene un string del back, no date
-  const dateToconvert = new Date(backBirthday);
-  const year = dateToconvert.getFullYear();
-  const month = dateToconvert.getMonth() + 1; 
-  const day = dateToconvert.getDate();
-  const dataFormatted = new NgbDate(year, month, day);
-
   // Definir los campos y sus valores iniciales (cámbialos según tu formulario)
   const fields = [
     { name: 'Nome_Completo', backValue: backFullName },
     { name: 'Telefone1', backValue: backPhone },
-    { name: 'Data_Nascimento', backValue: dataFormatted },
+    { name: 'Data_Nascimento', backValue: backBirthday },
     { name: 'emailCongregatio', backValue: backEmailCongregatio },
     { name: 'Nacionalidade', backValue: backNationality },
     { name: 'Residencia_atual', backValue: backActualAddress },
@@ -346,7 +345,6 @@ selectUser(user: any){
     { name: 'ordem', backValue: backOrdem },
 
   ];
-
 
   if(backOrdem && backOrdem !== ''){
 
@@ -359,7 +357,13 @@ selectUser(user: any){
 
     if (formControl instanceof FormControl) {
       if (field.backValue !== null && field.backValue !== undefined && field.backValue !== '') {
-        formControl.setValue(field.backValue);
+          //esto lo necesita el date picker
+        if(field.name === 'Data_Nascimento'){
+          const serializedDate = new Date(field.backValue).toISOString();
+          formControl.setValue(serializedDate);
+        }else{
+          formControl.setValue(field.backValue);
+          }
         this.readonlyFields[field.name] = true;
       } else {
         this.readonlyFields[field.name] = false;
@@ -451,7 +455,9 @@ Search( item: any ){
 // search
   
 closeModal(){
-  this.dialogRef.close();
+  this.backClose = true;
+  setTimeout( ()=>{ this.dialogRef.close() }, 400 )
+  
 }
 
 successToast( msg:string){

@@ -1,0 +1,41 @@
+
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+
+    <ng-container matColumnDef="img1" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > Usuário 1 </th>
+        <td mat-cell *matCellDef="let dupla"> 
+            <img [src]="dupla | duplaImagenPath:1" class="img-fluid br-6" style="border-radius: 7px; width: 70px;" *ngIf="dupla.Ruta_Imagen_1 !== '' && dupla.Ruta_Imagen_1 ">
+            <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="dupla.Ruta_Imagen_1 == '' || !dupla.Ruta_Imagen_1">
+            <span *ngIf="dupla.Nome_Completo_1 !== '' " class="selected" [routerLink]="['/painel/editar-usuario/', dupla.iduser_1]" >
+                {{ dupla.Nome_Completo_1}}
+            </span> 
+        </td>
+      </ng-container>
+
+    <ng-container matColumnDef="img2">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > Usuário 2  </th>
+        <td mat-cell *matCellDef="let dupla"> 
+            <img [src]="dupla | duplaImagenPath:2" class="img-fluid br-6" style="border-radius: 7px; width: 70px;" *ngIf="dupla.Ruta_Imagen_2 !== '' && dupla.Ruta_Imagen_2 ">
+                    <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="dupla.Ruta_Imagen_2 == '' || !dupla.Ruta_Imagen_2">
+
+                   <span *ngIf="dupla.Nome_Completo_2 !== '' " class="selected" [routerLink]="['/dashboard/editar-usuario/', dupla.iduser_2]" >
+                        {{ dupla.Nome_Completo_2}}
+                    </span> 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="propulsao">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Propulsao </th>
+        <td mat-cell *matCellDef="let dupla"> {{ dupla?.propulsao_name}}</td>
+      </ng-container> 
+          
+     
+      
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<br>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

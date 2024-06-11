@@ -1,0 +1,68 @@
+
+
+<div class="d-flex justify-content-between align-items-center pd-10">
+    <h1 mat-dialog-title style="font-family: poppins-regular;">Congregatio</h1>
+  
+    <div class="iconSelected">
+        <span class="material-icons cursor " (click)="closeModal()">close</span>
+    </div>
+ </div>
+
+<div class="d-flex justify-content-center w-100 pd-20">
+    <div class="border w-100"></div>
+</div>    
+
+<mat-dialog-content style="padding: 20px;">
+    
+    <mat-card class="cardWithShadow w-100 animate__animated animate__fadeIn" >
+        
+        <mat-card-content class="p-10" style="height: 90vh;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'700px'}" >
+
+
+            <form [formGroup]="myFormSearch" class="needs-validation"  novalidate  [autocomplete]="false">
+
+                <div class="row">
+
+                    <div class="col-12 mt-30 w-100" >
+                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                        <input matInput type="text"  placeholder="Use % para pesquisas complexas"  name="itemSearch" formControlName="itemSearch"  />
+                         <div class="d-flex justify-content-center align-items-center t" matSuffix style="background-color: rgb(0, 110, 255); width: 120px; height: 44px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">  <i class="fas fa-search"></i></div>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="d-flex justify-content-start align-items-center " *ngIf="labelNoFound">
+                <span class="font fs-10" style="color: red;"> 
+                    <b>Sem resultados encontrados...</b> 
+                </span>
+                <span class="material-icons " style="color: red;">cancel</span>
+            </div>
+
+            <div class="d-flex justify-content-center mt-40 w-100"  *ngIf="loadindCongregatio" >
+                <!-- <span class="font fs-12" > Espere por favor...</span> -->
+                    <mat-spinner style="width: 20px !important;"></mat-spinner>
+            </div>
+
+            <div *ngIf="mostrarSugerencias">
+                <div *ngFor="let item of suggested"  (click)="selectUser(item)" >
+                
+                <div class="boxSelection mt-1 font fs-10" >   
+                    <img class="img-fluid br-6" src="https://congregatio.info/{{ item['Ruta Imagen'] }}" alt="Foto do Perfil do Usuário" style="width: 70px; border-radius: 5px;">
+                    &nbsp;
+                    {{ item['Nome Completo'] }}
+                </div>
+                </div>
+            </div>
+
+
+        </mat-card-content>
+    </mat-card>
+
+
+</mat-dialog-content>        
+
+
+
+      

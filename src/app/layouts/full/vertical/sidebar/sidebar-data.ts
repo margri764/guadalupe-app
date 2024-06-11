@@ -2,33 +2,43 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Admin',
   },
  
   {
-    displayName: 'Congressos',
-    iconName: 'brand-ted',
-    route: 'painel/congressos',
+    displayName: 'Configuração',
+    iconName: 'settings',
+    // route: 'painel/congressos',
   },
 
-  {
-    displayName: 'Usuários',
-    iconName: 'user-plus',
-    route: '/painel/usuarios',
-    // children: [
-    //   {
-    //     displayName: 'Side Login',
-    //     iconName: 'point',
-    //     route: '/authentication/side-register',
-    //   },
-    //   {
-    //     displayName: 'Boxed Login',
-    //     iconName: 'point',
-    //     route: '/authentication/boxed-register',
-    //   },
-    // ],
-  },
- 
+    
+    {
+      navCap: 'Usuários',
+    },
+
+    {
+      displayName: 'Usuários',
+      iconName: 'user-plus',
+    
+      children: [
+        {
+          displayName: 'Usuários',
+          route: '/painel/usuarios',
+          
+        },
+        {
+          displayName: 'Duplas',
+          route: '/painel/duplas',
+        },
+
+        {
+          displayName: 'Grupos',
+          route: '/painel/grupos',
+        },
+      ],
+  
+      },
+   
   
  
 ];
