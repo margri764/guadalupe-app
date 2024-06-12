@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './services/auth.service';
 import { ActivationEnd, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { Subscription, filter, take } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LocalstorageService } from './services/localstorage.service';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -60,11 +61,18 @@ export class AppComponent implements OnInit {
 
 }
 
+@ViewChild('drawer') drawer!: MatDrawer;
+private drawerSubscription!: Subscription;
+
+openDrawer() {
+  this.drawer.open();
+}
+
+
 ngOnInit(): void {
 
   this.localStorageService.loadInitialState();
-  
-}
+}  
 
 
 

@@ -1,1 +1,96 @@
-<p>view-groupusers-modal works!</p>
+
+
+    
+    <div class="d-flex justify-content-between align-items-center pd-20">
+        <div class="d-flex justify-content-start align-items-center w-100 ">
+           <h2 style="font-family: poppins-regular;"  > Usuários grupo {{ selectedGroup?.name }}  &nbsp; ({{selectedGroup?.length}}) </h2> 
+       </div>
+        <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+    </div>
+  
+    <div class="d-flex justify-content-center w-100 pd-20">
+        <div class="border w-100"></div>
+    </div>    
+      
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'100vw'}:{'width':'800px'}">
+        
+        <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+
+            <ng-container *ngIf="!addUsers">
+
+                <div class="row pd-10">
+        
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                
+                        <mat-form-field appearance="outline" color="primary" class="mt-20">
+                            <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+                          </mat-form-field>
+                
+                        <button  type="button" mat-flat-button  color="primary" class="font fs-10 shadow"  (click)="openDrawer()" >
+                            <i class="fas fa-plus "></i> &nbsp; Usuários
+                        </button>
+                    </div>
+                
+                    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 mt-20"  >
+                
+                        <ng-container matColumnDef="img" >
+                            <th mat-header-cell *matHeaderCellDef > Img </th>
+                            <td mat-cell *matCellDef="let user"  > 
+                                <img [src]="user | imagenPath" class="img-fluid br-6" width="50px" style="border-radius: 7px;" *ngIf="user.Ruta_Imagen !== '' && user.Ruta_Imagen !== null">
+    
+                                <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="user.Ruta_Imagen == '' || !user.Ruta_Imagen">
+                           </td>
+                          </ng-container>
+                
+                        <ng-container matColumnDef="name" >
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Nome </th>
+                            <td mat-cell *matCellDef="let user" class="selected " (click)="openModalFichaCompleta(user)"> 
+                                {{ user.Nome_Completo }}
+                           </td>
+                          </ng-container>
+                
+                              
+                          <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header >  Ação </th>
+                
+                            <td  mat-cell *matCellDef="let user" >
+                
+                                <!-- <div class="d-flex justify-content-center align-items-center " > -->
+                                    <span class="material-icons  delete"  [matTooltip]="'Excluir usuário'" (click)="removeUserFromGroup(user)">delete</span>
+                                   
+                                <!-- </div> -->
+                
+                              </td>
+                          </ng-container>
+                              
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    </table>
+                       <br>
+                 </div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    
+
+            </ng-container>
+
+            <div *ngIf="addUsers">
+                <app-assign-usersgroup 
+                [data] = "groupID"
+                (closeDrawer)="closingAddUsers($event)"
+                >
+            </app-assign-usersgroup>
+                </div>
+                <ng-container >
+            </ng-container>
+
+           
+        </div>
+    </mat-dialog-content>
+
+
+      
+    
+
+
+  

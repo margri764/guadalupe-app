@@ -17,6 +17,8 @@ import { MaterialModule } from 'src/app/material.module';
 import { NewGroupModalComponent } from '../../modals/new-group-modal/new-group-modal/new-group-modal.component';
 import { EditGroupModalComponent } from '../../modals/edit-group-modal/edit-group-modal/edit-group-modal.component';
 import { ViewGroupusersModalComponent } from '../../modals/view-groupusers-modal/view-groupusers-modal/view-groupusers-modal.component';
+import { AddPropulsaoModalComponent } from '../../modals/add-propulsao-modal/add-propulsao-modal/add-propulsao-modal.component';
+import { MatDrawer } from '@angular/material/sidenav';
 
 
 @Component({
@@ -73,7 +75,9 @@ export class GroupsComponent {
    }
 
 
+
   ngOnInit(): void {
+
 
     this.getInitialData();
     this.errorService.closeIsLoading$.pipe(delay(1500)).subscribe(emitted => emitted && (this.isLoading = false));
@@ -135,36 +139,27 @@ export class GroupsComponent {
       data: { groupID, managedFromPropulsao }
     });
 
-
-    //  const groupID=  group.idgroup;
-
-    // const modalRef = this.modalService.open(ViewGroupusersModalComponent,{
-    //   backdrop: 'static', 
-    //   size: "lg"
-    // });
-
-    // modalRef.componentInstance.data = { groupID, managedFromPropulsao }
   
   }
 
   assignPropulsao( value:any){
 
-  //  const id = value.idgroup;
-  //  const component = "edit-group";
+   const id = value.idgroup;
+   const component = "edit-group";
 
-  //   const modalRef = this.modalService.open(AddPropulsaoModalComponent,{
-  //     backdrop: 'static', 
-  //     // keyboard: false,  
-  //     size: "md"
-  //   });
+   const dialogRef = this.dialog.open(AddPropulsaoModalComponent,{
+      maxWidth: (this.phone) ? "97vw": '800px',
+      maxHeight: (this.phone) ? "90vh": '90vh',
+      data: { component, id }
+  });
   
-  //   modalRef.componentInstance.data = { component, id }
-  //   modalRef.result.then(
-  //     (result) => {
-  //       if(result === 'edit-group'){
-  //      this.getInitialData()      }
-  //     },
-  //   );
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      if(result === 'edit-group'){
+        this.getInitialData() 
+      }
+    } 
+  });
 
   }
 
@@ -178,10 +173,9 @@ editGroup( group:any ){
   
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-
       if(result === 'edit-group'){
         this.getInitialData() 
-            }
+      }
     } 
   });
 
@@ -285,31 +279,20 @@ showPropulsaoSwal( ) {
 }
 
 openDeleteModal( action:string ){
-  // const modalRef = this.modalService.open(DeleteModalComponent,{
-  //   backdrop: 'static', 
-  //   keyboard: false,    
-  //   windowClass: 'custom-modal-delete'
-  // });
-  // modalRef.componentInstance.data = { component: "groups", action }
-
-  
   this.dialog.open(DeleteModalComponent,{
     maxWidth: (this.phone) ? "98vw": '',
     panelClass: "custom-modal-picture",    
     data: { component: "groups", action }
     });
-
 }
 
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-
   const savedPageSize = localStorage.getItem('groupPageSize');
   if (savedPageSize) {
     this.paginator.pageSize = +savedPageSize;
   }
-
   this.paginator.page.subscribe((event) => {
     localStorage.setItem('groupPageSize', event.pageSize.toString());
   });
@@ -322,8 +305,5 @@ applyFilter(event: Event) {
     this.dataSource.paginator.firstPage();
   }
 }
-
-
-
 
 }

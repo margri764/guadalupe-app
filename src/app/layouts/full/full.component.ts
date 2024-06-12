@@ -1,7 +1,7 @@
 import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { CoreService } from 'src/app/services/core.service';
 import { AppSettings } from 'src/app/app.config';
 import { filter } from 'rxjs/operators';
@@ -19,6 +19,7 @@ import { HeaderComponent } from './vertical/header/header.component';
 import { AppBreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { CustomizerComponent } from './shared/customizer/customizer.component';
 import { ErrorService } from 'src/app/services/error.service';
+import { AlarmGroupService } from 'src/app/services/alarm-group.service';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -74,6 +75,9 @@ export class FullComponent implements OnInit {
   private isContentWidthFixed = true;
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
+
+
+
 
   get isOver(): boolean {
     return this.isMobileScreen;
@@ -192,7 +196,8 @@ export class FullComponent implements OnInit {
               private router: Router,
               private breakpointObserver: BreakpointObserver,
               private navService: NavService,
-              private errorService : ErrorService
+              private errorService : ErrorService,
+              private alarmgroupService : AlarmGroupService
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -219,10 +224,16 @@ export class FullComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
+
 
   ngOnDestroy() {
     this.layoutChangesSubscription.unsubscribe();
+    // if (this.drawerSubscription) {
+    //   this.drawerSubscription.unsubscribe();
+    // }
   }
 
   toggleCollapsed() {

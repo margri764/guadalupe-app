@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { Subject, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 
@@ -8,6 +8,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AlarmGroupService {
+
+  private openDrawerSource = new Subject<void>();
+  openDrawer$ = this.openDrawerSource.asObservable();
+
+  openDrawer() {
+    this.openDrawerSource.next();
+  }
 
 
   private baseUrl = environment.baseUrl;

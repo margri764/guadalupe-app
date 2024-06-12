@@ -8,7 +8,14 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Configuração',
     iconName: 'settings',
-    // route: 'painel/congressos',
+    
+    children: [
+      {
+        displayName: 'Envío de arquivos',
+        route: '/painel/arquivos',
+        
+      },
+    ]
   },
 
     

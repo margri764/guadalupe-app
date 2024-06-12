@@ -49,6 +49,7 @@
     <!-- horizontal Sidebar -->
     <!-- ============================================================== -->
     @if (resView) {
+
     <mat-sidenav #leftsidenav [mode]="'over'" [opened]="options.sidenavOpened && !isTablet"
       (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
       <app-sidebar> </app-sidebar>
@@ -115,7 +116,12 @@
 
       <app-customizer (optionsChange)="receiveOptions($event)"></app-customizer>
     </mat-sidenav>
+
+  
+
+
   </mat-sidenav-container>
+
 
   <!-- ------------------------------------------------------------------
     Mobile Apps Sidebar
@@ -189,4 +195,6 @@
       </div>
     </div>
   </mat-drawer>
+
+  
 </span>

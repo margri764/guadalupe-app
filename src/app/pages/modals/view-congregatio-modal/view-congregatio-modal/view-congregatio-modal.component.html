@@ -1,0 +1,52 @@
+
+
+
+    <div class="d-flex justify-content-between align-items-center pd-10">
+        <h1 mat-dialog-title style="font-family: poppins-regular;">Ficha completa</h1>
+        <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+    </div>
+  
+    <div class="d-flex justify-content-center w-100 pd-20">
+        <div class="border w-100"></div>
+    </div>    
+      
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'800px'}">
+        
+        <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+  
+                <div class="p-3" >
+              
+                  <h3 *ngIf="user" class="mt-5 font" style="color: #007BFF;"> {{ user['Nome Completo'] }} </h3>
+              
+                      <div #gallery class="d-flex mt-3 shadow " style="overflow-x: auto; padding: 2px; height: 300px;">  </div>
+              
+              
+                      <div class="border-top mt-5"> </div>
+              
+                  <div class="table-responsive font p-3 font fs-10" >
+                      <table class="table table-hover mt-5" >
+                        <thead>
+                          <tr>
+                            <th scope="col">Propiedad</th>
+                            <th scope="col">Valor</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let prop of getObjectProperties()">
+                            <td> <b>{{ prop.key }}</b> </td>
+                            <td>{{ prop.value }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+              
+          </div>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+       <button type="button" mat-dialog-close class="cancelButton" style="margin-right: 30px;">Sair</button>
+    </mat-dialog-actions>
+  
+  
