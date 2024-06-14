@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
   
   templateUrl: './login.component.html',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, MaterialModule,  NgbModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, MaterialModule],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {

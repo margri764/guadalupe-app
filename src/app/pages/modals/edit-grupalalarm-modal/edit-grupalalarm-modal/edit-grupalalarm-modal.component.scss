@@ -1,0 +1,188 @@
+
+.frame-work{
+    border-radius: 10px; 
+    padding: 20px;
+    border: 1px solid rgb(233, 233, 233);
+    background-color: rgb(240, 240, 240);
+  
+    box-shadow: 5px 9px 11px -2px rgba(196,196,196,0.75);
+  -webkit-box-shadow: 5px 9px 11px -2px rgba(196,196,196,0.75);
+  -moz-box-shadow: 5px 9px 11px -2px rgba(196,196,196,0.75);
+  }
+  
+  .frame-work:hover{
+    background-color: rgb(230, 230, 230);
+  
+  }
+
+
+  
+  .cancel:hover{
+    color: red;
+  }
+  .groups{
+    display: inline-block;
+    margin-right: 10px;
+    /* justify-content: center;
+    align-items: center; */
+  }
+  
+  .groups:hover{
+    color: blue;
+    // text-decoration: underline;
+  }
+  
+  input[readonly] {
+    background-color: inherit;
+  }
+  
+  .iconSelected{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+  .iconSelected:hover{
+    background-color: rgb(238, 238, 238, 0.4);
+    box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.25);
+    -webkit-box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.25);
+    -moz-box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.25);
+  }
+  
+  .btnMenuClicked , .btnMenu  {
+    font-size: 1.2em;
+    font-family: "poppins-regular";
+    padding: 8px 10px; /* espaciado interno del botón */
+    white-space: nowrap !important;
+    border-radius: 6px !important;
+    width: 160px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .exclude{
+    color: green; 
+    margin-top: 5px;
+    width: 100%;
+    margin-left: 5px;
+  }
+  
+  
+  
+  .btnMenuClicked {
+    border: 1px solid white;
+    background-color: #007BFF;
+    color: rgb(255, 255, 255);
+  
+    box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.75);
+    -webkit-box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.75);
+    -moz-box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.75);
+  }
+  .btnMenu {
+    border: 1px solid #007BFF !important;
+    background-color: white !important;
+    color: #007BFF;
+    cursor: pointer;
+  
+    box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.75);
+    -webkit-box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.75);
+    -moz-box-shadow: 0px 1px 8px 0px rgba(145,145,145,0.75);
+  }
+  
+  input{
+    font-size: 1.1em;
+  }
+  
+  select{
+    font-size: 0.9em;
+  }
+  
+  .border{
+    border-radius: 7px;
+    width: 60px;
+  }
+  
+  .boxSelection2{
+    
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 3px;
+    text-align: justify;
+    line-height: 30px;
+    
+    box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+    -webkit-box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+    -moz-box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+  }
+  
+  
+  .boxSelection{
+  
+        padding-left: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 1px;
+        cursor: pointer;
+        text-align: justify;
+        line-height: 30px;
+        
+        box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+        -webkit-box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+        -moz-box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+  }
+  
+//   .boxSelection:hover{
+//     background-color: rgb(0, 128, 255);
+//     color: white;
+//     box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+//     -webkit-box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+//     -moz-box-shadow: 0px 1px 9px -2px rgba(175, 175, 175, 0.85);
+//   }
+  
+  .selectUser{
+    padding: 7px;
+  }
+  
+  .select[disabled] {
+    background-color: #e9ecef;  
+    color: #99999900;  
+    cursor: not-allowed;
+  }
+  
+  
+  .select{
+    height: 36px; 
+    border-color: rgb(207, 207, 207); 
+    font-size: 1.1em; 
+    font-family: 'source_3'; 
+    color: gray;
+  }
+  
+  
+//   .boxSelection:hover  .selectUser {
+//     color: white;
+//   }
+  
+  
+  
+  .selected:hover{
+    color: rgb(0, 128, 255);
+    text-decoration: underline;
+  }
+  
+  
+  
+  select{
+    font-size: 0.9em;
+  }
+  
+  
+  
+  

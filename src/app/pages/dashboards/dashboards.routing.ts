@@ -7,6 +7,7 @@ import { EditUserComponent } from '../edit-user/edit-user/edit-user.component';
 import { DuplasComponent } from '../duplas/duplas/duplas.component';
 import { GroupsComponent } from '../groups/groups/groups.component';
 import { FilesComponent } from '../files/files/files.component';
+import { AlarmsComponent } from '../alarms/alarms/alarms.component';
 
 export const DashboardsRoutes: Routes = [
   {
@@ -16,6 +17,7 @@ export const DashboardsRoutes: Routes = [
       { path: 'duplas', component: DuplasComponent,  data: { title: 'Duplas' } },
       { path: 'grupos', component: GroupsComponent,  data: { title: 'Grupos' } },
       { path: 'arquivos', component: FilesComponent,  data: { title: 'Arquivos' } },
+      { path: 'alarmes', component: AlarmsComponent,  data: { title: 'Alarmes' } },
       { path: 'editar-usuario/:id',  component: EditUserComponent , data:{ title:"Editar Usuário"}},
     ],
   },

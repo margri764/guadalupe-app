@@ -15,6 +15,11 @@ export const navItems: NavItem[] = [
         route: '/painel/arquivos',
         
       },
+      {
+        displayName: 'Alarmes',
+        route: '/painel/alarmes',
+        
+      },
     ]
   },
 

@@ -25,19 +25,10 @@ export class RegisterComponent implements OnInit {
 
   myForm!: FormGroup;
   submitted : boolean = false;
-  bsValue = new Date();
-  bsRangeValue!:Date[];
-  maxDate = new Date();
-  minDate = new Date();
   succesSignup : boolean = false;
   isLoading : boolean = false;
   arrBackground : any []=[];
   backgroundImage : string = '';
-
-  fromDate: NgbDate;
-  toDate: NgbDate;
-  model3: NgbDateStruct;
-
 
   constructor(
               private fb : FormBuilder,
@@ -48,9 +39,7 @@ export class RegisterComponent implements OnInit {
               private router : Router,
               public toastr: ToastrService,
               private cookieService: CookieService,
-
   ) {
-
 
    }
 
