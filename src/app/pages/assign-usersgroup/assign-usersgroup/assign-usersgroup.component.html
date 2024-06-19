@@ -56,9 +56,8 @@
     <mat-chip-set style="margin-top: 0px !important;">
         <mat-chip *ngFor="let selUser of selectedUsers" [removable]="true" (removed)="removeUser(selUser)" >
 
-        <img matChipAvatar [src]="selUser | imagenPath" alt=""  *ngIf="selUser.Ruta_Imagen !== '' && selUser.Ruta_Imagen !== null">
-        <img matChipAvatar src="./assets/images/no-image.jpg" class="img-fluid br-6" width="50px" *ngIf="!selUser.Ruta_Imagen">
-        <!-- <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg"> -->
+        <img matChipAvatar [src]="selUser | imagenPath" alt="" *ngIf="selUser.Ruta_Imagen !== '' && selUser.Ruta_Imagen !== null">
+        <img matChipAvatar src="./assets/images/no-image.jpg" *ngIf="!selUser.Ruta_Imagen">
             {{ selUser.Nome_Completo }}
             <mat-icon matChipRemove style="color: white;     
         " >cancel</mat-icon>

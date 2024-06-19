@@ -17,6 +17,7 @@ import { DeleteModalComponent } from '../../modals/delete-modal/delete-modal/del
 import { MatDialog } from '@angular/material/dialog';
 import { EditGroupModalComponent } from '../../modals/edit-group-modal/edit-group-modal/edit-group-modal.component';
 import { EditGrupalalarmModalComponent } from '../../modals/edit-grupalalarm-modal/edit-grupalalarm-modal/edit-grupalalarm-modal.component';
+import { NewAlarmModalComponent } from '../../modals/new-alarm-modal/new-alarm-modal/new-alarm-modal.component';
 
 
 @Component({
@@ -91,6 +92,8 @@ export class AlarmsComponent {
     if(user){
       this.loggedUser = user;
     }
+
+    (screen.width < 800) ? this.phone = true : this.phone = false;
 
     this.dataSource = new MatTableDataSource();
 
@@ -203,7 +206,7 @@ editAlarm(alarm: any) {
   }
 
   const dialogRef = this.dialog.open(EditGrupalalarmModalComponent,{
-    maxWidth: (this.phone) ? "97vw": '800px',
+    maxWidth: (this.phone) ? "97vw": '900px',
     maxHeight: (this.phone) ? "90vh": '90vh',
     data: { alarm, nameFreq: this.nameFreq }
 });
@@ -321,6 +324,20 @@ openDeleteModal( action:string ){
 }
 
 openModalNewAlarm(){
+
+  const dialogRef = this.dialog.open(NewAlarmModalComponent,{
+    maxWidth: (this.phone) ? "97vw": '900px',
+    maxHeight: (this.phone) ? "90vh": '90vh',
+});
+
+dialogRef.afterClosed().subscribe(result => {
+  if (result) {
+    if(result === 'closed'){
+      this.getAllAlarms();
+    }
+  } 
+});
+
     // const modalRef = this.modalService.open(NewAlarmModalComponent,{
     //   backdrop: 'static', 
     //   // keyboard: false,  

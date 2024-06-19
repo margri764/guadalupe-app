@@ -85,9 +85,14 @@ input[readonly] {
   --mdc-chip-label-text-font: 'poppins-regular'; 
   --mdc-chip-container-height: 40px; 
   --mdc-chip-elevated-container-color: rgb(163, 215, 221); 
-  margin-top: 0px !important;
+    margin-top: 0px !important;
 }
-   
+
+.mat-mdc-standard-chip img{ 
+ transform: scale(1.5);
+}
+
+
 
 .btnMenuClicked {
   border: 1px solid white;

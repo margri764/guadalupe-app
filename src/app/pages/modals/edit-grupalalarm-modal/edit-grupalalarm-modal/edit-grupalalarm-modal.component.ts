@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgbActiveModal, NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, debounceTime, delay } from 'rxjs';
@@ -38,7 +38,7 @@ export interface Alarm {
     standalone: true,
     templateUrl: './edit-grupalalarm-modal.component.html',
     styleUrl: './edit-grupalalarm-modal.component.scss',
-    imports: [CommonModule, MaterialModule, ReactiveFormsModule, ImagenPathPipe],
+    imports: [CommonModule, MaterialModule, ReactiveFormsModule, ImagenPathPipe, MatSlideToggleModule],
     providers: [provideNativeDateAdapter()],
 
 })
@@ -182,17 +182,10 @@ export class EditGrupalalarmModalComponent {
       this.sugerenciasUser(valor);
     });
 
-    // NgbDate necesita 3 argumentos
-    const alarmDate = new Date(this.alarm.alarmDate);
-    const year = alarmDate.getFullYear();
-    const month = alarmDate.getMonth() + 1; 
-    const day = alarmDate.getDate();
-
-
     
   this.myForm.patchValue({
     name: this.alarm.name,
-    alarmDate: new NgbDate(year, month, day),
+    alarmDate: this.alarm.alarmDate,
     description: this.alarm.description,
     idalarm: this.alarm.idalarm
   });
@@ -218,7 +211,7 @@ getInitAlarms(){
     this.nameFreq = this.data.nameFreq;
     this.frequencySelected = (!this.alarm.notifFrequency) ? [] : this.alarm.notifFrequency ; 
     this.selectedUsers = this.alarm.idUsersNotifications;
-    this.suggested.push(this.alarm.userAlarm);
+    this.suggested.push({Ruta_Imagen: this.alarm.userAlarm.Ruta_Imagen, iduser: this.alarm.userAlarm.iduser, Nome_Completo: this.alarm.userAlarm.name });
     this.showSuggested = true;
     this.mostrarSugerencias = true;
     this.enableUserInput = true;
@@ -258,19 +251,9 @@ editAlarm(){
 
     }
 
- 
-  //cambie el codigo por ngbDatepicker
-  const alarmDate = this.myForm.get('alarmDate')?.value;
-
-  const momentDate = new Date( alarmDate.year, alarmDate.month - 1 , alarmDate.day );
-
-  let formattedDate = '';
   let groups : any [] | null= [];
   let userNotifi : any [] | null= [];
 
-  if(alarmDate !== null && alarmDate !== ''){
-    formattedDate = momentDate.toISOString();
-  }
 
   if(this.selectedGroups && this.selectedGroups.length > 0){
 
@@ -307,7 +290,8 @@ editAlarm(){
 
   const body : Alarm = {
                   name : this.myForm.get('name')?.value,
-                  alarmDate : formattedDate,
+                  // alarmDate : formattedDate,
+                  alarmDate : this.myForm.get('alarmDate')?.value,
                   notifFrequency : this.frequencySelected,
                   description : this.myForm.get('description')?.value,
                   userAlarm,
@@ -341,6 +325,7 @@ editAlarm(){
 removeGroup(nameToRemove: string): void {
 
   console.log('selectedGroups',  this.selectedGroups);
+  console.log('nameToRemove',  nameToRemove);
 
   // Filtrar el array para excluir el grupo con el nombre especificado
   // esto es para cuando no seleccione nada o sea q viene del back como edit
@@ -355,6 +340,7 @@ removeGroup(nameToRemove: string): void {
 }
 
 selectUser( user:any ){
+  console.log(user);
   this.myFormSearch.get('itemSearch')?.setValue(user.Nome_Completo);
   this.user = user;
   this.suggested = [];
@@ -390,7 +376,6 @@ viewUser( user:any ){
       });
 
   },300)
-
 
 
 }
@@ -595,7 +580,7 @@ selectUserNotif(user: any): void {
   
 
   if ( !this.selectedUsers.some(selectedUser => selectedUser.iduser === user.iduser)) {
-    this.selectedUsers.push( {iduser: user.iduser, email: user.Email, Nome_Completo: user.Nome_Completo } );
+    this.selectedUsers.push( {iduser: user.iduser, email: user.Email, Nome_Completo: user.Nome_Completo, Ruta_Imagen: user.Ruta_Imagen } );
   }
 
   console.log( this.selectedUsers);
@@ -614,9 +599,9 @@ removeUser(user: any){
 }
 
 closeModal(){
-  this.resetEdition();
+  
   this.backClose = true;
-  setTimeout( ()=>{ this.dialogRef.close() }, 400 )
+  setTimeout( ()=>{ this.dialogRef.close(); this.resetEdition(); }, 400 )
 }
 
 resetEdition(){

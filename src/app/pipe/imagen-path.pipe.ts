@@ -16,6 +16,9 @@ export class ImagenPathPipe implements PipeTransform {
         const serverURL = 'https://arcanjosaorafael.org/profilePicture/';
         // const serverURL = 'https://comissaoguadalupe.org/profile/';
         return `${serverURL}${fileName}`;
+      }else if(user.Ruta_Imagen.startsWith('https://congregatio.info/')){
+        return user.Ruta_Imagen
+
       }else{
         return '';
 

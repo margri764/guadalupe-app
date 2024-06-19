@@ -1,4 +1,22 @@
 @use "@angular/material" as mat;
+
+// Define tus colores personalizados
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// Define tu tema personalizado
+$custom-slider-theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+  )
+));
+
+// Incluye los temas de componentes necesarios
+@include mat.slider-theme($custom-slider-theme);
+@include mat.slide-toggle-theme($custom-slider-theme);
+
+
 @include mat.core();
 
   // set fix height to input

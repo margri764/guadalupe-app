@@ -1,7 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: rgb(240, 240, 240);}
+// Importa el tema de color naranja
+
 
 @font-face {
     font-family:'poppins-regular';
@@ -18,6 +19,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     src: url(assets/font/poppins/Poppins-Light.ttf);
     }
   
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'poppins-regular';
+    }
+
+    .swal2-title, .swal2-content, .swal2-footer {
+      font-family: 'poppins-regular';
+    }
+    
   
   
   .font{
@@ -70,8 +80,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     .d-flex{
       display: flex;
     }
-  
-  
+
   
     .f-w {
       color: white;
@@ -554,7 +563,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
   
     .selected:hover{
-      text-decoration: underline;
+      // text-decoration: underline;
       cursor: pointer;
       color: rgb(0, 128, 255);
     }

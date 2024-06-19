@@ -1,17 +1,16 @@
 
 
-<form [formGroup]="myForm" class="font fs-10"  (ngSubmit)="editAlarm()">
+<form [formGroup]="myForm" class="font fs-10"  (ngSubmit)="editAlarm()" style="overflow-x: hidden;">
 
     <div class="d-flex justify-content-between align-items-center pd-10">
         <h1 mat-dialog-title style="font-family: poppins-regular;">Editar alarme </h1>
         <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
     </div>
-  
-    <div class="d-flex justify-content-center w-100 pd-20">
-        <div class="border w-100"></div>
-    </div>    
+  <div class="row justify-content-center pd-20">
+      <div class="border col-12"></div>
+  </div>
       
-    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'600px'}">
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'800px'}">
         
         <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
   
@@ -53,13 +52,13 @@
                         
                         <div class="font boxSelection d-flex justify-content-between align-items-center w-100" >   
             
-                        <div class="d-flex align-items-center fs-10 font">
-                            <img class="img-fluid br-6 " [src]="(item | imagenPath) || './assets/images/no-image.jpg'" alt="Foto do Perfil do Usuário" width="60px">
-                                &nbsp; 
-                                <a class="cursor selectUser font fs-10" (click)="selectUser(item)">{{ item.name }} </a>
+                            <div class="d-flex align-items-center fs-10 font">
+                                <img class="img-fluid br-6 " [src]="(item | imagenPath) || './assets/images/no-image.jpg'" alt="Foto do Perfil do Usuário" width="60px">
+                                    &nbsp; 
+                                    <a class="cursor selectUser font fs-10" (click)="selectUser(item)">{{ item.Nome_Completo }} </a>
                             </div>
-            
-                            <div class="d-flex justify-content-end" style=" width: 100px; ">
+                
+                            <div class="d-flex justify-content-end" style="width: 100px; ">
             
                                 <div class="d-flex justify-content-center align-items-center  iconDeselected"(click)="viewUser(item)">
                                     <span class="material-icons play"  [matTooltip]="'Ver usuário'" style="color: blue;">visibility</span>
@@ -77,7 +76,7 @@
 
                 <mat-label class="font f-w-600 m-b-8 d-block mt-30">Data do alarme</mat-label>
                 <mat-form-field appearance="outline"  class="w-100" color="primary">
-                    <input matInput [matDatepicker]="picker1" formControlName="alarmDate" >
+                    <input matInput [matDatepicker]="picker1" formControlName="alarmDate" placeholder="clique no ícone para selecionar a data" readonly="true" >
                     <mat-datepicker-toggle matIconSuffix [for]="picker1" ></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     @if(f['alarmDate'].touched && f['alarmDate'].invalid) {
@@ -90,21 +89,27 @@
                         }
                 </mat-form-field>
 
-                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+          
+             <div class="row"> 
+
+                <div class="col-sm-12 col-12 col-md-12 mt-30" >
                     <mat-label class="font f-w-600 m-b-8 d-block">  Antecedência do Lembrete </mat-label>
                     <select class="select"  (change)="onSelectFreq($event)" >
                         <option [value]="null" hidden selected disabled></option>
-                        <option *ngFor="let freq of frequency" [value]="[freq.id,freq.name]" class="font fs-10">{{ freq.name }}</option>
+                        <option *ngFor="let freq of frequency" [value]="[freq.id,freq.name]" class="font fs-10"> &nbsp; &nbsp;{{ freq.name }}</option>
                     </select>
 
-                    <div class="mt-3 col-12 frame-work" *ngIf="nameFreq && nameFreq.length !== 0">
-                        <div class="font fs-10 groups d-flex flex-wrap justify-content-start"  >
-                          <div *ngFor="let sel of nameFreq" class="d-flex align-items-center mr-2 mb-2">
-                            {{ sel }} &nbsp;
-                            <span class="material-icons cursor cancel" (click)="removeFreq(sel)" style="margin-right: 20px;">cancel</span>
-                          </div>
-                        </div>
-                      </div>
+                    <div class="font fs-10 groups d-flex flex-wrap justify-content-start mt-20" *ngIf="nameFreq && nameFreq.length !== 0">
+                        <mat-chip-set>
+                                <mat-chip  *ngFor="let sel of nameFreq" [removable]="true" (removed)="removeFreq(sel)" >
+                                {{ sel }}
+                                    <mat-icon matChipRemove style="color: white;     
+                                " >cancel</mat-icon>
+                           </mat-chip>
+                        </mat-chip-set>
+                     
+                     </div> 
+               </div>
                </div>
 
                <mat-label class="font f-w-600 m-b-8 d-block mt-30">Descrição <b style="color: red;">*</b></mat-label>
@@ -116,82 +121,87 @@
                  } 
                  }
 
-                 <h2 class="font mt-5">Notificação do alarme</h2>  
+                 <mat-divider style="margin-top: 30px;"></mat-divider>
+
+                 <h2 style="font-family: poppins-regular; margin-top: 30px;">Notificação do alarme</h2>  
     
 
-                <mat-divider style="margin-top: 40px;"></mat-divider>
 
-                <form [formGroup]="myFormSearchUser">
+                    <form [formGroup]="myFormSearchUser" class="w-100 mt-40">
 
-                    <div class="col-12 mt-30 w-100" >
                         <mat-label class="font f-w-600 m-b-8 d-block"> Selecione o usuário  <b style="color: red;">*</b> </mat-label>
                         <mat-form-field appearance="outline" class="w-100" color="primary"  >
                         <input matInput type="text"  placeholder="Use % para pesquisas complexas"  name="userSearch" formControlName="userSearch"  />
                         <div class="d-flex justify-content-center align-items-center t" matSuffix style="background-color: rgb(0, 110, 255); width: 120px; height: 44px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">  <i class="fas fa-search"></i></div>
                         </mat-form-field>
-                    </div>
-                </form>   
+                    </form>   
 
-                <div *ngIf="mostrarSugerenciasUser && showSuggestedUser" style="margin-bottom: 20px;">
-                    <div *ngFor="let item of suggestedUser" >
-                      
-                      <div class="font boxSelection d-flex justify-content-between align-items-center pd-20" >   
-          
-                        <div class="d-flex align-items-center fs-10 font">
-                            
-                            <img [src]="item | imagenPath" class="img-fluid br-6" width="50px" style="border-radius: 7px;" *ngIf="item.Ruta_Imagen !== '' && item.Ruta_Imagen !== null">
-          
-                            <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="item.Ruta_Imagen == '' || !item.Ruta_Imagen">&nbsp; &nbsp; 
-                            
-                            <a class="cursor selectUser" (click)="selectUserNotif(item)">{{ item.Nome_Completo }} </a>
+                    <div *ngIf="mostrarSugerenciasUser && showSuggestedUser" style="margin-bottom: 20px;">
+
+                        <div *ngFor="let item of suggestedUser" >
+                            <div class="font boxSelection d-flex justify-content-between align-items-center pd-20" >   
+                
+                                <div class="d-flex align-items-center fs-10 font">
+                                    
+                                    <img [src]="item | imagenPath" class="img-fluid br-6" width="50px" style="border-radius: 7px;" *ngIf="item.Ruta_Imagen !== '' && item.Ruta_Imagen !== null">
+                
+                                    <img src="./assets/images/no-image.jpg" class="img-fluid br-6 " width="50px" *ngIf="item.Ruta_Imagen == '' || !item.Ruta_Imagen">&nbsp; &nbsp; 
+                                    
+                                    <a class="cursor selectUser" (click)="selectUserNotif(item)">{{ item.Nome_Completo }} </a>
+                                </div>
+                
+                                <span class="material-icons" (click)="viewUser(item)">visibility</span>
+                
+                            </div>
                         </div>
-          
-                        <span class="material-icons" (click)="viewUser(item)">visibility</span>
-          
-                      </div>
                     </div>
-                 </div>
+                 
 
-                 <mat-chip-set style="margin-top: 0px !important;" >
-                    <mat-chip  *ngFor="let user of selectedUsers" [removable]="true" (removed)="removeUser(user)" >
-            
-                    <!-- <img matChipAvatar [src]="user | imagenPath" alt=""  *ngIf="user.Ruta_Imagen !== '' && user.Ruta_Imagen !== null">
-                    <img matChipAvatar src="./assets/images/no-image.jpg" class="img-fluid br-6" width="50px" *ngIf="!user.Ruta_Imagen"> -->
-                    <img matChipAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg">
-                    {{ user.Nome_Completo }}
-                        <mat-icon matChipRemove style="color: white;     
-                    " >cancel</mat-icon>
-                    </mat-chip>
-                </mat-chip-set>
+                    <mat-chip-set style="margin-top: 20px !important;" >
+                            <mat-chip  *ngFor="let user of selectedUsers" [removable]="true" (removed)="removeUser(user)" >
+                            <img matChipAvatar [src]="user | imagenPath" alt="" *ngIf="user?.Ruta_Imagen !== '' && user?.Ruta_Imagen !== null">
+                            <img matChipAvatar src="./assets/images/no-image.jpg" *ngIf="!user?.Ruta_Imagen">
+                            {{ user.Nome_Completo }}
+                                <mat-icon matChipRemove style="color: white;     
+                            " >cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-set>
 
-                <div class="col-sm-12 col-12 col-md-6 mt-30" >
-                    <mat-label class="font f-w-600 m-b-8 d-block">  Selecione grupo </mat-label>
-                    <select class="select"  (change)="onSelectGroup($event)" >
-                        <option [value]="null" hidden selected disabled></option>
-                        <option *ngFor="let group of groups" [value]="group.idgroup"  class="font fs-10">{{ group.name }}</option>
-                    </select>
-                    <div *ngIf="groupSelection" class="invalid w-100">Dado obrigatório</div>
-               </div>
+              <div class="row " > 
+                    <div class="col-sm-12 col-12 col-md-12 mt-30" >
+                            <mat-label class="font f-w-600 m-b-8 d-block">  Selecione grupo </mat-label>
+                            <select class="select"  (change)="onSelectGroup($event)" >
+                                <option [value]="null" hidden selected disabled></option>
+                                <option *ngFor="let group of groups" [value]="group.idgroup"  class="font fs-10"> &nbsp;&nbsp;{{ group.name }}</option>
+                            </select>
+                            <div *ngIf="groupSelection" class="invalid w-100">Dado obrigatório</div>
 
-               <div class="shadow frame-work mt-1"  *ngIf="selectedGroups.length !== 0" style="display: flex; flex-wrap: wrap;">
-                <div class="font fs-10  d-flex justify-content-start groups" style="flex-wrap: wrap;">
-                    <div *ngFor="let sel of selectedGroups" class="d-flex align-items-center mr-2 mb-2">
-                        {{ sel.name }} &nbsp;
-                        <span class="material-icons cursor cancel" (click)="removeGroup(sel.name)" style="margin-right: 20px;">cancel</span>
+                        <div class="groups d-flex flex-wrap justify-content-start" *ngIf="selectedGroups.length !== 0">
+
+                            <mat-chip-set style="margin-top: 20px !important;" >
+                                    <mat-chip  *ngFor="let sel of selectedGroups" [removable]="true" (removed)="removeGroup(sel.name)" >
+                                    {{ sel.name }}
+                                        <mat-icon matChipRemove style="color: white;     
+                                    " >cancel</mat-icon>
+                                    </mat-chip>
+                            </mat-chip-set>
+                        </div>
+                        
                     </div>
                 </div>
-            </div>
+
+                <mat-divider style="margin-top: 30px;"></mat-divider>
       
-              <div class="custom-control custom-switch d-flex  align-items-center justify-content-start mt-5"  > 
+              <div class="d-flex  align-items-center justify-content-start mt-20"  > 
                 <mat-slide-toggle  (change)="eventSendEmail($event)" [checked]="isSendEmail === 1"></mat-slide-toggle> &nbsp; &nbsp;
                 <label class="custom-control-label font fs-10" > <b>Enviar e-mail</b></label>
               </div> 
       
-              <div class="custom-control custom-switch d-flex  align-items-center justify-content-start mt-2"  > 
+              <div class=" d-flex  align-items-center justify-content-start mt-10"  > 
                 <mat-slide-toggle  (change)="repeatAnnually($event)" [checked]="repAnnually === 1" [disabled]="isSendEmail === 0  "></mat-slide-toggle> &nbsp; &nbsp;
                 <label class="custom-control-label font fs-10" > <b>Repetir todos os anos</b></label>
               </div> 
-      
+
           </div>
   
     </mat-dialog-content>
