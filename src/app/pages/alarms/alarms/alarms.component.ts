@@ -103,8 +103,9 @@ export class AlarmsComponent {
 
 ngOnInit(): void {
 
-  if (this.loggedUser.role !== 'webmaster') {
-    this.displayedColumns.push('action');
+  if (this.loggedUser.role === 'webmaster') {
+    const position = this.displayedColumns.length - 1;
+    this.displayedColumns.splice(position, 0, 'propulsao');
   }
 
   this.errorService.closeIsLoading$.pipe(delay(1500)).subscribe(emitted => emitted && (this.isLoading = false));

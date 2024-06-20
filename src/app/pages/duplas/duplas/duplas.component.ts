@@ -21,7 +21,7 @@ import { delay } from 'rxjs';
 })
 export class DuplasComponent  {
 
-  displayedColumns: string[] = ['img1','img2','propulsao'];
+  displayedColumns: string[] = ['img1','img2'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,6 +46,11 @@ export class DuplasComponent  {
     if(user){
       this.loggedUser = user;
     }
+
+    if (this.loggedUser.role === 'webmaster') {
+      this.displayedColumns.push('propulsao');
+    }
+
   
    }
 

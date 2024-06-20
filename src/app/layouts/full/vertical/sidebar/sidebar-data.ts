@@ -11,16 +11,38 @@ export const navItems: NavItem[] = [
     
     children: [
       {
-        displayName: 'Envío de arquivos',
+        childName: 'Envío de arquivos',
         route: '/painel/arquivos',
-        
       },
       {
-        displayName: 'Alarmes',
+        childName: 'Alarmes',
         route: '/painel/alarmes',
+      },
+      {
+        childName: 'Próximos alarmes',
+        route: '/painel/proximos-alarmes',
+      },
+      
+      {
+        childName: 'Segmentações',
+        children: [
+          {
+            childrenName: 'Tratamento',
+            route: '/painel/tratamento',
+          },
+          {
+            childrenName: 'Profissão',
+            route: '/painel/profissao',
+          },
+          {
+            childrenName: 'Email',
+            route: '/painel/segmentacao-de-emails',
+          }
+        ]
         
       },
     ]
+    
   },
 
     
@@ -29,22 +51,22 @@ export const navItems: NavItem[] = [
     },
 
     {
-      displayName: 'Usuários',
+      childName: 'Usuários',
       iconName: 'user-plus',
     
       children: [
         {
-          displayName: 'Usuários',
+          childrenName: 'Usuários',
           route: '/painel/usuarios',
           
         },
         {
-          displayName: 'Duplas',
+          childrenName: 'Duplas',
           route: '/painel/duplas',
         },
 
         {
-          displayName: 'Grupos',
+          childrenName: 'Grupos',
           route: '/painel/grupos',
         },
       ],

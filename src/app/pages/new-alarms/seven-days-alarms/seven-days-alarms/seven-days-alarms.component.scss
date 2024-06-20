@@ -1,0 +1,42 @@
+.selected {
+    color: rgb(0, 128, 255);
+  }
+  
+  .selected:hover {
+    cursor: pointer;
+    text-decoration: underline; 
+  }
+  
+  .customTHead{
+    background: rgb(42,148,198);
+    background: linear-gradient(90deg, rgba(42,148,198,1) 35%, rgba(0,212,255,1) 100%);
+    border-radius: 7px;
+    height: 52px;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 1.1em;
+  }
+
+  td{
+    font-family: 'poppins-regular';
+    font-size: 0.85em;
+  }
+  
+  th{
+    font-family: 'poppins-regular';
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
+  
+  .mat-elevation-z8{
+    overflow-x: auto;
+    width: 100%;
+  
+  }
+  

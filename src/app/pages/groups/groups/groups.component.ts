@@ -33,7 +33,7 @@ export class GroupsComponent {
 
   @Input() user: any;
 
-  displayedColumns: string[] = ['name','description','membersNumber','propulsao','action'];
+  displayedColumns: string[] = ['name','description','membersNumber','action'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -67,6 +67,12 @@ export class GroupsComponent {
     if(user){
       this.loggedUser = user;
     }
+
+    if (this.loggedUser.role === 'webmaster') {
+      const position = this.displayedColumns.length - 1;
+      this.displayedColumns.splice(position, 0, 'propulsao');
+    }
+
 
     (screen.width <= 800) ? this.phone = true : this.phone = false;
 

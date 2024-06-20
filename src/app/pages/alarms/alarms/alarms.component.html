@@ -1,9 +1,12 @@
 
+
 <div class="row pd-20">
+
+  <div class="mat-elevation-z8 pd-10" style="border-radius: 7px;">
         
     <div class="d-flex justify-content-between align-items-center w-100">
 
-        <mat-form-field appearance="outline" color="primary" class="mt-20">
+        <mat-form-field appearance="outline" color="primary">
             <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
           </mat-form-field>
 
@@ -12,7 +15,7 @@
         </button>
     </div>
 
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 mt-20"  >
+    <table mat-table [dataSource]="dataSource" matSort class="mt-20"  >
 
         <ng-container matColumnDef="name" >
             <th mat-header-cell *matHeaderCellDef  mat-sort-header > Nome </th>
@@ -53,7 +56,7 @@
             </td>
           </ng-container> 
 
-          <ng-container matColumnDef="propulsoes">
+          <ng-container matColumnDef="propulsao">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Propulsões </th>
             <td  mat-cell *matCellDef="let alarm" >
                 {{ alarm.propulsao_name }}
@@ -82,6 +85,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
+  </div>  
 
     <br>
 </div>

@@ -16,16 +16,6 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { NewUserModalComponent } from '../../modals/new-user-modal/new-user-modal/new-user-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 
-interface Users {
-  img : string, 
-  fullName: string, 
-  email: string,
-  propulsao: string,
-  role: string,
-  ativo: string,
-
-}
-
 
 @Component({
     selector: 'app-users',
@@ -34,12 +24,14 @@ interface Users {
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss',
 })
+
 export class UsersComponent implements OnInit, AfterViewInit  {
 
   displayedColumns: string[] = ['img','fullName','email','propulsao','role','ativo'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
   users : User[]=[];
   isLoading : boolean = false;
   phone : boolean = false;
@@ -62,7 +54,6 @@ export class UsersComponent implements OnInit, AfterViewInit  {
 
     this.initialUsers();
     this.errorService.closeIsLoading$.pipe(delay(700)).subscribe(emitted => emitted && (this.isLoading = false));
-
 
     const user = getDataSS('user');
     if(user){

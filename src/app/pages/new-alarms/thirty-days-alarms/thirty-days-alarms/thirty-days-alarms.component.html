@@ -1,0 +1,72 @@
+
+
+<div class="mat-elevation-z8 pd-10" style="border-radius: 7px;">
+        
+    <div class="justify-content-end align-items-center text-end w-100">
+
+        <div class="customTHead shadow font mt-1 w-100"> Alarmes do 30 días</div>
+
+        <mat-form-field appearance="outline" color="primary" class="mt-20" >
+            <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+        </mat-form-field>
+
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class=" mt-20"  >
+
+        <ng-container matColumnDef="name" >
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Nome </th>
+            <td mat-cell *matCellDef="let alarm"> 
+                {{ alarm.name }} 
+        </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userAlarm" >
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Usuário do alarme </th>
+            <td mat-cell *matCellDef="let alarm" class="selected " [routerLink]="['/painel/editar-usuario/', alarm.userAlarm.iduser]"> 
+                {{ alarm.userAlarm.name }} 
+        </td>
+        </ng-container>
+
+        <ng-container matColumnDef="group" >
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Grupos </th>
+            <td mat-cell *matCellDef="let alarm" > 
+                <span *ngFor="let group of alarm.grupos; let i = index" class="selected">
+                    <span (click)="getUsersGroup(alarm, i)" class="selected">
+                        {{ group.name }}
+                    </span>
+                </span>
+        </td>
+        </ng-container>
+
+        <ng-container matColumnDef="users" >
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Usúarios </th>
+            <td mat-cell *matCellDef="let alarm" > 
+                <span *ngFor="let userNotif of alarm.idUsersNotifications">
+                    <span [routerLink]="['/painel/editar-usuario/', userNotif.iduser]" class="selected">
+                        {{ userNotif.Nome_Completo}}
+                    </span>
+                </span>
+        </td>
+        </ng-container>
+
+        <ng-container matColumnDef="data" >
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header > Data </th>
+            <td mat-cell *matCellDef="let alarm" > 
+                {{alarm.alarmDate | date }}
+        </td>
+        </ng-container>
+
+            
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <div class="justify-content-end w-100 mt-20" >
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons ></mat-paginator>
+    </div>
+
+    <br>
+</div>
+

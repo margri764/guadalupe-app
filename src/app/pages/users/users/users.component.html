@@ -1,4 +1,8 @@
 <div class="row pd-20">
+
+
+  <div class="mat-elevation-z8 pd-10" style="border-radius: 7px;">
+
         
         <div class="d-flex justify-content-between align-items-center w-100">
 
@@ -11,7 +15,7 @@
             </button>
         </div>
 
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+        <table mat-table [dataSource]="dataSource" matSort  >
 
             <ng-container matColumnDef="img" >
                 <th mat-header-cell *matHeaderCellDef  > Img </th>
@@ -58,10 +62,10 @@
         </table>
 
         <br>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-
+  </div>
 
     <div class="loading-overlay" *ngIf="isLoading">
         <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
