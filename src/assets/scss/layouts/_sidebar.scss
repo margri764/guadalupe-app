@@ -112,8 +112,9 @@
 
     .menu-list-item {
       border-radius: 7px;
-      height: 45px;
-      padding: 8px 10px !important;
+      height: 35px;
+      // height: 45px;
+      // padding: 8px 10px !important;
       margin-bottom: 2px;
       font-family: 'poppins-regular';
 
@@ -127,7 +128,7 @@
       }
 
       &.twoline {
-        // height: 60px;
+        height: 60px;
         align-items: center;
       }
       &:before,

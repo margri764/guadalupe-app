@@ -27,20 +27,81 @@ export const navItems: NavItem[] = [
         childName: 'Segmentações',
         children: [
           {
-            childrenName: 'Tratamento',
+            childrenName: 'Tratamentos',
             route: '/painel/tratamento',
           },
           {
-            childrenName: 'Profissão',
+            childrenName: 'Profissões',
             route: '/painel/profissao',
           },
           {
-            childrenName: 'Email',
+            childrenName: 'E-mails',
             route: '/painel/segmentacao-de-emails',
+          },
+          {
+            childrenName: 'Telefones',
+            route: '/painel/segmentacao-de-telefone',
+          },
+          {
+            childrenName: 'Endereços',
+            route: '/painel/segmentacao-de-enderecos',
+          },
+          {
+            childrenName: 'Relaçãos',
+            route: '/painel/segmentacao-de-relacao',
           }
         ]
         
       },
+      {
+        childName: 'Congreatio',
+        route: '/painel/congregatio',
+      },
+      {
+        childName: 'Cidades - Dioceses',
+        children: [
+          {
+            childrenName: 'Cidades',
+            route: '/painel/cidades',
+          },
+          {
+            childrenName: 'Dioceses',
+            route: '/painel/dioceses',
+          },
+        ]
+      },
+      {
+        childName: 'Fontes - Resultados',
+        children: [
+          {
+            childrenName: 'Fontes',
+            route: '/painel/fontes',
+          },
+          {
+            childrenName: 'Resultados',
+            route: '/painel/resultados',
+          },
+        ]
+      },
+      {
+        childName: 'Bancos',
+        children: [
+          {
+            childrenName: 'Contas bancárias',
+            route: '/painel/contas-bancarias',
+          },
+          {
+            childrenName: 'Cartões de crédito',
+            route: '/painel/cartoes-de-credito',
+          },
+          {
+            childrenName: 'Convênios',
+            route: '/painel/convenios-bancarios',
+          },
+        ]
+      },
+  
+  
     ]
     
   },

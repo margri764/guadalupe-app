@@ -35,6 +35,8 @@ export class ViewCongregatioModalComponent {
 
   ) {
 
+    console.log(this.data);
+
     (screen.width < 800) ? this.phone = true : this.phone = false;
 
    }
@@ -60,7 +62,6 @@ export class ViewCongregatioModalComponent {
       this.userFromGroup = this.data.user;
     }
 
-;
 
    //el usuario viene de los grupos
     if(this.userFromGroup !== undefined){

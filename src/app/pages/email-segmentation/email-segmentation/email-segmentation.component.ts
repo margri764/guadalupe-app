@@ -58,14 +58,12 @@ export class EmailSegmentationComponent {
     const user = getDataSS('user');
     if(user){
       this.loggedUser = user;
-
-          
-    if (this.loggedUser.role === 'webmaster') {
-      const position = this.displayedColumns.length - 1;
-      this.displayedColumns.splice(position, 0, 'propulsao');
+      if (this.loggedUser.role === 'webmaster') {
+        const position = this.displayedColumns.length - 1;
+        this.displayedColumns.splice(position, 0, 'propulsao');
+      }
     }
-    }
-
+    
     (screen.width <= 800) ? this.phone = true : this.phone = false;
     this.dataSource = new MatTableDataSource();
 
@@ -204,12 +202,12 @@ openDeleteModal( action:string ){
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-  const savedPageSize = getDataSS('emailSegmentationPageSize');
+  const savedPageSize =  localStorage.getItem('emailSegmentationPageSize');
   if (savedPageSize) {
     this.paginator.pageSize = +savedPageSize;
   }
   this.paginator.page.subscribe((event) => {
-    saveDataLS('emailSegmentationPageSize', event.pageSize.toString());
+    localStorage.setItem('emailSegmentationPageSize', event.pageSize.toString());
   });
 }
 

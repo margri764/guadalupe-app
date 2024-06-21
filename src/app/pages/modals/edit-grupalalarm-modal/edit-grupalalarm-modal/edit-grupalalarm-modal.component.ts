@@ -364,9 +364,7 @@ unSelectSelectedUser( user:any ){
 }
 
 viewUser( user:any ){
-
   this.visibility = true;
-
   setTimeout(()=>{
     const origin = 'group'
     this.dialog.open(ViewCongregatioModalComponent,{
@@ -376,8 +374,6 @@ viewUser( user:any ){
       });
 
   },300)
-
-
 }
 
 onSelectFreq( event: any){

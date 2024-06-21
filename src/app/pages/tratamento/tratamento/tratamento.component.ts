@@ -93,7 +93,6 @@ openModalNewTratamento(){
 }
 
 editTratamento( tratamento:any ){
-
   const dialogRef = this.dialog.open(EditTratamentoModalComponent,{
     maxWidth: (this.phone) ? "97vw": '800px',
     maxHeight: (this.phone) ? "90vh": '90vh',
@@ -107,7 +106,6 @@ editTratamento( tratamento:any ){
       }
     } 
   });
-
 }
 
 getInitialTratamentos(){
@@ -198,12 +196,12 @@ openDeleteModal( action:string ){
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-  const savedPageSize = getDataSS('tratamentoPageSize');
+  const savedPageSize =  localStorage.getItem('tratamentoPageSize');
   if (savedPageSize) {
     this.paginator.pageSize = +savedPageSize;
   }
   this.paginator.page.subscribe((event) => {
-    saveDataLS('groupPageSize', event.pageSize.toString());
+    localStorage.setItem('tratamentoPageSize', event.pageSize.toString());
   });
 }
 

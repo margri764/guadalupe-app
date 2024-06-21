@@ -1,0 +1,100 @@
+
+
+
+<div class="d-flex justify-content-between align-items-center pd-20">
+    <div class="d-flex justify-content-start align-items-center w-100 ">
+       <h2 style="font-family: poppins-regular;"  > Adicionar cidade </h2> 
+   </div>
+    <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+</div>
+
+<div class="d-flex justify-content-center w-100 pd-20">
+    <div class="border w-100"></div>
+</div>    
+  
+<mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'100vw'}:{'width':'800px'}">
+    
+    <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+         
+   
+      <form [formGroup]="myFormSearch">
+    
+        <div class="row">
+            
+            <div class="col-12 w-100" >
+                    <mat-label class="font w-100 fs-12"> Busca por nome cidade ou país</mat-label>
+                    <mat-form-field appearance="outline" class="w-100 mt-10" color="primary"  >
+                    <input matInput type="text"  placeholder="Use % para pesquisas complexas"  name="itemSearch" formControlName="itemSearch" class="w-100"  />
+                    <div class="d-flex justify-content-center align-items-center t" matSuffix style="background-color: rgb(0, 110, 255); width: 120px; height: 44px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;">  <i class="fas fa-search"></i></div>
+                    </mat-form-field>
+                </div>
+            </div>
+
+      </form>
+
+      <div class="d-flex justify-content-start align-items-center " *ngIf="labelNoFound">
+     <span class="font fs-11" style="color: red;"> 
+       <b>Sem resultados encontrados...</b> 
+     </span>
+     <span class="material-icons " style="color: red;">cancel</span>
+      </div>
+
+      <div class="d-flex justify-content-center" *ngIf="loadindCongregatio">
+    <mat-spinner style="width: 20px !important;"></mat-spinner>
+      </div>
+
+      <div class="mt-10" *ngIf="mostrarSugerencias">
+       <div *ngFor="let item of suggested"   >
+         
+         <div class="font boxSelection d-flex justify-content-between align-items-center pd-20" (click)="selectCity(item)"  > 
+
+            <div class="d-flex align-items-center font fs-10"  >
+                <img [src]="item.flag" alt="bandeira" width="60px" class="img-fluid" *ngIf="item.flag  || item.flag !== '' ">
+                <img src="./assets/images/no-image.jpg" class="img-fluid " width="60px" *ngIf="item.flag === '' || !item.flag">
+                 &nbsp; &nbsp; &nbsp;
+                <a class="cursor selectCity" >{{ item.name}} </a>
+           </div>
+
+         </div>
+       </div>
+      </div>
+    
+      <div class="mt-5" *ngIf="selectedCities.length > 0">
+        
+        <h2 class="font"> Cidades adicionadas</h2>
+
+  
+       <div class="card pd-20">
+
+        <mat-chip-set style="margin-top: 0px !important;">
+            <mat-chip *ngFor="let selCity of selectedCities" [removable]="true" (removed)="removeUser(selCity)" >
+    
+            <img matChipAvatar [src]="selCity.flag" *ngIf="selCity.flag && selCity.flag !== ''" >
+            <img matChipAvatar src="./assets/images/no-image.jpg" *ngIf="!selCity.flag || selCity.flag === ''">
+                {{ selCity.name }}
+                <mat-icon matChipRemove style="color: white;     
+            " >cancel</mat-icon>
+            </mat-chip>
+             </mat-chip-set>
+
+         
+  
+       </div>
+      </div>
+
+      <div class="d-flex justify-content-end align-items-center mb-30 mt-30" *ngIf="selectedCities.length > 0">
+
+        <button class="acceptButton"> 
+            <span>Adicionar cidades à diocese</span>
+        </button>
+    
+         </div>
+  
+    </div>
+</mat-dialog-content>    
+
+       
+
+
+
+     

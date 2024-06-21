@@ -5,6 +5,7 @@ import { PagesRoutes } from './pages.routing.module';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     FormsModule,
     RouterModule.forChild(PagesRoutes),
     PdfViewerModule,
+    // GoogleMapsModule
 
    
   ],

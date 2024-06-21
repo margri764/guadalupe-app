@@ -1,0 +1,71 @@
+
+
+
+<div class="row pd-20">
+
+    <div class="cardWithShadow pd-10 w-100" style="margin-top: 20px;" >
+     
+        <form [formGroup]="myFormSearch" >
+            <div class="row ">
+            
+                <div class="col-sm-12 col-12 col-md-8 w-100" >
+                        <mat-label class="font mt-3 w-100 fs-11"> Busca por nome ou sobrenome</mat-label>
+                        <mat-form-field appearance="outline" class="w-100 mt-10" color="primary"  >
+                        <input matInput type="text"  placeholder="Use % para pesquisas complexas"  name="itemSearch" formControlName="itemSearch" class="w-100"  />
+                            <div class="d-flex justify-content-center align-items-center t" matSuffix style="background-color: rgb(0, 110, 255); height: 44px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" [ngStyle]="phone ? {'width':'60px'}:{ 'width':'120px'}"> 
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </mat-form-field>
+                        <div class="d-flex justify-content-center align-items-center w-100 mt-30" *ngIf="isLoading">
+                            <mat-spinner diameter="40"></mat-spinner>
+                    </div> 
+                </div>
+                    
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-start align-items-center " *ngIf="labelNoFound">
+            <span class="font fs-10" style="color: red;"> 
+                <b>Sem resultados encontrados...</b> 
+            </span>
+            <span class="material-icons " style="color: red;">cancel</span>
+        </div>
+    </div>
+</div>
+
+  
+
+    <div class="row pd-20">
+
+        <div class="mat-elevation-z8 mt-20 pd-20" *ngIf="congregatio.length !== 0">
+            
+            <table class="table font fs-10 w-100">
+                    <thead>
+                        <tr>
+                            <th> Imagen</th>
+                            <th> Nome</th>
+                            <th> E-mail</th>
+                            <th> Ordem</th>
+                            <th> Nacionalidade</th>
+                            <!-- <th scope="col"> Ação</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let con of congregatio">
+                            <td> 
+                                <img src="https://congregatio.info/{{ con['Ruta Imagen'] }}" alt="Foto do Perfil do Usuário" width="60px" style="border-radius: 6px; "> 
+                            </td>
+                            <td> <a class="selected" (click)="selectUserCongregatio(con)"  data-toggle="modal" data-target="#modalFichaCompleta">{{ con['Nome Completo'] }} </a> </td>
+                            <td> {{ con.Email }} </td>
+                            <td> {{ con.Ordem }} </td>
+                            <td> {{ con.Nacionalidade }} </td>
+                        </tr>
+                    </tbody>
+
+                        
+            </table>
+        </div>  
+    </div>  
+
+  
+

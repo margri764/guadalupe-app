@@ -4,11 +4,11 @@
         
     <div class="d-flex justify-content-between align-items-center w-100">
 
-        <mat-form-field appearance="outline" color="primary">
+        <mat-form-field appearance="outline" color="primary" style="width: 160px;">
             <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
           </mat-form-field>
 
-        <button  type="button" mat-flat-button  color="primary" class="font fs-10 shadow" (click)="openModalNewTratamento()"  >
+        <button  type="button" mat-flat-button  color="primary" class="font fs-10 shadow" (click)="openModalNewTratamento()" style="height: 42px;" >
             <i class="fas fa-plus "></i> &nbsp; Novo
         </button>
     </div>

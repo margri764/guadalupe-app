@@ -28,7 +28,7 @@ export class AuthService {
   user! : User;
   private baseUrl = environment.baseUrl;
   notAnswer : boolean = true;
-  // private gMapKey = environment.googleMaps;
+  private gMapKey = environment.googleMaps;
 
 
   constructor(
@@ -301,13 +301,13 @@ export class AuthService {
     });
   }
 
-  // getAddressByCoords ( lat: string, lng : string) {
+  getAddressByCoords ( lat: string, lng : string) {
 
-  //   return this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.gMapKey}`)
-  //   .pipe(
-  //    map( res =>  res)
-  //        );
-  //  }
+    return this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${this.gMapKey}`)
+    .pipe(
+     map( res =>  res)
+         );
+   }
    
   
 

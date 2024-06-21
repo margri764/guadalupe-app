@@ -1,0 +1,38 @@
+.map {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    transition: opacity 150ms ease-in;
+  }
+  
+
+  .mat-column-action {
+    text-align: center;
+  }
+  
+  td{
+  font-family: 'poppins-regular';
+  font-size: 0.87em;
+  }
+  
+  th{
+  font-family: 'poppins-regular';
+  font-size: 1em;
+  font-weight: bold;
+  }
+  
+  
+  .mat-elevation-z8{
+  overflow-x: auto;
+  width: 100%;
+  
+  }
+  
+  .selectedTD{
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
+}
+    

@@ -1,0 +1,93 @@
+
+
+<form [formGroup]="myForm" class="font fs-10"  (ngSubmit)="onSave()">
+
+    <div class="d-flex justify-content-between align-items-center pd-10">
+        <h1 mat-dialog-title style="font-family: poppins-regular;">Editar Cidade </h1>
+        <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+    </div>
+  
+    <div class="d-flex justify-content-center w-100 pd-20">
+        <div class="border w-100"></div>
+    </div>    
+      
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'600px'}">
+        
+        <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+        
+
+                <div class=" mt-30" >
+                    <mat-label class="font f-w-600 m-b-8 d-block"> Nome  <b style="color: red;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  formControlName="name"/>
+                    @if(f['name'].touched && f['name'].invalid) {
+                        <mat-hint class="m-b-16 error-msg">
+                        @if(f['name'].errors && f['name'].errors['required']) {
+                        <div class="error">Dado obrigatorio.</div>
+                        } 
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class=" mt-30" >
+                    <mat-label class="font f-w-600 m-b-8 d-block"> Region  <b style="color: red;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  formControlName="province"/>
+                    @if(f['province'].touched && f['province'].invalid) {
+                        <mat-hint class="m-b-16 error-msg">
+                        @if(f['province'].errors && f['province'].errors['required']) {
+                        <div class="error">Dado obrigatorio.</div>
+                        } 
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class=" mt-30" >
+                    <mat-label class="font f-w-600 m-b-8 d-block"> País  <b style="color: red;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  formControlName="country"/>
+                    @if(f['country'].touched && f['country'].invalid) {
+                        <mat-hint class="m-b-16 error-msg">
+                        @if(f['country'].errors && f['country'].errors['required']) {
+                        <div class="error">Dado obrigatorio.</div>
+                        } 
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+  
+
+                <mat-divider style="margin-top: 40px;"></mat-divider>
+
+                <h3 class="font mt-4" *ngIf="user && user.role === 'webmaster'"> Propulsão </h3>
+    
+                <div class="row" *ngIf="user && user.role === 'webmaster'">
+                    <div class="mt-3 col-sm-12 col-12 col-md-6 ">
+                        <select class="select" formControlName="propulsao" >
+                        <option *ngFor="let prop of propulsaos" [ngValue]="prop"> &nbsp; {{ prop.name }}</option>
+                        </select>
+                    </div>
+                </div>
+
+            
+          </div>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+       <button type="button" mat-dialog-close class="cancelButton">Cancelar</button> &nbsp;  &nbsp;
+       <button type="submit" class="acceptButton">  Editar Cidade</button> 
+        </mat-dialog-actions>
+  </form>
+  
+  
+  <div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <mat-spinner></mat-spinner>
+  </div>
+  </div> 
+  
+            
+  

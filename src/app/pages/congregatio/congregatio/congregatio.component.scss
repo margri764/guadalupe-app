@@ -1,0 +1,31 @@
+
+
+.mat-column-action {
+    text-align: center;
+  }
+
+td{
+  font-family: 'poppins-regular';
+  font-size: 0.95em;
+}
+
+tr:hover{
+  background-color: whitesmoke;
+}
+
+th{
+  font-family: 'poppins-regular';
+  font-size: 1em;
+  font-weight: bold;
+  text-align: start;
+}
+
+
+.mat-elevation-z8{
+  overflow-x: auto;
+  width: 100%;
+
+}
+.mdc-mat-spinner {
+  width: 100px !important;
+}

@@ -11,7 +11,7 @@
         <div class="border w-100"></div>
     </div>    
       
-    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'85vw'}:{'width':'600px'}">
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'600px'}">
         
         <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
   
@@ -40,6 +40,25 @@
                     <div class="error">Dado obrigatorio.</div>
                     } 
                     }
+                </div>
+
+                <mat-divider style="margin-top: 40px;"></mat-divider>
+
+                
+                <div class="row mt-3 pd-20 font">
+                    <span style="color: rgb(198, 198, 198); font-size: 1em;" > Última modificação: &nbsp; {{ segmentation?.timestamp | date:'yyyy-MM-dd HH:mm:ss' }}
+                    </span>
+                    <span style="color: rgb(198, 198, 198); font-size: 1em; width: 100%;" > Usuário: &nbsp; {{segmentation?.last_modified}} </span>
+                </div>
+
+                <h3 class="font mt-4" *ngIf="user && user.role === 'webmaster'"> Propulsão </h3>
+    
+                <div class="row" *ngIf="user && user.role === 'webmaster'">
+                    <div class="mt-3 col-sm-12 col-12 col-md-6 ">
+                        <select class="select" formControlName="propulsao" >
+                        <option *ngFor="let prop of propulsaos" [ngValue]="prop"> &nbsp; {{ prop.name }}</option>
+                        </select>
+                    </div>
                 </div>
     
           </div>

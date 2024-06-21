@@ -90,8 +90,8 @@ export class NewEmailsegmentationModalComponent {
   closeModal(){
     this.backClose = true;
     setTimeout( ()=>{ this.dialogRef.close() }, 400 )
-    
   }
+ 
   validField( field: string ) {
     const control = this.myForm.controls[field];
     return control && control.errors && control.touched;

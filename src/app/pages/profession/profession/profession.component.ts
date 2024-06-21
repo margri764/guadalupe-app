@@ -205,12 +205,12 @@ openDeleteModal( action:string ){
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   this.dataSource.sort = this.sort;
-  const savedPageSize = getDataSS('professionPageSize');
+  const savedPageSize =  localStorage.getItem('professionPageSize');
   if (savedPageSize) {
     this.paginator.pageSize = +savedPageSize;
   }
   this.paginator.page.subscribe((event) => {
-    saveDataLS('professionPageSize', event.pageSize.toString());
+    localStorage.setItem('professionPageSize', event.pageSize.toString());
   });
 }
 

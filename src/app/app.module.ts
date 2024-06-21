@@ -73,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     }),
     NgbModule,
 
+
   ],
   providers:[
     {

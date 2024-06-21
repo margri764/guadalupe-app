@@ -12,6 +12,17 @@ import { NextAlarmsComponent } from '../next-alarms/next-alarms/next-alarms.comp
 import { TratamentoComponent } from '../tratamento/tratamento/tratamento.component';
 import { ProfessionComponent } from '../profession/profession/profession.component';
 import { EmailSegmentationComponent } from '../email-segmentation/email-segmentation/email-segmentation.component';
+import { PhonesegmentationComponent } from '../modals/phonesegmentation/phonesegmentation/phonesegmentation.component';
+import { AddressSegmentationComponent } from '../address-segmentation/address-segmentation/address-segmentation.component';
+import { RelationshipSegmentationComponent } from '../relationship-segmentation/relationship-segmentation/relationship-segmentation.component';
+import { CongregatioComponent } from '../congregatio/congregatio/congregatio.component';
+import { CitiesComponent } from '../cities/cities/cities.component';
+import { DiocesesComponent } from '../dioceses/dioceses/dioceses.component';
+import { FontesComponent } from '../fontes/fontes/fontes.component';
+import { ResultsComponent } from '../results/results/results.component';
+import { BankComponent } from '../bank/bank/bank.component';
+import { BankAgreementComponent } from '../bank-agreement/bank-agreement/bank-agreement.component';
+import { CreditCardComponent } from '../credit-card/credit-card/credit-card.component';
 
 export const DashboardsRoutes: Routes = [
   {
@@ -26,7 +37,20 @@ export const DashboardsRoutes: Routes = [
       { path: 'tratamento', component: TratamentoComponent,  data: { title: 'Tratamento' } },
       { path: 'profissao', component: ProfessionComponent,  data: { title: 'Profissão' } },
       { path: 'segmentacao-de-emails', component: EmailSegmentationComponent,  data: { title: 'Segmentação de emails' } },
+      { path: 'segmentacao-de-telefone', component: PhonesegmentationComponent,  data: { title: 'Segmentação de telefone' } },
+      { path: 'segmentacao-de-enderecos', component: AddressSegmentationComponent,  data: { title: 'Segmentação de Endereços' } },
+      { path: 'segmentacao-de-relacao', component: RelationshipSegmentationComponent,  data: { title: 'Segmentação de Relaçãos' } },
+      { path: 'congregatio', component: CongregatioComponent,  data: { title: 'Congregatio' } },
+      { path: 'cidades', component: CitiesComponent,  data: { title: 'Cidades' } },
+      { path: 'dioceses', component: DiocesesComponent,  data: { title: 'Dioceses' } },
+      { path: 'fontes', component: FontesComponent,  data: { title: 'Fontes' } },
+      { path: 'resultados', component: ResultsComponent,  data: { title: 'Resultados' } },
+      { path: 'contas-bancarias', component: BankComponent,  data: { title: 'Contas bancárias' } },
+      { path: 'convenios-bancarios', component: BankAgreementComponent,  data: { title: 'Convênios' } },
+      { path: 'cartoes-de-credito', component: CreditCardComponent,  data: { title: 'Cartões de crédito' } },
       { path: 'editar-usuario/:id',  component: EditUserComponent , data:{ title:"Editar Usuário"}},
     ],
   },
 ];
+
+

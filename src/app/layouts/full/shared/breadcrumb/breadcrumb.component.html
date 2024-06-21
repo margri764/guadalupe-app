@@ -4,22 +4,22 @@
 
   
   <div class="row">
-    <div class="col-sm-8 " >
-      <h4 class="d-flex justify-content-start align-items-center page-title m-0 f-s-20 f-w-600 m-b-16" style="font-family: 'poppins-light';">
-
-        <div class="d-flex justify-content-center align-items-center " [ngClass]="back ? 'iconSelected':'iconDeselected' " (click)="goBack()" *ngIf="showBackArrow">
-          <span class="material-symbols-outlined  cursor">arrow_back_ios_new</span>
+    <div class="d-flex justify-content-start align-items-center w-100" >
+      
+      <div class="d-flex justify-content-center align-items-center " [ngClass]="back ? 'iconSelected':'iconDeselected' " (click)="goBack()" *ngIf="showBackArrow">
+        <span class="material-symbols-outlined  cursor">arrow_back_ios_new</span>
       </div> &nbsp;
-        <!-- <span class="material-symbols-outlined cursor" style="font-size: 30px;"> arrow_back_ios</span> &nbsp; -->
-        {{ pageInfo?.['title'] }}
-      </h4>
+      <span class="d-flex justify-content-start align-items-center fs-15 ml-20 " style="font-family: 'poppins-light'; font-weight: 600;">
+      {{ pageInfo?.['title'] }}
+      </span>
+
       <div class="d-flex align-items-center overflow-hidden">
         <ul class="breadcrumb">
           @for (url of pageInfo?.['urls']; track url.url;let index = $index, last = $last ) { @if(!last){
 
-          <li class="breadcrumb-item" [routerLink]="url.url">
+          <!-- <li class="breadcrumb-item" [routerLink]="url.url">
             <a [routerLink]="url.url">{{ url.title }}</a>
-          </li>
+          </li> -->
           }@else {
           <li class="breadcrumb-item">
             <i-tabler name="circle-filled" class="icon-8"></i-tabler>

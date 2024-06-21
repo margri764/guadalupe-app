@@ -140,8 +140,8 @@ export class SegmentationService {
     return this.http.get<any>(`${this.baseUrl}api/user/getAllPhoneSegmentation`) 
     
     .pipe(
-      tap( ( {users}) =>{
-                    console.log("from getAllPhoneSegmentation service: ", users);
+      tap( res =>{
+                    console.log("from getAllPhoneSegmentation service: ", res);
                 }  
       ),            
       map( res => res )

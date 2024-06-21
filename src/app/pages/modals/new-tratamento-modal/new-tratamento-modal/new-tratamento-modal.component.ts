@@ -98,7 +98,6 @@ export class NewTratamentoModalComponent {
   closeModal(){
     this.backClose = true;
     setTimeout( ()=>{ this.dialogRef.close() }, 400 )
-    
   }
   
   validField( field: string ) {
