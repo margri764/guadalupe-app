@@ -69,17 +69,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-size: 1.5em;
     }
   
-    .align-items-center{
-      align-items:center
-    }
-  
-    .justify-content-center{
-      justify-content: center;
-    }
-  
-    .d-flex{
-      display: flex;
-    }
 
   
     .f-w {
@@ -163,6 +152,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       box-shadow: 3px 7px 10px 0px rgba(53,153,153, 0.75);
       -webkit-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
       -moz-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
+    }
+
+    .acceptButton:hover {
+      .material-symbols-outlined{
+        transform: scale(1.05);
+      }
     }
 
     
@@ -763,9 +758,33 @@ input{
    
   }
 
+    // bootstrap
+  .d-flex{
+    display: flex;
+  }
   .flex-column{
     flex-direction: column;
   }
+  .align-items-center{
+    align-items:center
+  }
+  .align-items-start{
+    align-items:start
+  }
+
+  .justify-content-center{
+    justify-content: center;
+  }
+
+  .justify-content-end{
+    justify-content: end;
+  }
+  .justify-content-between{
+    justify-content: space-between;
+  }
+
+
+
   
   
   .custom-modal-code  {

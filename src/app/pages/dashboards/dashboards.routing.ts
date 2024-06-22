@@ -23,6 +23,11 @@ import { ResultsComponent } from '../results/results/results.component';
 import { BankComponent } from '../bank/bank/bank.component';
 import { BankAgreementComponent } from '../bank-agreement/bank-agreement/bank-agreement.component';
 import { CreditCardComponent } from '../credit-card/credit-card/credit-card.component';
+import { AssociationComponent } from '../association/association/association.component';
+import { UnitiesComponent } from '../unities/unities/unities.component';
+import { CadComponent } from '../cad/cad/cad.component';
+import { PropulsoesComponent } from '../propulsoes/propulsoes/propulsoes.component';
+import { CurrienciesComponent } from '../curriencies/curriencies/curriencies.component';
 
 export const DashboardsRoutes: Routes = [
   {
@@ -48,6 +53,11 @@ export const DashboardsRoutes: Routes = [
       { path: 'contas-bancarias', component: BankComponent,  data: { title: 'Contas bancárias' } },
       { path: 'convenios-bancarios', component: BankAgreementComponent,  data: { title: 'Convênios' } },
       { path: 'cartoes-de-credito', component: CreditCardComponent,  data: { title: 'Cartões de crédito' } },
+      { path: 'associacao', component: AssociationComponent,  data: { title: 'Associação' } },
+      { path: 'unidades', component: UnitiesComponent,  data: { title: 'Unidades' } },
+      { path: 'codigos-cad', component: CadComponent,  data: { title: 'Cadastro' } },
+      { path: 'propulsoes', component: PropulsoesComponent,  data: { title: 'Propulsões' } },
+      { path: 'moedas', component: CurrienciesComponent,  data: { title: 'Moedas' } },
       { path: 'editar-usuario/:id',  component: EditUserComponent , data:{ title:"Editar Usuário"}},
     ],
   },

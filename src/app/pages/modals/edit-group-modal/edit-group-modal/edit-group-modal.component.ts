@@ -43,6 +43,9 @@ export class EditGroupModalComponent {
             ) 
   { 
 
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
+
+
     this.myForm = this.fb.group({
       editName:     [ '' ],
       editDescription:  [ ''],

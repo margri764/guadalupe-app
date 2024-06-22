@@ -28,11 +28,13 @@ export class AssociationService {
   {  }
 
 
-  createAssociation( body:any,  file:File ){
+  createAssociation( body:any,  file:File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if(file){
+      formData.append("file", file )
+    }
     formData.append("body", JSONbody )
     
     return this.http.post<any>(`${this.baseUrl}api/association/createAssociation`, formData) 
@@ -103,11 +105,13 @@ export class AssociationService {
 
   }
 
-  editAssociationById( id:any, body:any, file:File){
+  editAssociationById( id:any, body:any, file:File | null){
 
       const JSONbody = JSON.stringify(body)
       const formData = new FormData();
-      formData.append("file", file )
+      if(file){
+        formData.append("file", file )
+      }
       formData.append("body", JSONbody )
     
     return this.http.put<any>(`${this.baseUrl}api/association/editAssociationById/${id}`, formData) 

@@ -100,6 +100,31 @@ export const navItems: NavItem[] = [
           },
         ]
       },
+      {
+        childName: 'Associações',
+        route: '/painel/associacao',
+      },
+      {
+        childName: 'Unidades',
+        route: '/painel/unidades',
+      },
+      {
+        childName: 'Cadastro',
+        route: '/painel/codigos-cad',
+      },
+      {
+        childName: 'Propulsões',
+        children: [
+          {
+            childrenName: 'Propulsões',
+            route: '/painel/propulsoes',
+          },
+          {
+            childrenName: 'Moedas',
+            route: '/painel/moedas',
+          },
+        ]
+      },
   
   
     ]

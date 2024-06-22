@@ -78,11 +78,13 @@ export class BankCreditcardService {
 }
 
 
-  createCreditCardRule( body:any, file:File ){
+  createCreditCardRule( body:any, file:File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if(file){
+      formData.append("file", file )
+    }
     formData.append("body", JSONbody )
 
     return this.http.post<any>(`${this.baseUrl}api/creditcard/createCreditCardRule`, formData) 
@@ -102,11 +104,13 @@ export class BankCreditcardService {
     )
   }
 
-  editCreditCardById( id:any, body:any, file:File ){
+  editCreditCardById( id:any, body:any, file:File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if(file){
+      formData.append("file", file )
+    }
     formData.append("body", JSONbody )
 
       return this.http.put<any>(`${this.baseUrl}api/creditcard/editCreditCardById/${id}`, formData) 
@@ -137,11 +141,13 @@ export class BankCreditcardService {
     )
   }
 
-  createBankAccount( body:any, file : File ){
+  createBankAccount( body:any, file : File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if (file) {
+      formData.append("file", file);
+    }
     formData.append("body", JSONbody )
 
       return this.http.post<any>(`${this.baseUrl}api/bankAccount/createBankAccount`, formData) 
@@ -152,11 +158,13 @@ export class BankCreditcardService {
       )
   }
 
-  editBankById( id:any, body:any, file:File ){
+  editBankById( id:any, body:any, file:File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if(file){
+      formData.append("file", file )
+    }
     formData.append("body", JSONbody )
 
       return this.http.put<any>(`${this.baseUrl}api/bankAccount/editBankById/${id}`, formData) 
@@ -236,11 +244,13 @@ export class BankCreditcardService {
 
 // bank agreement
 
-  createBankAgreement( body:any, file : File ){
+  createBankAgreement( body:any, file : File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if(file){
+      formData.append("file", file )
+    }
     formData.append("body", JSONbody )
 
       return this.http.post<any>(`${this.baseUrl}api/bankAccount/createBankAgreement`, formData) 
@@ -269,11 +279,13 @@ export class BankCreditcardService {
     )
   }
 
-  editBankAgreementById( id:any, body:any, file:File ){
+  editBankAgreementById( id:any, body:any, file:File | null ){
 
     const JSONbody = JSON.stringify(body)
     const formData = new FormData();
-    formData.append("file", file )
+    if(file){
+      formData.append("file", file )
+    }
     formData.append("body", JSONbody )
 
       return this.http.put<any>(`${this.baseUrl}api/bankAccount/editBankAgreementById/${id}`, formData) 

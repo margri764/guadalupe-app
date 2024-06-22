@@ -29,7 +29,7 @@ import { BankLogoPipe } from "../../../pipe/bank-logo.pipe";
 })
 export class BankComponent {
 
-  displayedColumns: string[] = ['img','number','name', 'description','action'];
+  displayedColumns: string[] = ['img','name','bankNumber', 'description','action'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -86,10 +86,10 @@ export class BankComponent {
             this.dataSource.data = bankAccounts;
             this.dataSource.sortingDataAccessor = (item, property) => {
               switch (property) {
-                case 'number': return item.number;
                 case 'name': return item.name;
-                case 'propulsao': return item.propulsao_name;
+                case 'bankNumber': return item.bankNumber;
                 case 'description': return item.description;
+                case 'propulsao': return item.propulsao_name;
                 default: return '';
               }
             };

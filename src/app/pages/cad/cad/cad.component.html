@@ -1,0 +1,93 @@
+<div class="row pd-20">
+
+  
+    <div class="mat-elevation-z8 mt-20 pd-20">
+
+        
+    <h3 class="font mt-30"> Busca por CPF ou Nome </h3>
+
+    <div class="mt-30">
+
+      <mat-radio-group [(ngModel)]="typeSearch" (change)="typeSearchManage()" >
+
+        <mat-radio-button value="code" style="font-size: 1.2em;" [matTooltip]="msgCodePopover" placement="right">Cod Cad</mat-radio-button> &nbsp;&nbsp;
+    
+        <mat-radio-button value="name" style="font-size: 1.2em;" [matTooltip]="msgNamePopover" placement="right">Nome</mat-radio-button> &nbsp;&nbsp;
+
+        <mat-radio-button value="number"  style="font-size: 1.2em;" [matTooltip]="msgCPFPopover" placement="right">CPF</mat-radio-button> &nbsp;&nbsp;
+      </mat-radio-group>
+
+   
+    </div>
+
+        <form [formGroup]="myFormSearch" >
+
+            <div class="row ">
+            
+                <div class="col-sm-12 col-12 col-md-6 w-100" >
+                        <mat-form-field appearance="outline" class="w-100 mt-10" color="primary"  >
+                        <input matInput type="text"  placeholder="Busca por CPF ou Nome"  name="itemSearch" formControlName="itemSearch" class="w-100"  />
+                            <div class="d-flex justify-content-center align-items-center t" matSuffix style="background-color: rgb(0, 110, 255); height: 43px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" [ngStyle]="phone ? {'width':'50px'}:{ 'width':'80px'}" (click)="cancelSearch()" *ngIf="spinner"> 
+                                <i class="fas fa-times" style="color: white; font-size: 1.3em;"></i>
+                            </div>
+
+                            <div class="d-flex justify-content-center align-items-center t" matSuffix style="background-color: rgb(0, 110, 255); height: 43px; color: white; border-top-right-radius: 3px; border-bottom-right-radius: 3px;" [ngStyle]="phone ? {'width':'50px'}:{ 'width':'80px'}" *ngIf="!spinner"> 
+                                <i class="fas fa-search" style="color: white; font-size: 1.3em;"></i>
+                            </div>
+                        </mat-form-field>
+                        <div class="d-flex justify-content-center align-items-center w-100 mt-30" *ngIf="spinner">
+                            <mat-spinner diameter="40"></mat-spinner>
+                    </div> 
+                </div>
+                    
+            </div>
+        </form>
+    
+        <div class="d-flex justify-content-start align-items-center " *ngIf="labelNoFound">
+            <span class="font fs-10" style="color: red;"> 
+                <b>Sem resultados encontrados...</b> 
+            </span>
+            <span class="material-icons " style="color: red;">cancel</span>
+        </div>
+    
+      <div class="d-flex justify-content-end align-items-center w-100 mt-30">
+  
+          <mat-form-field appearance="outline" color="primary" style="width: 160px !important;">
+              <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+            </mat-form-field>
+      </div>
+  
+      <table mat-table [dataSource]="dataSource" matSort class="mt-10"  >
+  
+          <ng-container matColumnDef="code" >
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header > Código </th>
+              <td mat-cell *matCellDef="let cad"> 
+                  {{ cad.code }}
+             </td>
+            </ng-container>
+  
+          <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header > Nome </th>
+              <td mat-cell *matCellDef="let cad"> 
+                   {{ cad.name }}
+              </td>
+            </ng-container>
+
+          <ng-container matColumnDef="cpf">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header > CPF </th>
+              <td mat-cell *matCellDef="let cad"> 
+                   {{ cad.number }}
+              </td>
+            </ng-container>
+                
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+  
+      <br>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    
+</div>
+    

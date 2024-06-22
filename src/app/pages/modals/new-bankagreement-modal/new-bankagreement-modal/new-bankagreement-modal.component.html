@@ -1,0 +1,84 @@
+
+
+<form [formGroup]="myForm" class="font fs-10"  (ngSubmit)="onSave()">
+
+    <div class="d-flex justify-content-between align-items-center pd-10">
+        <h1 mat-dialog-title style="font-family: poppins-regular;">Novo convênio bancário </h1>
+        <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+    </div>
+  
+    <div class="d-flex justify-content-center w-100 pd-20">
+        <div class="border w-100"></div>
+    </div>    
+      
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'600px'}">
+        
+        <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+
+            
+    <div class="d-flex flex-column justify-content-center align-items-center w-100" (click)="fileUploader.click()" *ngIf="!pathImg">
+        <button type="button"matRipple  class="uploadLogo acceptButton"  >
+                  <span class="material-symbols-outlined" style="font-size: 47px; ;"> upload </span>
+        </button>
+
+        <div class="d-flex justify-content-center w-100" >
+             <span class="fs-12 mt-1" style="font-family: poppins-regular;"> Enviar logotipo </span>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center w-100 mt-3"  *ngIf="pathImg" >
+        <img [src]="pathImg" alt="Foto do Perfil do cartões" class="img-fluid" width="200px"  >
+        <span class="material-icons cursor"  (click)="cancelImag()">close</span>
+    </div>
+    
+    <div style="display: none;">
+        <input type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" #fileUploader />
+      </div>
+  
+  
+
+                <div class=" mt-30" >
+                    <mat-label class="font f-w-600 m-b-8 d-block"> Nome do banco  <b style="color: red;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  formControlName="name"   />
+                    @if(f['name'].touched && f['name'].invalid) {
+                        <mat-hint class="m-b-16 error-msg">
+                        @if(f['name'].errors && f['name'].errors['required']) {
+                        <div class="error">Dado obrigatorio.</div>
+                        } 
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+
+  
+                <div class=" mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block">Descrição <b style="color: red;">*</b></mat-label>
+                  <textarea  class="w-100" formControlName="description" (input)="limitCharacters($event)"></textarea>
+                  <div class="d-flex justify-content-end w-100 mt-1 fs-8 font" [ngStyle]="{'color': remainingCharacters === 0 ? 'red' : 'black'}" >{{ remainingCharacters }} de 250 caracteres restantes</div>
+                  @if(f['description'].touched && f['description'].invalid) {
+                    @if(f['description'].errors && f['description'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    }
+                </div>
+    
+          </div>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+       <button type="button" mat-dialog-close class="cancelButton">Cancelar</button> &nbsp;  &nbsp;
+       <button type="submit" class="acceptButton" >Enviar</button> 
+        </mat-dialog-actions>
+  </form>
+  
+  
+  <div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <mat-spinner></mat-spinner>
+  </div>
+  </div> 
+  
+            
+  

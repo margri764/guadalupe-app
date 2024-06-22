@@ -36,7 +36,10 @@ export class AddPropulsaoModalComponent {
               @Inject(MAT_DIALOG_DATA) public data: any,
 
 
-  ) { }
+  ) { 
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
+
+  }
 
   ngOnInit(): void {
 

@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
   submitted : boolean = false;
   succesSignup : boolean = false;
   isLoading : boolean = false;
+  phone : boolean = false;
   arrBackground : any []=[];
   backgroundImage : string = '';
 
@@ -40,6 +41,8 @@ export class RegisterComponent implements OnInit {
               public toastr: ToastrService,
               private cookieService: CookieService,
   ) {
+
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
 
    }
 

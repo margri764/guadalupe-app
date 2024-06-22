@@ -1,1 +1,220 @@
-<p>credit-card works!</p>
+<div class="row pd-20">
+
+    <div class="mat-elevation-z8 mt-20 pd-20">
+          
+      <div class="d-flex justify-content-between align-items-center w-100">
+  
+          <mat-form-field appearance="outline" color="primary" style="width: 160px !important;">
+              <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+            </mat-form-field>
+  
+          <button  type="button" mat-flat-button  color="primary" class="font fs-10 shadow" style="height: 42px;" (click)="openModalNewCreditCard()"  >
+              <i class="fas fa-plus "></i> &nbsp;Novo
+          </button>
+      </div>
+  
+      <table mat-table [dataSource]="dataSource" matSort   >
+
+           <ng-container matColumnDef="img" >
+                <th mat-header-cell *matHeaderCellDef> Img </th>
+                <td mat-cell *matCellDef="let card"> 
+                    <img  [src]="card | creditCardLogoPath" alt="Imagen" class="img-fluid" width="60px" >
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name" >
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header > Nome </th>
+                <td mat-cell *matCellDef="let card" (click)="selectCard(card)" class="selected"  > 
+                    {{ card.name }}
+               </td>
+              </ng-container>
+  
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header > Descrição </th>
+                <td mat-cell *matCellDef="let card"> 
+                    {{ card.description }}
+                </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="propulsao">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Propulsões </th>
+                <td  mat-cell *matCellDef="let card" >
+                    {{ card.propulsao_name.join(',  ') }}
+                </td>
+                </ng-container> 
+                
+                <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td  mat-cell *matCellDef="let card" >
+                    <div class="d-flex justify-content-center align-items-center " >
+                        <span class="material-icons edit"  (click)="editCreditCard(card)" [matTooltip]="'Editar cartão de crédito'">edit</span>
+                        <span class="material-icons  delete"  [matTooltip]="'Excluir cartão de crédito'" (click)="onRemove(card)">delete</span>
+                        <span class="material-icons cursor add"  [matTooltip]="'Adicionar propulsões'" (click)="assignPropulsao(card)" *ngIf="loggedUser.role === 'webmaster'">lan</span>
+                    </div>
+    
+                    </td>
+                </ng-container>
+                
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+  
+      <br>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+
+    <div #credit_card style="margin-top: 500px;"></div>
+
+    <div class="card" *ngIf="card " >   
+
+        <div class="row col-12 " >
+            <div class="col-sm-12 col-12 col-md-6"  >
+                <form [formGroup]="myForm" class="font fs-10">
+                    
+                    <div class="mt-30" >
+                        <mat-label class="font f-w-600 m-b-8 d-block"> Número do cartão  <b style="color: red;">*</b> </mat-label>
+                        <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                         <input matInput type="number"  formControlName="cardNumber" (keyup)="handleBlurNumber()" (blur)="handleBlurNumber()"   />
+                        </mat-form-field>
+                         <div *ngIf="validField('cardNumber')" class="invalid w-100 d-block" > Dado obrigatório / número  </div>
+                    </div>
+
+                    <div class="row mt-30" >
+
+                        <mat-label class="font f-w-600 d-block w-100" style="margin-left: 18px;"> Data de expiração  <b style="color: red;">*</b> </mat-label>
+
+                        <div class="col-sm-12 col-12 col-md-6" *ngIf="!disableValidFrom">
+
+                            <div class="row" >
+
+                               <div class="col-6"  >
+                                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                    <input matInput type="number"  formControlName="validFromDateMonth" (blur)="handleBlurNumber()" placeholder="Mês"  min="0" />
+                                </mat-form-field>
+                                <div *ngIf="validField('validFromDateMonth')" class="invalid w-100" > {{errorMonthValidForm}}  </div>
+                                </div>
+
+                                <div class="col-6"  >
+                                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                    <input matInput type="number"  formControlName="validFromDateYear" placeholder="Ano"  min="0"  />
+                                </mat-form-field>
+                                <div *ngIf="validField('validFromDateYear')" class="invalid w-100" > {{errorYearValidForm}}  </div>
+                                </div>
+                          
+                            </div>
+                             <span class="font fs-10" style="color: rgb(167, 167, 167); margin-top: 0px !important;"> Válida desde </span>
+
+                        </div>
+
+                        <div class="col-sm-12 col-12 col-md-6" >
+
+                            <div class="row">
+
+                               <div class="col-6" >
+
+                                <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                    <input matInput type="number"  formControlName="expirationDateMonth" placeholder="Mês"  min="0"  />
+                                </mat-form-field>
+                                <div *ngIf="validField('expirationDateMonth')" class="invalid w-100" > {{errorMonthExpDate}}  </div>
+                               </div>   
+
+                               <div class="col-6" >
+
+                                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                                    <input matInput type="number"  formControlName="expirationDateYear" placeholder="Ano"  min="0"  />
+                                </mat-form-field>
+                                <div *ngIf="validField('expirationDateYear')" class="invalid w-100" > {{errorYearExpDate}}  </div>
+                               </div>        
+                              
+                            </div> 
+                            <label class="font fs-10" style="color: rgb(167, 167, 167);"> Válida hasta </label>
+
+                        </div>
+
+                        <div class="col-6 mt-30"  >
+                            <mat-label class="font f-w-600 m-b-8 d-block"> CCV <b style="color: red;">*</b> </mat-label>
+                            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                            <input matInput type="number"  formControlName="ccvNumber"  min="0"  (blur)="handleBlur()" />
+                            <div *ngIf="validField('ccvNumber')" class="invalid"> {{errorCCV}} </div>
+                            </mat-form-field>
+                        </div>
+                    </div>
+            
+                </form> 
+            </div>
+
+            <div class="col-sm-12 col-12 col-md-6 w-100" style="position: relative;"  *ngIf="!phone"  >
+
+                <div class="flip-container w-100 " [class.hover]="isHovered" style="margin-top: 40px;">
+                                
+                    <div class="flipper"  >
+                        
+                        <div class="d-flex flex-column align-items-center justify-content-between front w-100" >
+
+                            <div class="backCard" [ngClass]="{'cardOK': numberOK=== 'true', 'badCard': numberOK === 'false'}">
+                                <div class="d-flex justify-content-between w-100">
+                                    <img src="assets/images/chip.png" alt="chip" class="img-fluid" width="44px">
+                                    <span style="color: white; font-size: 1.4em;"> {{card }} </span>
+                                
+                                </div>
+
+                                <div style="border: 1px solid; border-radius: 4px; padding: 5px; font-family: poppins-regular; font-size: 2em; text-align: center; width: 100%; color: white;" [hidden]="!creditCardNumber"> {{ creditCardNumber }} 
+                            <span class="material-icons" style="color: green;"  *ngIf="numberOK === 'true'">done_outline</span>   
+                            
+                            <span class="material-icons" style="color: red;"  *ngIf="numberOK === 'false'">close</span>
+
+                                </div>
+                        
+                                <div class="d-flex justify-content-between w-100" >
+
+
+                                    <div style="font-family: poppins-regular; font-size: 1.8em; text-align: start; color: white;" >
+                                        {{ creditcardName | uppercase}} 
+                                    </div>
+                                    <div style="font-family: poppins-regular; font-size: 1.1em; text-align: center; width: 120px; color: white;" >
+                                        <span style="width: 100%; display: block; font-size: 0.8em; color: white;"> Válida hasta </span>
+                                        <span [hidden]="!expirationDateMonth">
+                                            {{ expirationDateMonth }} / {{ expirationDateYear }}
+                                        </span>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" d-flex  align-items-center back" style="color: white;">
+                            <div class="backCard"  [ngClass]="{'cardOK': numberOK=== 'true', 'badCard': numberOK === 'false'}">
+                                <div class="d-flex justify-content-end w-100">
+                                    <span> Logo </span>
+                                </div>
+
+                                <div style="background-color: rgba(0, 0, 0, 0.643); height: 40px; width: 100%;"></div>
+
+                                <div class="" >
+                                    <label class="text w-100 fs-10 mt-2"> CCV </label>
+
+                                    <div style="border: 1px solid; border-radius: 4px; padding: 5px; font-family: poppins-regular; font-size: 1.3em; text-align: center; width: 80px; height: 30px; color: white;" > 
+                                        <span [hidden]="!ccvCodeNumber">{{ ccvCodeNumber }} </span> 
+                                    </div>
+                                </div> 
+                            </div> 
+                    
+                        </div>
+                            
+                    </div>
+                    
+                </div> 
+                <div [ngStyle]="{'color': numberOK === 'false' ? 'red' : 'green'}" style="position: absolute; bottom: 0px;" *ngIf="validating">
+                    <span class="fs-12" >Cartão de crédito </span> 
+                    <span class="fs-12" *ngIf="numberOK === 'true'">válido</span>
+                    <span class="fs-12" *ngIf="numberOK === 'false'">inválido</span>
+                </div>
+            </div>
+        </div>
+         
+    </div >
+
+    
+</div>
+    

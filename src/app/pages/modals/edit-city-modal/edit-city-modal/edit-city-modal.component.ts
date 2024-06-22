@@ -40,6 +40,8 @@ export class EditCityModalComponent {
               @Inject (MAT_DIALOG_DATA) public data : any  
             ) 
   { 
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
+
 
     this.myForm = this.fb.group({
       name:     [ '', Validators.required ],

@@ -20,6 +20,7 @@ export class LockscreenComponent implements OnInit {
 
   myForm! : FormGroup
   isLoading : boolean = false;
+  phone : boolean = false;
   profilePicture : string = "assets/no-image.jpg";
   name : string = "";
   
@@ -30,6 +31,9 @@ export class LockscreenComponent implements OnInit {
                 private errorService : ErrorService,
                 private store : Store <AppState>
     ) {
+
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
+
       
       this.myForm = this.fb.group({
         email:  [ '', [Validators.required]],

@@ -41,6 +41,7 @@ export class EditRelationshipModalComponent {
 
             ) 
   { 
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
 
     this.myForm = this.fb.group({
       name: [ '', Validators.required ],

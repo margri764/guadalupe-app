@@ -54,9 +54,6 @@ export class FontesComponent {
               private resultFonteService : ResultFuenteService,
               private router : Router,
               private dialog : MatDialog
-
-
-    
               ) 
 
   {
@@ -83,7 +80,6 @@ export class FontesComponent {
   }
 
   openModalNewFonte(){
-
     const dialogRef = this.dialog.open(NewFonteModalComponent,{
       maxWidth: (this.phone) ? "97vw": '800px',
       maxHeight: (this.phone) ? "90vh": '90vh',
@@ -97,7 +93,6 @@ export class FontesComponent {
            }
       } 
     });
-  
   }
 
 editFonte( fonte:any ){
@@ -135,9 +130,6 @@ getInitialFontes(){
               }
             };
           }
-
-
-       
           setTimeout(()=>{ this.isLoading = false }, 700)
         }
       })
@@ -274,7 +266,6 @@ applyFilter(event: Event) {
     this.dataSource.paginator.firstPage();
   }
 }
-
 
 ngOnDestroy(): void {
   if(this.unsubscribe$){

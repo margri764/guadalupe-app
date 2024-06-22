@@ -1,0 +1,144 @@
+<div class="row pd-20">
+
+    <div class="mat-elevation-z8 mt-20 pd-20">
+          
+      <div class="d-flex justify-content-end align-items-center w-100">
+  
+          <mat-form-field appearance="outline" color="primary" style="width: 160px !important;">
+              <input matInput placeholder="Procurar aqui" (keyup)="applyFilter($event)" />
+            </mat-form-field>
+      </div>
+  
+      <table mat-table [dataSource]="dataSource" matSort class="mt-30">
+
+        <ng-container matColumnDef="nome_da_unidade">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome Unidade </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.nome_da_unidade }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="oi_oii_ou_oiii">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> OI, OII ou OIII </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.oi_oii_ou_oiii }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="duplas">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Duplas </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.duplas }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="tratamento">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tratamento </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.tratamento }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="encarregado_do_caixa">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Encarregado do Caixa </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.encarregado_do_caixa }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="tel_da_uni">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tel da Uni </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.tel_da_uni }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="tel_pessoal">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tel Pessoal </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.tel_pessoal }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="endereco_para_correspondencia">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Endereço para Correspondência </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.endereco_para_correspondencia }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="cidade">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cidade </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.cidade }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="cep">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CEP </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.cep }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="e_mail_do_encarregado">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail do Encarregado </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.e_mail_do_encarregado }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="e_mail_da_unidade">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail da Unidade </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.e_mail_da_unidade }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="ativa">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ativa </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.ativa }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="associacao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Associação </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.associacao }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="cnpj">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CNPJ </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.cnpj }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="alta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Alta </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.alta }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="banco">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Banco </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.banco }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="agencia">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Agência </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.agencia }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="digito">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Dígito </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.digito }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="cc_conta_corrente">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Conta Corrente </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.cc_conta_corrente }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="digito_2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Dígito 2 </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.digito_2 }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="endereco_completo_do_cnpj">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Endereço Completo do CNPJ </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.endereco_completo_do_cnpj }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="obs">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Observações </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.obs }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="email_encarregado_dos_veiculos">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail Encarregado dos Veículos </th>
+          <td mat-cell *matCellDef="let unit"> {{ unit.email_encarregado_dos_veiculos }} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+      </table>
+      
+      <br>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    
+  </div>
+    

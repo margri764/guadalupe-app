@@ -38,6 +38,7 @@ export class EditPhonesegmentationModalComponent {
               private dialogRef : MatDialogRef<EditPhonesegmentationModalComponent>
             ) 
   { 
+    (screen.width <= 800) ? this.phone = true : this.phone = false;
 
     this.myForm = this.fb.group({
       name:     [ '', Validators.required ],
