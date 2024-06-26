@@ -5,6 +5,7 @@ import { AppMaintenanceComponent } from './maintenance/maintenance.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResendPasswordComponent } from './resend-password/resend-password.component';
+import { AssignDioceseDrawerComponent } from '../drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component';
 
 export const AuthenticationRoutes: Routes = [
   {
@@ -16,6 +17,7 @@ export const AuthenticationRoutes: Routes = [
       { path: 'login', component: LoginComponent,  data: { title: 'login' } },
       { path: 'registro', component: RegisterComponent,  data: { title: 'registro' } },
       { path: 'recuperar-senha', component: ResendPasswordComponent,  data: { title: 'recuperar senha' } },
+
     ],
   },
 ];

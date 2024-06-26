@@ -1,1 +1,112 @@
-<p>edit-currency-modal works!</p>
+
+
+<form [formGroup]="myForm" class="font fs-10"  (ngSubmit)="onSave()">
+
+    <div class="d-flex justify-content-between align-items-center pd-10">
+        <h1 mat-dialog-title style="font-family: poppins-regular;"> Editar Moeda </h1>
+        <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+    </div>
+  
+    <div class="d-flex justify-content-center w-100 pd-20">
+        <div class="border w-100"></div>
+    </div>    
+      
+    <mat-dialog-content style="padding: 20px;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'800px'}">
+        
+        <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+  
+
+                <div class="mt-30" >
+                    <mat-label class="font f-w-600 m-b-8 d-block"> Name <b style="color: red;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  formControlName="name"   />
+                    @if(f['name'].touched && f['name'].invalid) {
+                        <mat-hint class="m-b-16 error-msg">
+                        @if(f['name'].errors && f['name'].errors['required']) {
+                        <div class="error">Dado obrigatorio.</div>
+                        } 
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <div class="mt-30" >
+                    <mat-label class="font f-w-600 m-b-8 d-block">Símbolo monetário <b style="color: red;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  formControlName="acronym"   />
+                    @if(f['acronym'].touched && f['acronym'].invalid) {
+                        <mat-hint class="m-b-16 error-msg">
+                        @if(f['acronym'].errors && f['acronym'].errors['required']) {
+                        <div class="error">Dado obrigatorio.</div>
+                        } 
+                        </mat-hint>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <mat-divider style="margin-top: 30px; margin-bottom: 30px;"></mat-divider>
+
+                <label class="text w-100 fs-11" > Formato </label>
+    
+                <div class=" row mb-3 pd-20 col-12" style="border-radius: 7px;">
+            
+                    <div class="col-8 ">
+                        <div class="d-flex justify-content-start  align-items-center " >
+                            <span style="font-size: 1em; font-family: poppins-regular; margin-right: 7px;" [ngStyle]="decimalError ? {'color':'red'}:{}">Posiciones decimales: </span>
+                            <input type="number" class="form-control font fs-11 " style="width: 60px; height: 30px !important;"   formControlName="decimal" value="0"  [ngStyle]="( validField('decimal')) ? {'border':'1px solid red'}:{}" maxlength="1" pattern="[0-9]" (input)="updateExample()">
+                        </div>
+                
+                        <label style="font-size: 1em; font-family: poppins-regular; margin-right: 7px;" [ngStyle]="separatorError ? {'color':'red'}:{}"> Separador de milhares:  </label>
+                
+                            <mat-radio-button value="vírgula" style="font-size: 1em; font-family: poppins-regular; margin-right: 7px;" (change)="handleSeparatorMill($event)" [checked]="mill === 'vírgula'">vírgula </mat-radio-button> &nbsp;&nbsp;
+                                        
+                            <mat-radio-button value="ponto" style="font-size: 1em; font-family: poppins-regular; margin-right: 7px;" (change)="handleSeparatorMill($event)"  [checked]="mill === 'ponto'">ponto</mat-radio-button> &nbsp;&nbsp;
+                            
+                    </div>
+            
+                    
+                    <div class="col-4 " >
+                        <div style="display: flex; align-items: center;" >
+                            <span style="font-size: 1em; font-family: poppins-regular; margin-right: 7px;">Inserir número</span>
+                            <input type="text" class="form-control" style="width: 80px; font-family: poppins-regular; height: 30px !important;" formControlName="example" (input)="formatNumber()"  > 
+                        </div>    
+                            <span style="font-size: 1.3em; font-family: poppins-regular;  width: 100%; display: inline; margin-top: 10px; font-weight: bold;"> {{acronym}}  {{formattedValue}} </span>
+                            
+            
+                    </div>
+                   
+              
+                    <div *ngIf="validField('format')" class="invalid" > Dado obrigatório </div>
+                </div> 
+            
+  
+                <div class=" mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block">Descrição <b style="color: red;">*</b></mat-label>
+                  <textarea  class="w-100" formControlName="description" (input)="limitCharacters($event)"></textarea>
+                  <div class="d-flex justify-content-end w-100 mt-1 fs-8 font" [ngStyle]="{'color': remainingCharacters === 0 ? 'red' : 'black'}" >{{ remainingCharacters }} de 250 caracteres restantes</div>
+                  @if(f['description'].touched && f['description'].invalid) {
+                    @if(f['description'].errors && f['description'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    }
+                </div>
+    
+          </div>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+       <button type="button" mat-dialog-close class="cancelButton">Cancelar</button> &nbsp;  &nbsp;
+       <button type="submit" class="acceptButton" >Criar Moeda</button> 
+        </mat-dialog-actions>
+  </form>
+  
+  
+  <div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <mat-spinner></mat-spinner>
+  </div>
+  </div> 
+  
+            
+  

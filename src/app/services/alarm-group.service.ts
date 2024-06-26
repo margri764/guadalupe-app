@@ -9,12 +9,12 @@ import { environment } from 'src/environments/environment';
 })
 export class AlarmGroupService {
 
-  private openDrawerSource = new Subject<void>();
-  openDrawer$ = this.openDrawerSource.asObservable();
+  // private openDrawerSource = new Subject<void>();
+  // openDrawer$ = this.openDrawerSource.asObservable();
 
-  openDrawer() {
-    this.openDrawerSource.next();
-  }
+  // openDrawer() {
+  //   this.openDrawerSource.next();
+  // }
 
 
   private baseUrl = environment.baseUrl;

@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditGroupModalComponent } from '../../modals/edit-group-modal/edit-group-modal/edit-group-modal.component';
 import { EditGrupalalarmModalComponent } from '../../modals/edit-grupalalarm-modal/edit-grupalalarm-modal/edit-grupalalarm-modal.component';
 import { NewAlarmModalComponent } from '../../modals/new-alarm-modal/new-alarm-modal/new-alarm-modal.component';
+import { DrawersService } from 'src/app/services/drawers.service';
 
 
 @Component({
@@ -84,9 +85,12 @@ export class AlarmsComponent {
               private alarmGroupService : AlarmGroupService,
               private errorService : ErrorService,
               private toastr: ToastrService,
-              private dialog : MatDialog
+              private dialog : MatDialog,
+             
 
   ) {
+
+  
 
     const user = getDataSS('user');
     if(user){

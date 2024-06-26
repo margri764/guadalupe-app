@@ -1,0 +1,168 @@
+
+
+<form [formGroup]="myForm" class="font fs-10"  (ngSubmit)="onSave()">
+
+    <div class="d-flex justify-content-between align-items-center pd-10">
+        <h1 mat-dialog-title style="font-family: poppins-regular;"> {{propulsao?.name}} </h1>
+        <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeModal()">close</span>
+    </div>
+  
+    <div class="d-flex justify-content-center w-100 pd-20">
+        <div class="border w-100"></div>
+    </div>    
+      
+    <mat-dialog-content style="padding: 20px; height: 1000px;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'1200px'}">
+        
+        <div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10"  >
+
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title  style="font-family: poppins-regular !important; font-size: 1.1em; padding: 0 5px 0 5px;" (click)="openDrawerDiocese('diocese')"> <div style="border: 2px solid green; height:25px; margin-right: 5px;" ></div> Dioceses </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <div class="font fs-10" *ngIf="dioceses && dioceses.length > 0">
+                      <span > Foram atribuídos {{ dioceses ? dioceses.length : '' }}  dioceses: 
+                        <span class="selected ml-20" (click)="moreDioceses = !moreDioceses">Ver mais...</span>
+                      </span> 
+
+                      <ng-container *ngIf="moreDioceses">
+                        <div class="d-flex justify-content-start align-items-centerw-100" >
+                          <span style="margin-right: 10px; font-size: 0.9em; color: rgb(167, 167, 167);"  *ngFor="let diocese of dioceses">{{ diocese.name }}. </span> 
+                        </div>
+                      </ng-container>
+                
+                  </div>
+                  <div *ngIf="!dioceses || dioceses.length === 0">
+                    <span style="color: rgb(189, 189, 189);"> Nenhum dado selecionado... </span>
+                  </div>
+
+
+                </mat-expansion-panel>
+            </mat-accordion>
+            
+            <br>
+         
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title  style="font-family: poppins-regular !important; font-size: 1.1em; padding: 0 5px 0 5px;"  (click)="openDrawerDiocese('fonte')">
+                       <div style="border: 2px solid red; height:25px; margin-right: 5px;"></div> Fontes </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <div class="font fs-10" *ngIf="fonts && fonts.length > 0">
+                    <span > Foram atribuídos {{ fonts ? fonts.length : '' }}  fontes: 
+                      <span class="selected ml-20" (click)="moreFontes = !moreFontes">Ver mais...</span>
+                    </span> 
+
+                    <ng-container *ngIf="moreFontes">
+                      <div class="d-flex justify-content-start align-items-centerw-100" >
+                        <span style="margin-right: 10px; font-size: 0.9em; color: rgb(167, 167, 167);"  *ngFor="let fonte of fonts">{{ fonte.acronym }}. </span> 
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div *ngIf="!fonts || fonts.length === 0">
+                    <span style="color: rgb(189, 189, 189);"> Nenhum dado selecionado... </span>
+                  </div>
+
+
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <br>
+         
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title  style="font-family: poppins-regular !important; font-size: 1.1em; padding: 0 5px 0 5px;"  (click)="openDrawerDiocese('admin')">
+                       <div style="border: 2px solid blue; height:25px; margin-right: 5px;"></div> Administradores </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <div class="font fs-10" *ngIf="admins && admins.length > 0">
+                    <span > Foram atribuídos {{ moreAdmins ? admins.length : '' }}  administradores: 
+                      <span class="selected ml-20" (click)="moreAdmins = !moreAdmins">Ver mais...</span>
+                    </span> 
+
+                    <ng-container *ngIf="moreAdmins">
+                      <div class="d-flex justify-content-start align-items-center w-100 mt-5" >
+                        <span style="margin-right: 10px; font-size: 0.9em; color: rgb(167, 167, 167);"  *ngFor="let adm of admins">{{ adm.Nome_Completo }}. </span> 
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div *ngIf="!admins || admins.length === 0">
+                    <span style="color: rgb(189, 189, 189);"> Nenhum dado selecionado... </span>
+                  </div>
+
+
+
+                </mat-expansion-panel>
+            </mat-accordion>
+            <br>
+         
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title  style="font-family: poppins-regular !important; font-size: 1.1em; padding: 0 5px 0 5px;" >
+                       <div style="border: 2px solid cyan; height:25px; margin-right: 5px;"></div> País da Propulsão </mat-panel-title>
+                    <mat-panel-description>
+                      <span class="font fs-9" *ngIf="myFormCountry.get('country')?.value && myFormCountry.get('country')?.value !== '' && showCountry "> Foi atribuído ao {{myFormCountry.get('country')?.value}} como país da propulsão   </span> 
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+              
+                  <!-- <div class="font fs-10 cursor mb-2" (click)="showCountry = !showCountry"> País da Propulsão   </div> -->
+                   
+                  <div >
+                      <form [formGroup]="myFormCountry" >
+                        <div class="mt-30" >
+                          <mat-form-field appearance="outline" color="primary" style="width: 250px;" >
+                          <input matInput type="text"  formControlName="country" placeholder="Inserir país e pressionar Enter." (keydown.enter)="addCountryPropulsao()"  />
+                          </mat-form-field>
+                          <span (click)="removeCountry()" class="selected font" style="font-size: 0.9em;" *ngIf="myFormCountry.get('country')?.value && myFormCountry.get('country')?.value !== '' "> Mudar de país  </span>
+                      </div>
+                      </form>
+                  </div>
+
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+
+          </div>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+       <button type="button" mat-dialog-close class="cancelButton">Cancelar</button> &nbsp;  &nbsp;
+       <button type="submit" class="acceptButton"> Configurar propulsão</button> 
+        </mat-dialog-actions>
+  </form>
+  
+  
+  <div class="loading-overlay" *ngIf="isLoading">
+  <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <mat-spinner></mat-spinner>
+  </div>
+  </div> 
+
+  <mat-sidenav #drawerDiocese mode="over" position="end" [ngStyle]="phone ? {'width': '100vw'}:{'width': '600px'}">
+    <app-assign-diocese-drawer></app-assign-diocese-drawer>
+  </mat-sidenav>
+
+  <mat-sidenav #drawerFonte mode="over" position="end" [ngStyle]="phone ? {'width': '100vw'}:{'width': '600px'}" >
+    <app-assign-fonte-drawer></app-assign-fonte-drawer>
+  </mat-sidenav>
+
+  <mat-sidenav #drawerAdmin mode="over" position="end" [ngStyle]="phone ? {'width': '100vw'}:{'width': '600px'}" >
+    <app-assign-admin-drawer></app-assign-admin-drawer>
+  </mat-sidenav>
+
+  
+            
+  

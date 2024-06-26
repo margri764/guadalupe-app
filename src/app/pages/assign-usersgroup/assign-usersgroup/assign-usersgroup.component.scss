@@ -94,6 +94,29 @@ input[readonly] {
 
 
 
+
+td{
+font-family: 'poppins-regular';
+font-size: 0.87em;
+}
+
+th{
+font-family: 'poppins-regular';
+font-size: 1em;
+font-weight: bold;
+}
+
+
+.mat-elevation-z8{
+overflow-x: auto;
+width: 100%;
+
+}
+
+  
+
+
+
 .btnMenuClicked {
   border: 1px solid white;
   background-color: #007BFF;

@@ -17,14 +17,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewPropulsaoModalComponent } from '../../modals/new-propulsao-modal/new-propulsao-modal/new-propulsao-modal.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
+import { SettingPropulsaoModalComponent } from '../../modals/setting-propulsao-modal/setting-propulsao-modal/setting-propulsao-modal.component';
+import { RouterModule } from '@angular/router';
+import { MatDrawer } from '@angular/material/sidenav';
+import { AssignDioceseDrawerComponent } from "../../drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component";
+import { DrawersService } from 'src/app/services/drawers.service';
 
 
 @Component({
-  selector: 'app-propulsoes',
-  standalone: true,
-  imports: [CommonModule, MaterialModule],
-  templateUrl: './propulsoes.component.html',
-  styleUrl: './propulsoes.component.scss'
+    selector: 'app-propulsoes',
+    standalone: true,
+    templateUrl: './propulsoes.component.html',
+    styleUrl: './propulsoes.component.scss',
+    imports: [CommonModule, MaterialModule, RouterModule, AssignDioceseDrawerComponent]
 })
 export class PropulsoesComponent {
   
@@ -32,6 +37,12 @@ export class PropulsoesComponent {
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  @ViewChild('drawer') drawer!: MatDrawer;
+  @ViewChild('mode') mode!: { value: string };
+  @ViewChild('hasBackdrop') hasBackdrop!: { value: boolean | null };
+
+
 
   propulsaos : any[]=[];
   isLoading : boolean = false;
@@ -49,12 +60,14 @@ export class PropulsoesComponent {
               private propulsaoService : PropulsaoService,
               private toastr: ToastrService,
               private store : Store<AppState>,
-              private dialog : MatDialog
+              private dialog : MatDialog,
+
               ) 
 
   {
     (screen.width <= 800) ? this.phone = true : this.phone = false;
     this.dataSource = new MatTableDataSource();
+  
    }
 
   ngOnInit(): void {
@@ -65,31 +78,33 @@ export class PropulsoesComponent {
 
   settingPropulsaoModal( propulsao:any){
 
-    // if(propulsao.status && propulsao.status !== 'no_assigned'){
-    //   return;
-    // }
+    if(propulsao.status && propulsao.status !== 'no_assigned'){
+      return;
+    }
 
-    // const propulsaoName = getDataSS("propulsaoName");
+    const propulsaoName = getDataSS("propulsaoName");
 
-    // if(propulsaoName && propulsaoName !== ''){
-    //   if(propulsaoName !== propulsao.name){
-    //     this.showErrorSwal(propulsao.name)
-    //     return
-    //   }
-    // }
+    if(propulsaoName && propulsaoName !== ''){
+      if(propulsaoName !== propulsao.name){
+        this.showErrorSwal(propulsao.name)
+        return
+      }
+    }
 
-    // const modalRef = this.modalService.open(SettingPropulsaoModalComponent,{
-    //   backdrop: 'static', 
-    //   size: "lg"
-    // });
-
-    // modalRef.componentInstance.data =  {propulsao} ;
-    // modalRef.result.then(
-    //   (result) => {
-    //     if(result === 'new-propulsao'){
-    //     this.getInitialPropulsaos()      }
-    //   },
-    // );
+    const dialogRef = this.dialog.open(SettingPropulsaoModalComponent,{
+      maxWidth: (this.phone) ? "97vw": '1200px',
+      maxHeight: (this.phone) ? "90vh": '90vh',
+      data: {propulsao}
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+  
+        if(result === 'new-propulsao'){
+              this.getInitialPropulsaos()   
+           }
+      } 
+    });
   }
 
   newPropulsao(){

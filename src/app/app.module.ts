@@ -38,6 +38,7 @@ import { appReducers } from './shared/redux/app.reducer';
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './services/interceptor.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AssignDioceseDrawerComponent } from './pages/drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

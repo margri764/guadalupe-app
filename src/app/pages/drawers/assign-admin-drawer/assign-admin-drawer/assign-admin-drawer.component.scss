@@ -1,11 +1,16 @@
 
-.mat-column-action {
-    text-align: center;
+.selectedTD{
+    background-color: rgba(113,150,255,255);
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
   }
+  
   
   td{
   font-family: 'poppins-regular';
-  font-size: 0.87em;
+  font-size: 0.8em;
+  padding: 5px;
   }
   
   th{
@@ -21,4 +26,4 @@
   
   }
   
-    
+  

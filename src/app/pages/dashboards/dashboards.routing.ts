@@ -28,6 +28,7 @@ import { UnitiesComponent } from '../unities/unities/unities.component';
 import { CadComponent } from '../cad/cad/cad.component';
 import { PropulsoesComponent } from '../propulsoes/propulsoes/propulsoes.component';
 import { CurrienciesComponent } from '../curriencies/curriencies/curriencies.component';
+import { AssignDioceseDrawerComponent } from '../drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component';
 
 export const DashboardsRoutes: Routes = [
   {
@@ -58,6 +59,7 @@ export const DashboardsRoutes: Routes = [
       { path: 'codigos-cad', component: CadComponent,  data: { title: 'Cadastro' } },
       { path: 'propulsoes', component: PropulsoesComponent,  data: { title: 'Propulsões' } },
       { path: 'moedas', component: CurrienciesComponent,  data: { title: 'Moedas' } },
+      // { path: 'drawer', component: AssignDioceseDrawerComponent,  data: { title: 'Drawer' } },
       { path: 'editar-usuario/:id',  component: EditUserComponent , data:{ title:"Editar Usuário"}},
     ],
   },

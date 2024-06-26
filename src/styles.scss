@@ -579,7 +579,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     .mat-mdc-dialog-container {
       --mdc-dialog-container-shape: 13px;
     }
-  
+
    
     .customCard{
       box-shadow: 5px 10px 17px 0px rgba(53,153,153, 0.75);
@@ -708,9 +708,8 @@ input{
   .invalid{
     color: red; 
     margin-top: 5px;
-    width: 100%;
-    margin-left: 5px;
     font-family: 'poppins-regular';
+    font-weight: 700;
   }
   
   .tc-w{

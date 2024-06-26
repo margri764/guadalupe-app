@@ -19,7 +19,7 @@ export class NewPropulsaoModalComponent {
 
   myForm!: FormGroup;
   isLoading : boolean = false;
-  currencies : string []=[];
+  currencies : any []=[];
   ordems : string []= [ 'Primeira', 'Segunda','Terceira' ];
   selectedOrdems : string []=[];
   phone : boolean = false;
@@ -47,6 +47,10 @@ export class NewPropulsaoModalComponent {
 
   ngOnInit(): void {
     this.getCurrency();
+  }
+
+  get f(){
+    return this.myForm.controls;
   }
 
 
@@ -86,7 +90,9 @@ export class NewPropulsaoModalComponent {
   }
 
 
-  selectOrdem(ordem: string): void {
+  selectOrdem($event: any) {
+
+    const ordem = $event.target.value;
 
     if (!this.selectedOrdems.some(ord => ord === ordem)) {
       this.selectedOrdems.push( ordem);

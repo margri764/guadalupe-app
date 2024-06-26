@@ -13,10 +13,10 @@
           </button>
       </div>
   
-      <table mat-table [dataSource]="dataSource" matSort   >
+      <table mat-table [dataSource]="dataSource" matSort>
   
           <ng-container matColumnDef="name" >
-              <th mat-header-cell *matHeaderCellDef  mat-sort-header > Nome propulsão </th>
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header> Nome propulsão </th>
               <td mat-cell *matCellDef="let prop" class="selected" (click)="editPropulsao(prop)"> 
                   {{ prop.name }}
              </td>
@@ -44,7 +44,8 @@
                   <div class="d-flex justify-content-center align-items-center " >
                       <span class="material-icons edit"  (click)="editPropulsao(prop)" [matTooltip]="'Editar propulsão'">edit</span>
                       <span class="material-icons  delete"  [matTooltip]="'Excluir propulsão'" (click)="onRemove(prop)">delete</span>
-                      <span class="material-icons ml-5"  [matTooltip]="!prop.status || prop.status === 'no_assigned' ? 'Adicionar ao propulsão' : 'Não é possível reconfigurá-la'"(click)="settingPropulsaoModal(prop)" [ngClass]="prop.status && prop.status === 'assigned' ? ' gray-icon':'cursor add' ">lan</span>
+
+                      <span class="material-icons add"  [matTooltip]="!prop.status || prop.status === 'no_assigned' ? 'Configurar  ao propulsão' : 'Não é possível reconfigurá-la'"(click)="settingPropulsaoModal(prop)" [ngClass]="prop.status && prop.status === 'assigned' ? 'gray-icon':'cursor add' ">lan</span>
                  
                   </div>
   
@@ -61,4 +62,4 @@
     </div>
     
   </div>
-    
+

@@ -10,6 +10,9 @@
     green_theme: options.activeTheme == 'green_theme',
     cyan_theme: options.activeTheme == 'cyan_theme'
   }">
+
+
+
     <!-- ============================================================== -->
     <!-- Vertical Sidebar -->
     <!-- ============================================================== -->
@@ -97,15 +100,11 @@
         <!-- Outlet -->
         <!-- ============================================================== -->
         <router-outlet></router-outlet>
-        <!-- <div class="customizerBtn">
-          <button mat-fab color="primary" (click)="customizerRight.toggle()">
-            <mat-icon>settings</mat-icon>
-          </button>
-        </div> -->
+       
       </main>
     </mat-sidenav-content>
 
-    <mat-sidenav #customizerRight mode="over" position="end">
+    <!-- <mat-sidenav #customizerRight mode="over" position="end">
       <div class="p-x-16 p-y-20 d-flex align-items-center justify-content-between">
         <h3 class="mat-subtitle-1 f-s-21 f-w-600">Settings</h3>
         <button class="d-lg-none" mat-button (click)="customizerRight.toggle()">
@@ -115,9 +114,10 @@
       <mat-divider></mat-divider>
 
       <app-customizer (optionsChange)="receiveOptions($event)"></app-customizer>
-    </mat-sidenav>
-
-  
+    </mat-sidenav> -->
+    <!-- <mat-sidenav #drawer mode="over" position="end" >
+      <app-assign-diocese-drawer style="z-index: 100;"></app-assign-diocese-drawer>
+    </mat-sidenav> -->
 
 
   </mat-sidenav-container>
@@ -198,3 +198,4 @@
 
   
 </span>
+

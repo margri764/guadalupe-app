@@ -20,6 +20,8 @@ import { AppBreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component
 import { CustomizerComponent } from './shared/customizer/customizer.component';
 import { ErrorService } from 'src/app/services/error.service';
 import { AlarmGroupService } from 'src/app/services/alarm-group.service';
+import { DrawersService } from 'src/app/services/drawers.service';
+import { AssignDioceseDrawerComponent } from "../../pages/drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component";
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -42,23 +44,23 @@ interface quicklinks {
 }
 
 @Component({
-  selector: 'app-full',
-  standalone: true,
-  imports: [
-    RouterModule,
-    AppNavItemComponent,
-    MaterialModule,
-    CommonModule,
-    SidebarComponent,
-    NgScrollbarModule,
-    TablerIconsModule,
-    HeaderComponent,
-    AppBreadcrumbComponent,
-    CustomizerComponent
-  ],
-  templateUrl: './full.component.html',
-  styleUrls: [],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-full',
+    standalone: true,
+    templateUrl: './full.component.html',
+    styleUrls: [],
+    encapsulation: ViewEncapsulation.None,
+    imports: [
+        RouterModule,
+        AppNavItemComponent,
+        MaterialModule,
+        CommonModule,
+        SidebarComponent,
+        NgScrollbarModule,
+        TablerIconsModule,
+        HeaderComponent,
+        AppBreadcrumbComponent,
+        CustomizerComponent,
+    ]
 })
 export class FullComponent implements OnInit {
 
@@ -76,8 +78,7 @@ export class FullComponent implements OnInit {
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
 
-
-
+  // @ViewChild('drawer') drawer!: MatDrawer;
 
   get isOver(): boolean {
     return this.isMobileScreen;
@@ -197,8 +198,17 @@ export class FullComponent implements OnInit {
               private breakpointObserver: BreakpointObserver,
               private navService: NavService,
               private errorService : ErrorService,
-              private alarmgroupService : AlarmGroupService
+              private alarmgroupService : AlarmGroupService,
+              private drawerService : DrawersService
   ) {
+
+    // this.drawerService.openDrawer$.subscribe((isOpen) => {
+    //   if (isOpen) {
+    //    this.drawer.open();
+    //   }
+    // });
+
+
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_VIEW, TABLET_VIEW, MONITOR_VIEW, BELOWMONITOR])

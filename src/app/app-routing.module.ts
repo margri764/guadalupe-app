@@ -5,6 +5,7 @@ import { FullComponent } from './layouts/full/full.component';
 import { AppErrorComponent } from './pages/authentication/error/error.component';
 import { LoginComponent } from './pages/authentication/login/login.component';
 import { RegisterComponent } from './pages/authentication/register/register.component';
+import { AssignDioceseDrawerComponent } from './pages/drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component';
 
 const routes: Routes = [
   {
@@ -36,11 +37,12 @@ const routes: Routes = [
 
  
   { path: 'login', component: LoginComponent,  data: { title: 'login' } },
+
   // { path: 'registro', component: RegisterComponent,  data: { title: 'registro' } },
  
   { path: "error", component: AppErrorComponent },
   { path: "", redirectTo: "/login", pathMatch: 'full' },
-  { path: '**', redirectTo: '/error' } // redirigir a una página de error 404 para rutas no encontradas
+  { path: '**', redirectTo: '/error' },
 
 
 ];
