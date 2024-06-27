@@ -192,26 +192,6 @@ openModalFichaCompleta( user:User ){
     });
 
 
-  // const modalRef = this.modalService.open(ViewCongregatiComponent,{
-  //   keyboard: true, 
-  //   backdrop: 'static',
-  //   size: 'xl',
-  //   scrollable: true
-  // });
-
-  // let userFichaCompleta: any;
-  // let origin: any;
-
-  // if(user && user.linkCongregatio){
-  //   userFichaCompleta = user;
-  //   origin = 'congregatio';
-
-  // }else{
-  //   userFichaCompleta = user;
-  //   origin = 'group'
-  // }
-
-  // modalRef.componentInstance.data = { user: userFichaCompleta, origin  }
 }
 
 openDeleteModal( action:string ){

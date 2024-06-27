@@ -125,6 +125,10 @@ export const navItems: NavItem[] = [
           },
         ]
       },
+      {
+        childName: 'Imagens de fundo',
+        route: '/painel/images-de-fundo',
+      },
   
   
     ]

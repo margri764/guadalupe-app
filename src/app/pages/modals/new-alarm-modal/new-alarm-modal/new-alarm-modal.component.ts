@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -27,8 +27,6 @@ export class NewAlarmModalComponent {
 
 
   @ViewChild('groupSelect') groupSelect! : ElementRef;
-
-  @Input() data : any;
 
   // start search
   @Output() onDebounce: EventEmitter<string> = new EventEmitter();
@@ -88,6 +86,7 @@ export class NewAlarmModalComponent {
               private errorService : ErrorService,
               private dialog : MatDialog,
               private dialogRef : MatDialogRef<NewAlarmModalComponent>,
+              @Inject (MAT_DIALOG_DATA) public data :any
 
 
              ) 
