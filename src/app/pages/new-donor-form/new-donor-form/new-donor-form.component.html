@@ -1,1 +1,701 @@
-<p>new-donor-form works!</p>
+
+<mat-stepper  #stepper  [orientation]="(stepperOrientation | async)!" style="margin-bottom: 25px;">
+    <!-- <mat-stepper  [linear]="isLinear" #stepper style="margin-bottom: 25px;"> -->
+    
+      <mat-step [stepControl]="firstFormGroup"  >
+        <form [formGroup]="firstFormGroup" class="font">
+          <ng-template matStepLabel> <span class="font  bold" style="font-size: 1em !important;"> 1. Interno </span> </ng-template>
+  
+              <div class="row">
+                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block">Código CAD </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input matInput type="text"  
+                  [ngStyle]="showChecked ? {'border':'1px solid green'}:{}"  />
+                  <span class="material-icons" style="color: green; position: absolute; top: 27px; transform: translateX(50%); right: 35px;" *ngIf="showChecked" >done</span>
+                  <span class="material-icons" style="color: red; position: absolute; top: 27px; transform: translateX(50%); right: 35px; transform: scale(0.85);" *ngIf="validateNumberCount" >close</span>
+                       
+                  </mat-form-field>
+                </div>
+              </div>
+                
+              <div class="row">
+
+                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block">Diocese <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input  type="text"  class="select w-100 cursor" style="height: 34px; margin-top: 1px;"    matInput [matAutocomplete]="autoDiocese" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="diocese">
+                  <mat-autocomplete #autoDiocese="matAutocomplete" (optionSelected)="onDioceseSelected($event)">
+                    <mat-option *ngFor="let option of diocesesOptions | async" [value]="option">
+                      <span *ngFor="let letter of option.split('')">
+                        <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                        <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  @if(first['diocese'].touched && first['diocese'].invalid) {
+                    <mat-hint class="m-b-16 error-msg">
+                    @if(first['diocese'].errors && first['diocese'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    </mat-hint>
+                    }
+            
+                  </mat-form-field>
+                </div>
+            
+      
+                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block"> Cidade <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input type="text" class="select w-100 cursor" style="height: 34px; margin-top: 1px;"  matInput [matAutocomplete]="autoCity" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="city" (click)="checkDioceseValue()">
+                  <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="onCitySelected( $event)"  >
+                    <mat-option *ngFor="let option of citiesOptions | async" [value]="option">
+                      <span *ngFor="let letter of option.split('')">
+                        <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                        <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-autocomplete>
+                  @if(first['city'].touched && first['city'].invalid) {
+                    <mat-hint class="m-b-16 error-msg">
+                    @if(first['city'].errors && first['city'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    </mat-hint>
+                    }
+                  </mat-form-field>
+                </div>
+  
+              </div>
+  
+              <div class="row">
+
+                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block"> Fonte <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input  type="text" class="select w-100 cursor" style="height: 34px; margin-top: 1px;" matInput [matAutocomplete]="autoFonte" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="fonte">
+                  <mat-autocomplete #autoFonte="matAutocomplete" (optionSelected)="onFonteSelected($event)">
+                    <mat-option *ngFor="let option of fontesOptions | async" [value]="option">
+                      <span *ngFor="let letter of option.split('')">
+                        <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                        <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  @if(first['fonte'].touched && first['fonte'].invalid) {
+                    <mat-hint class="m-b-16 error-msg">
+                    @if(first['fonte'].errors && first['fonte'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    </mat-hint>
+                    }
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block"> Resultado <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input matInput type="text"  class="select w-100 cursor" style="height: 34px; margin-top: 1px;"  [matAutocomplete]="autoResult" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="result" (click)="checkFonteValue()">
+                  <mat-autocomplete #autoResult="matAutocomplete" (optionSelected)="onResultSelected( $event)">
+                    <mat-option *ngFor="let option of resultsOptions | async" [value]="option">
+                      <span *ngFor="let letter of option.split('')">
+                        <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                        <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  @if(first['result'].touched && first['result'].invalid) {
+                    <mat-hint class="m-b-16 error-msg">
+                    @if(first['result'].errors && first['result'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    </mat-hint>
+                    }
+                  </mat-form-field>
+                </div>
+              
+              </div>
+  
+              <div class="row">
+
+                <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                  <mat-label class="font f-w-600 m-b-8 d-block"> Associação <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input matInput type="text"   class="select w-100 cursor" style="height: 34px; margin-top: 1px;"  matInput [matAutocomplete]="autoAssociation" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="association">
+                  <mat-autocomplete #autoAssociation="matAutocomplete" (optionSelected)="onAssociationSelected( $event)">
+                    <mat-option *ngFor="let option of associationOptions | async" [value]="option">
+                      <span *ngFor="let letter of option.split('')">
+                        <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                        <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-autocomplete>
+
+                  @if(first['association'].touched && first['association'].invalid) {
+                    <mat-hint class="m-b-16 error-msg">
+                    @if(first['association'].errors && first['association'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    </mat-hint>
+                    }
+                  </mat-form-field>
+                </div>
+           
+  
+                <div class="mt-3 col-sm-12 col-xs-12 col-md-6" *ngIf="selectedAssociation">
+                  <img  [src]="selectedAssociation | associationLogoPath" alt="Imagen" class="img-fluid" style="max-width: 250px;" >
+                </div>
+  
+              </div>
+              
+              <div class="row">
+  
+                <div class="col-sm-12 col-xs-12 col-md-4 mt-30 mb-5">
+                    <button type="button" class="acceptButton  w-100 fs-10" style="height: 40px;" (click)="validateStepOne()" matStepperNext [disabled]="firstFormGroup.invalid" >
+                      Próximo
+                    </button>
+                </div>
+            </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="secondFormGroup" >
+        <ng-template matStepLabel> <span class="font bold" style="font-size: 1em !important;"> 2. Dados pessoais </span> </ng-template>
+        <form [formGroup]="secondFormGroup" class="font fs-10">
+  
+          <div class="row mt-30">
+
+            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+                <mat-label class="font f-w-600 m-b-8 d-block"> Tratamento <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                <select class="select w-100 cursor" formControlName="tratamento"  [ngStyle]="validFieldSecond('tratamento') ? {'border':'1px solid red'}:{}" (change)="onTratamentoSelected()" >
+                <option *ngFor="let tratamento of tratamentos" [ngValue]="tratamento"> &nbsp; {{ tratamento }} </option>
+                </select>
+                <div *ngIf="validFieldSecond('tratamento')" class="invalid font fs-10" style="text-align: end;"> Dado obrigatorio </div>
+            </div>
+
+            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+              <mat-label class="font f-w-600 m-b-8 d-block">Nome Completo <b style="color: red; margin-left: 3px;">*</b></mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary"  >
+              <input matInput type="text"  class="form-control" formControlName="fullName" [ngStyle]="validFieldSecond('fullName') ? {'border':'1px solid red'}:{}" (blur)="onFullNameSelected()" />
+              @if(second['fullName'].touched && second['fullName'].invalid) {
+                  <mat-hint class="m-b-16 error-msg">
+                  @if(second['fullName'].errors && second['fullName'].errors['required']) {
+                  <div class="error">Dado obrigatorio.</div>
+                  } 
+                  </mat-hint>
+                  }
+              </mat-form-field>
+            </div>
+
+  
+          </div>
+  
+          <div class="row">
+
+            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+              <mat-label class="font f-w-600 m-b-8 d-block"> Aniversario <b style="color: red; margin-left: 3px;">*</b></mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary"  >
+              <input matInput type="text" class="form-control" formControlName="anniversary" [ngStyle]="validFieldSecond('anniversary') ? {'border':'1px solid red'}:{}" placeholder="dd/mm/aaaa" (blur)="onAnniversarySelected()" />
+              @if(second['anniversary'].touched && second['anniversary'].invalid) {
+                  <mat-hint class="m-b-16 error-msg">
+                  @if(second['anniversary'].errors && second['anniversary'].errors['required']) {
+                  <div class="error">Dado obrigatorio / O formato é dd/mm/aaaa.</div>
+                  } 
+                  </mat-hint>
+                  }
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+              <mat-label class="font f-w-600 m-b-8 d-block"> Profissão <b style="color: red; margin-left: 3px;">*</b> <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary"  >
+              <input  type="text" class="form-control w-100 cursor" style="height: 33px; margin-top: 1px;"  matInput [matAutocomplete]="autoProfession2" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="profession">
+              <mat-autocomplete #autoProfession2="matAutocomplete" (optionSelected)="onProfessionSelected( $event)" >
+                <mat-option *ngFor="let option of professionsOptions | async" [value]="option">
+                  <span *ngFor="let letter of option.split('')" >
+                    <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                    <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                  </span>
+                </mat-option>
+              </mat-autocomplete>
+
+              @if(second['profession'].touched && second['profession'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                @if(second['profession'].errors && second['profession'].errors['required']) {
+                <div class="error">Dado obrigatorio.</div>
+                } 
+                </mat-hint>
+                }
+              </mat-form-field>
+            </div>
+
+  
+              
+              <!-- <div class="mt-3 col-sm-12 col-xs-12 col-md-6" >
+                <label class="text w-100 fs-10"> Profissão  <b style="color: red; margin-left: 3px;">*</b> </label>
+                <input type="text" class="form-control w-100 cursor" style="height: 33px; margin-top: 1px;"  matInput [matAutocomplete]="autoProfession2" placeholder="Procure aqui" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="profession">
+                <mat-autocomplete #autoProfession2="matAutocomplete" (optionSelected)="onProfessionSelected( $event)" >
+                  <mat-option *ngFor="let option of professionsOptions | async" [value]="option">
+                    <span *ngFor="let letter of option.split('')" >
+                      <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                      <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                    </span>
+                  </mat-option>
+                </mat-autocomplete>
+                <div *ngIf="validFieldSecond('profession')" class="invalid font fs-10"> Dado obrigatorio </div>
+              
+              </div> -->
+  
+          </div>
+  
+          <div class="row">
+
+            <div class="col-sm-12 col-12 col-md-6 mt-30" >
+              <mat-label class="font f-w-600 m-b-8 d-block"> CPF <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary"  >
+              <input matInput type="text"  class="form-control" formControlName="cpf" [ngStyle]="validField('cpf') ? {'border':'1px solid red'}:{}"  [ngStyle]="showChecked ? {'border':'1px solid green'}:{}" (blur)="checkCPF()" (keyup.enter)="checkCPF()" />
+              <span class="material-icons" style="color: green; position: absolute; top: 17px; transform: translateX(50%); right: 28px;" *ngIf="showChecked" >done</span>
+  
+              <span class="material-icons" style="color: red; position: absolute; top: 17px; transform: translateX(50%); right: 28px; transform: scale(0.85);" *ngIf="validateNumberCount" >close</span>
+            
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-12 col-12 col-md-6" style="margin-top: 60px;">
+              <label class="text fs-10">¿Titular da conta?</label> &nbsp;
+              <mat-slide-toggle formControlName="formOwn" [checked]="secondFormGroup.get('formOwn')?.value === 'formPeople'"  (change)="setAccountOwner($event,'formPeople' )" ></mat-slide-toggle>
+            </div>
+          </div>
+  
+          <!-- emails -->
+          <div class="row mt-30">
+
+            <div class="col-sm-12 col-12 col-md-5 mt-30 " >
+              <mat-label class="font f-w-600 m-b-8 d-block"> E-mail <b style="color: red; margin-left: 3px;">*</b></mat-label>
+              <div class="d-flex justify-content-between align-items-center w-97">
+              <mat-form-field appearance="outline" class="w-100" color="primary"  >
+              <input matInput type="email" class="form-control" formControlName="email" [ngStyle]="( validFieldSecond('email')) ? {'border':'1px solid red'}:{}" />
+              @if(second['email'].touched && second['email'].invalid) {
+                <mat-hint class="m-b-16 error-msg">
+                  @if(second['email'].errors && second['email'].errors['required']) {
+                    <div class="error">Dado obrigatório / Não tem formato de e-mail</div>
+                    } 
+                  </mat-hint>
+                  }
+                </mat-form-field>
+                <button mat-mini-fab color="primary" style="margin-left: 10px;" [matTooltip]="'Adicionar emails'" (click)="addEmail()">
+                  <mat-icon >add</mat-icon>
+                </button>
+              </div>
+            </div>
+  
+   
+  
+             <div class="mt-10 mb-30 col-sm-12 col-12 col-md-7" *ngIf="emailSegmentationPairs.length > 0" >
+  
+                    <div class="row mt-20 mb-10" >
+  
+                      <div class="col-sm-12 col-12 col-md-6" >
+                          <span class="text"> E-mail </span>
+                      </div>
+  
+                      <div class="col-sm-12 col-xs-12 col-md-3">
+                        <span class="d-block text" style="text-align: start;"> Tipo </span>
+                     </div>
+                      <div class="col-sm-12 col-xs-12 col-md-3">
+                          <span class="d-block text" style="text-align: end;"> Ações</span>
+                      </div>
+                    </div>
+               
+                    <div class="row hovering" *ngFor="let email of emailSegmentationPairs; let i = index" >
+                      <div class="col-6 custom-overflow">
+                        <input type="text" [value]="email.email" (keyup.enter)="onEmailChange($event, i); isEditingEmail = false" 
+                        (blur)="onEmailChange($event, i); isEditingEmail = false"  *ngIf="isEditingEmail && i === editingEmailIndex">
+  
+                        <span class="font fs-10 selected" [matTooltip]="email.email" (click)="isEditingEmail = true; editingEmailIndex = i"  *ngIf="!isEditingEmail || i !== editingEmailIndex"> {{email.email}} </span>
+                      </div>
+                      <div class="col-3">
+                        <span *ngIf="(email.segmentation !== '')" style="text-align: start; font-family: poppins-regular; font-size: 1em;"> <b> {{email.segmentation}} </b> </span>
+                        <div class="d-flex flex-column justify-content-start align-items-center" *ngIf="(email.segmentation === '')">
+                          <span class="material-icons  animate__animated animate__flash" style="color: red;">error   </span> 
+                          <span style="color: red; font-size: 0.9em;">(agregar tipo)</span>
+                        </div>
+  
+                      </div>
+  
+                      <div class="col-3" style="text-align: end;">
+                        <span class="material-icons cursor" (click)="toggleCollapseEmail(i)" >more_vert</span>
+                        <mat-icon (click)="removeEmail(email.email)" style="color: red; cursor: pointer;" >delete</mat-icon>
+                      </div>
+  
+                      <div class=" w-100" *ngIf="selectedIndexEmail === i">
+                        <mat-form-field appearance="outline" style="width: 180px !important;" color="primary"  >
+                          <input type="text" class="select cursor"  placeholder="Procure aqui" matInput [matAutocomplete]="autoemail2" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="emailSegmentation">
+                          <mat-autocomplete #autoemail2="matAutocomplete" (optionSelected)="onEmailSelected(email, $event)" >
+                            <mat-option *ngFor="let option of emailsOptions | async" [value]="option">
+                              <span *ngFor="let letter of option.split('')">
+                                <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                                <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                              </span>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        <span class="font fs-10 selected" (click)="toggleCollapseEmail(i)"> Selecionar</span> 
+                        </div>
+                      
+                      </div> 
+            </div> 
+          </div>
+          
+          <!-- phones -->
+         <div class="row mt-20">
+
+          <div class="col-sm-12 col-12 col-md-5 mt-30 " >
+            <mat-label class="font f-w-600 m-b-8 d-block"> Telefone <b style="color: red; margin-left: 3px;">*</b></mat-label>
+            <div class="d-flex justify-content-between align-items-center w-97">
+            <mat-form-field appearance="outline" class="w-100" color="primary"  >
+            <input matInput type="email" formControlName="phone" [ngStyle]="( validFieldSecond('phone')) ? {'border':'1px solid red'}:{}" />
+            @if(second['phone'].touched && second['phone'].invalid) {
+              <mat-hint class="m-b-16 error-msg">
+                @if(second['phone'].errors && second['phone'].errors['required']) {
+                  <div class="error">Dado obrigatório / Não tem formato de e-mail</div>
+                  } 
+                </mat-hint>
+                }
+              </mat-form-field>
+              <button mat-mini-fab color="primary" style="margin-left: 10px;" [matTooltip]="'Adicionar telefone'" (click)="addPhone()">
+                <mat-icon >add</mat-icon>
+              </button>
+            </div>
+          </div>
+           
+            <div class="mb-30 mt-10 col-sm-12 col-12 col-md-7" *ngIf="phoneSegmentationPairs.length > 0">
+              
+              <div class="row mt-20 mb-10" >
+
+                <div class="col-sm-12 col-12 col-md-6 " >
+                    <span class="text"> Telefone</span>
+                </div>
+  
+                <div class="col-sm-12 col-12 col-md-3 ">
+                  <span class="d-block text" style="text-align: start;"> Tipo </span>
+               </div>
+                <div class="col-sm-12 col-12 col-md-3 ">
+                    <span class="d-block text" style="text-align: end;"> Ações</span>
+                </div>
+             </div>
+  
+              <div  class="row hovering" *ngFor="let phone of phoneSegmentationPairs; let i = index" >
+  
+               <div class="col-6 custom-overflow">
+                  <input type="text" [value]="phone.phone" (keyup.enter)="onPhoneChange($event, i); isEditingPhone = false" (blur)="onPhoneChange($event, i); isEditingPhone = false"  *ngIf="isEditingPhone && i === editingPhoneIndex">
+  
+                  <span class="font fs-10 selected" [matTooltip]="phone.phone" (click)="isEditingPhone = true; editingPhoneIndex = i"  *ngIf="!isEditingPhone || i !== editingPhoneIndex"> {{phone.phone}} </span>
+                </div>
+                <div class="col-3 ">
+                  <b *ngIf="(phone.segmentation !== '')" style="text-align: start; font-family: poppins-regular; font-size:1em;"> <b> {{phone.segmentation}}</b> </b>
+                  <div class="d-flex flex-column justify-content-start align-items-center" *ngIf="(phone.segmentation === '')">
+                    <span class="material-icons  animate__animated animate__flash" style="color: red;">error   </span> 
+                    <span style="color: red; font-size: 0.9em;">(agregar tipo)</span>
+                  </div>
+  
+                </div>
+  
+                <div class="col-3" style="text-align: end;" >
+                  <span class="material-icons cursor" (click)="toggleCollapsePhone(i)" >more_vert</span>
+                  <mat-icon (click)="removePhone(phone.phone)" style="color: red; cursor: pointer;" >delete</mat-icon>
+                </div>
+  
+  
+                <div class="collapse w-100" *ngIf="selectedIndexPhone === i">
+                  <mat-form-field appearance="outline" style="width: 180px !important;" color="primary"  >
+                    <input type="text" class="select cursor" style="height: 33px; margin-top: 1px;" placeholder="Procure aqui" matInput [matAutocomplete]="autophone" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="phoneSegmentation">
+                    <mat-autocomplete #autophone="matAutocomplete" (optionSelected)="onPhoneSelected(phone, $event)" style="width: 100px;">
+                      <mat-option *ngFor="let option of phonesOptions | async" [value]="option">
+                        <span *ngFor="let letter of option.split('')">
+                          <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                          <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                        </span>
+                      </mat-option>
+                    </mat-autocomplete>
+                    </mat-form-field>
+                    <span class="font fs-10 selected" (click)="toggleCollapsePhone(i)"> Selecionar</span> 
+                  </div>
+                <!-- </div> -->
+          
+              </div>
+            </div>
+          </div> 
+  
+          <div class="row">
+              <div class="col-sm-12 col-xs-12 col-md-4 mt-30 mb-5">
+                  <button type="button" class="acceptButton w-100 fs-10" style="height: 40px;" (click)="validateStepTwo()" matStepperNext [disabled]="secondFormGroup.invalid || showErrorAnniversary" >
+                    Próximo
+                  </button>
+              </div>
+          </div>
+  
+          <!-- added persons -->
+          <mat-divider style="margin-top: 30px;"></mat-divider>
+
+          <div class="d-flex flex-column justify-content-start align-items-center w-97 mt-30" style="margin-bottom: 60px;" *ngIf="relatedPerson.length > 0"> 
+
+           <span class="d-block w-100 text fs-12">  Pessoas adicionadas </span>
+  
+            <table class="table mt-30 font fs-10 w-100">
+              <thead>
+                <tr>
+                  <th style="text-align: start;">Nome Completo</th>
+                  <th style="text-align: start;">Telefone</th>
+                  <th style="text-align: start;">Relacão</th>
+                  <th style="text-align: start;">CPF</th>
+                  <th style="text-align: end;">Ações</th>
+                </tr>
+              </thead>
+              <mat-divider style="margin-bottom: 5px;"></mat-divider>
+              <tbody >
+                <tr *ngFor="let person of relatedPerson, let i = index" style="background-color: rgb(240, 240, 240);" >
+                  <td>
+                    <span class="selected"  (click)="editRelacaoPerson(person, i)"> {{ person?.fullName }} </span>
+                  </td>
+                  
+                  <td>
+                    <span  [matTooltip]="person.phone?.phone" > {{ person?.phone }} ({{ person?.segmentation }}) </span>
+                  </td>
+                
+                  <td> {{person?.relationship}} </td>
+  
+                  <td >  <span *ngIf="person.cpf && person.cpf !== ''"> {{ person.cpf }} (titular) </span> </td>
+                  <td>
+                    <div class="d-flex justify-content-end align-items-center " >
+                      <mat-icon (click)="removeAddedPerson(person)" class="delete" >delete</mat-icon>
+                    </div>
+                  </td>
+            
+                </tr>
+                <tr>
+         
+              </tbody>
+            </table>
+  
+           </div>
+  
+        </form>
+  
+  
+        <form [formGroup]="relacaoFormGroup">
+          <div class="d-flex justify-content-start align-items-center w-97" style="margin-bottom: 30px;">
+           <span class="text fs-12"> Adicionar pessoa </span>
+           <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" style="margin-left: 10px;" [matTooltip]="'Adicionar pessoa'" (click)="goToRelatedPerson()">
+            <mat-icon >person_add</mat-icon>
+           </button>
+          </div>
+  
+          <div class="row w-100" *ngIf="showAddPerson" >
+  
+              <div class="row w-100 pd-20">
+
+                <div class="col-sm-12 col-12 col-md-6" >
+                  <mat-label class="font f-w-600 m-b-8 d-block">Nome Completo <b style="color: red; margin-left: 3px;">*</b></mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input matInput type="text"  formControlName="fullNameRelacao" [ngStyle]="relacaoValidField('fullNameRelacao') ? {'border':'1px solid red'}:{}" />
+                  @if(relacao['fullNameRelacao'].touched && relacao['fullNameRelacao'].invalid) {
+                      <mat-hint class="m-b-16 error-msg">
+                      @if(relacao['fullNameRelacao'].errors && relacao['fullNameRelacao'].errors['required']) {
+                      <div class="error">Dado obrigatorio.</div>
+                      } 
+                      </mat-hint>
+                      }
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-12 col-md-6" >
+                  <mat-label class="font f-w-600 m-b-8 d-block"> Relacão <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                  <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                  <input  type="text"  class="select w-100 cursor" style="height: 34px; margin-top: 1px;"  matInput [matAutocomplete]="autorelacao" placeholder="Procure aqui" [ngStyle]="relacaoValidField('relationship') ? {'border':'1px solid red'}:{}" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="relationship">
+                  <mat-autocomplete #autorelacao="matAutocomplete" (optionSelected)="onRelacaoSelected( $event)">
+                    <mat-option *ngFor="let option of relacaosOptions | async" [value]="option">
+                      <span *ngFor="let letter of option.split('')">
+                        <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                        <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                      </span>
+                    </mat-option>
+                  </mat-autocomplete>
+                  @if(relacao['relationship'].touched && relacao['relationship'].invalid) {
+                    <mat-hint class="m-b-16 error-msg">
+                    @if(relacao['relationship'].errors && relacao['relationship'].errors['required']) {
+                    <div class="error">Dado obrigatorio.</div>
+                    } 
+                    </mat-hint>
+                    }
+            
+                  </mat-form-field>
+                </div>
+
+              </div>
+                
+                <!-- phones -->
+              <div class="row w-100 pd-20">
+
+                  <div class="col-sm-12 col-12 col-md-5" >
+                    <mat-label class="font f-w-600 m-b-8 d-block"> Telefone <b style="color: red; margin-left: 3px;">*</b></mat-label>
+                    <div class="d-flex justify-content-between align-items-center w-97">
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="email"  formControlName="relacaoPhone" [ngStyle]="(relacaoValidField('relacaoPhone') ||relacaoTelephoneError) ? {'border':'1px solid red'}:{}" />
+                    @if(relacao['relacaoPhone'].touched && relacao['relacaoPhone'].invalid || relacaoTelephoneError) {
+                      <mat-hint class="m-b-16 error-msg">
+                        @if(relacao['relacaoPhone'].errors && relacao['relacaoPhone'].errors['required']) {
+                          <div class="error">Dado obrigatório / Não tem formato de e-mail</div>
+                          } 
+                        </mat-hint>
+                        }
+                      </mat-form-field>
+                      <button mat-mini-fab color="primary" style="margin-left: 10px;" [matTooltip]="'Adicionar telefone'" (click)="addRelacaoPhone()">
+                        <mat-icon >add</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+
+  
+                <div class="mb-30  col-sm-12 col-12 col-md-7" *ngIf="relacaoPhoneSegmentationPairs.length > 0">
+                  <div class="row mt-20 mb-10" >
+      
+                    <div class="col-sm-12 col-12 col-md-6 " >
+                        <span class="text"> Telefone</span>
+                    </div>
+      
+                    <div class="col-sm-12 col-12 col-md-3 ">
+                      <span class="d-block text" style="text-align: start;"> Tipo </span>
+                    </div>
+                    <div class="col-sm-12 col-12 col-md-3 ">
+                        <span class="d-block text" style="text-align: end;"> Ações</span>
+                    </div>
+                  </div>
+      
+                  <div  class="row hovering" *ngFor="let phone of relacaoPhoneSegmentationPairs; let i = index" >
+      
+                    <div class="col-6 custom-overflow">
+                        <span class="font fs-10 " [matTooltip]="phone.phone"> {{phone.phone}} </span>
+                    </div>
+                    <div class="col-3">
+                        <span *ngIf="(phone.segmentation !== '')" style="text-align: start ; font-family: poppins-regular; font-size: 1em;"> <b> {{phone.segmentation}} </b> </span>
+                        <div class="d-flex flex-column justify-content-start align-items-center" *ngIf="(phone.segmentation === '')">
+                          <span class="material-icons  animate__animated animate__flash" style="color: red;">error   </span> 
+                          <span style="color: red; font-size: 0.9em;">(agregar tipo)</span>
+                        </div>
+                    </div>
+                    <div class="col-3" style="text-align: end;" >
+                      <span class="material-icons cursor" (click)="toggleCollapseRelacaoPhone(i)" >more_vert</span>
+                      <mat-icon (click)="removeRelacaoPhone(phone.phone)" style="color: red;">delete</mat-icon>
+                    </div>
+      
+      
+                    <div class="collapse w-100" *ngIf="selectedIndexRelacaoPhone === i">
+                      <mat-form-field appearance="outline" style="width: 180px !important;" color="primary"  >
+                        <input type="text" class="select cursor" style="height: 33px; margin-top: 1px;" placeholder="Procure aqui" matInput [matAutocomplete]="autorelacaophone" (keyup)="onSearchChange($event)" (blur)="clearSearch()" formControlName="relacaoPhoneSegmentation">
+                        <mat-autocomplete #autorelacaophone="matAutocomplete" (optionSelected)="onRelacaoPhoneSelected(phone.phone, $event)" style="width: 100px;">
+                          <mat-option *ngFor="let option of phonesOptions | async" [value]="option">
+                            <span *ngFor="let letter of option.split('')">
+                              <span *ngIf="searchText.toLowerCase().includes(letter.toLowerCase())"><b>{{ letter }}</b></span>
+                              <span *ngIf="!searchText.toLowerCase().includes(letter.toLowerCase())">{{ letter }}</span>
+                            </span>
+                          </mat-option>
+                        </mat-autocomplete> 
+                        </mat-form-field>
+                        <span class="font fs-10 selected" (click)="toggleCollapseRelacaoPhone(i)"> Selecionar</span> 
+                    </div>
+              
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row w-100 pd-20">
+      
+                <div class="col-sm-12 col-12 col-md-6" style="margin-top: 30px; margin-bottom: 40px;">
+                  <label class="text fs-10">¿Titular da conta?</label> &nbsp;
+                  <mat-slide-toggle formControlName="relacaoOwn" [checked]="relacaoFormGroup.get('relacaoOwn')?.value === 'relacaoPeople'"  (change)="setAccountOwner($event,'relacaoPeople' )" ></mat-slide-toggle>
+                </div>
+  
+                <div class="mb-30 col-sm-12 col-12 col-md-6" style="position: relative;" *ngIf="relacaoFormGroup.get('relacaoOwn')?.value === 'relacaoPeople'">
+
+                    <mat-label class="font f-w-600 m-b-8 d-block"> CPF <b style="color: red; margin-left: 3px;">*</b> </mat-label>
+                    <mat-form-field appearance="outline" class="w-100" color="primary"  >
+                    <input matInput type="text"  class="form-control" formControlName="cpfRelacao" [ngStyle]="validField('cpfRelacao') ? {'border':'1px solid red'}:{}" [ngStyle]="showCheckedRelacao ? {'border':'1px solid green'}:{}"   (blur)="checkCPFRelacao()" (keyup.enter)="checkCPFRelacao()" />
+                    <span class="material-icons" style="color: green; position: absolute; top: 17px; transform: translateX(50%); right: 35px;" *ngIf="showCheckedRelacao" >done</span>
+      
+                    <span class="material-icons" style="color: red; position: absolute; top: 17px; transform: translateX(50%); right: 35px; transform: scale(0.85);" *ngIf="validateNumberCountRelacao" >close</span>
+                    </mat-form-field>
+
+                    <div *ngIf="validateNumberCountRelacao" class="invalid font fs-10"> {{validateNumberCountRelacao}} </div>
+                    <div *ngIf="relacaoFormGroup.get('relacaoOwn')?.value === 'relacaoPeople' && (relacaoFormGroup.get('cpfRelacao')?.value === '' || relacaoFormGroup.get('cpfRelacao')?.value) === null"  class="invalid font fs-10"> Dado obrigatorio </div>
+                </div>
+              </div>
+  
+            <div class="d-flex justify-content-center align-items-center mb-30 pd-20" style="width: 200px;">
+              <button type="button" class="acceptButton w-100 fs-10" style="height: 40px;  font-family: poppins-regular;" (click)="saveAddedPerson()">
+                  <span  *ngIf="!isEditingRelacaoPerson" > Adicionar pessoa</span>
+                  <span  *ngIf="isEditingRelacaoPerson" > Editar pessoa</span>
+              </button>
+            
+            </div>
+  
+          </div> 
+        </form> 
+  
+        <div #person></div>
+  
+        <button mat-button matStepperPrevious  class="selected" style="font-family: poppins-regular; font-size: 1.5em;">Voltar</button>
+            
+      </mat-step>
+  
+      <mat-step [stepControl]="thirdFormGroup"   >
+        <ng-template matStepLabel> <span class="font bold" style="font-size: 1em !important;"> 3. Endereço</span> </ng-template>
+  
+        <app-form-address></app-form-address>
+  
+        <button mat-button matStepperPrevious  class="selected" style="font-family: poppins-regular; font-size: 1.5em;">Voltar</button>
+      </mat-step>
+  
+      <mat-step [stepControl]="fourthFormGroup">
+        <ng-template matStepLabel> <span class="font bold" style="font-size: 1em !important;"> 4. Dados bancarios</span> </ng-template>
+  
+        <!-- <app-bank-data></app-bank-data> -->
+        <app-data-bank></app-data-bank>
+  
+        <button mat-button matStepperPrevious  class="selected" style="font-family: poppins-regular; font-size: 1.5em;">Voltar</button>
+      </mat-step>
+  
+      <mat-step>
+        <ng-template matStepLabel> <span class="font bold" style="font-size: 1em !important;"> 5. Resumo</span> </ng-template>
+            <app-summary
+            [diocese]="firstFormGroup.get('diocese')?.value"
+            [fonte]="firstFormGroup.get('fonte')?.value"
+            [result]="firstFormGroup.get('result')?.value"
+            [city]="firstFormGroup.get('city')?.value"
+            [association]="firstFormGroup.get('association')?.value"
+            [fullName]="secondFormGroup.get('fullName')?.value"
+            [tratamento]="secondFormGroup.get('tratamento')?.value"
+            [anniversary]="secondFormGroup.get('anniversary')?.value"
+            [profession]="secondFormGroup.get('profession')?.value"
+            [cpf]="secondFormGroup.get('cpf')?.value"
+            [formOwn]="secondFormGroup.get('formOwn')?.value"
+            ></app-summary>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  
+    <div class="loading-overlay" *ngIf="isLoading">
+      <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div> 
+    
+    
+    

@@ -94,6 +94,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-family: 'poppins-regular';
     }
 
+
+
       
     .text-end{
       text-align: end;
@@ -181,6 +183,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-family:'poppins-regular';
       background-color: red;
       color: white;
+    }
+
+    .bold{
+      font-weight: bold;
     }
     
     .border{
@@ -757,6 +763,7 @@ input{
     width: 2000px !important;
    
   }
+
 
     // bootstrap
   .d-flex{
