@@ -1,1 +1,92 @@
-<p>documents works!</p>
+
+
+<div class="cardWithShadow w-100 animate__animated animate__fadeIn pd-10 w-100"  >
+
+    <div class="d-flex justify-content-end align-items-center mt-30 w-100">
+
+        <button type="button" class="acceptButton"  (click)="showModalUploadPdf()"> <i class="fas fa-upload"  [matTooltip]="'Subir tudo'"></i>&nbsp;  Subir documentos</button>
+    </div>
+
+    <div class="d-flex flex-wrap  align-items-start mt-50 w-100 ">
+    
+        <app-context-menu
+              [showContextMenu]="showContextMenu"
+              [contextMenuPosition]="contextMenuPosition"
+              *ngIf="arrDocument.length > 0"
+        ></app-context-menu>
+        
+      <div class="" *ngIf="arrDocument.length === 0" style="margin-bottom: 100px;" >
+
+       <div class="d-flex justify-content-between align-items-center rectangule w-100 " style="border-left: 5px solid #3370f5; width: 300px;" >
+          <span class="material-symbols-outlined" style="color: rgb(255, 170, 0);">info</span>
+
+            <span class="d-block w-100 ml-10"  style="color: black;" >
+                Sem documentos para mostrar...
+            </span>
+          </div>
+   
+      </div>
+
+      <div  *ngFor="let doc of arrDocument, index as i " class="card-container" >
+          <div class="shadow mb-30 pdfSelection" style="padding: 10px;   " >
+
+            <div *ngIf="(doc.type | fileType) === 'image' " (click)="onView(doc)"  class="cursor">
+              <img  [src]="doc | imagenDocPath" alt="Imagen" class="img-fluid" >
+              &nbsp; 
+            </div>
+
+            <!-- Alternativa para el caso en que el tipo de documento no sea una imagen -->
+              <pdf-viewer
+                [src]="doc | imagenDocPath"
+                [original-size]="true"
+                [show-all]="false"
+                [zoom]="0.3"
+                class="custom-size-viewer cursor"
+                *ngIf="(doc.type | fileType) === 'pdf' "
+                (click)="onView(doc)" >
+              </pdf-viewer>
+              
+              <a class="w-100 mt-3 cursor"  (click)="onView(doc)" *ngIf="(doc.type | fileType) === 'pdf' ">{{ doc.originalName }}</a>
+
+              <a class="w-100 mt-3 cursor"  (click)="onView(doc)" *ngIf="(doc.type | fileType) === 'image' ">{{ doc.originalName }}</a>
+
+              <div class="text-white d-flex justify-content-between align-items-center p-2" style="background-color: rgb(10, 120, 255);">
+            
+              <div class="d-flex justify-content-around">
+
+                <span class="material-icons" style="cursor: pointer; text-align: center; font-size: 20px; margin-left: 10px; "   (click)="deleteDocById(doc)"
+                [matTooltip]="'Excluir documento'">delete</span>
+
+                <span class="material-icons" style="cursor: pointer; text-align: center; font-size: 20px; margin-left: 20px;"
+                (click)="downloadPdf(doc)" [matTooltip]="'Baixar documento'">cloud_download</span>
+            
+              </div>
+            
+          
+                <div class="form-check">
+                  <input class="form-check-input cursor" type="checkbox" value="" id="{{'defaultCheck' + doc.iddocument}}" [checked]="arrIds.includes(doc.iddocument)" (change)="onCheckboxChange($event, doc)">
+                  <label class="form-check-label font fs-10" [for]="'defaultCheck' + doc.iddocument">
+                    Seleccionar
+                  </label>
+                </div>
+            
+              
+          </div>
+         </div>
+      </div>
+
+    </div>
+</div>
+
+
+<div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner-grow " role="status" style="width: 50px; height: 50px;"  >
+      <span class="sr-only">Loading...</span>
+    </div>
+</div> 
+  
+  
+
+
+
+

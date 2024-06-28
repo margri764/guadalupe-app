@@ -1,21 +1,29 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalComponent } from '../../modals/delete-modal/delete-modal/delete-modal.component';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, Subscription, filter, take, takeUntil } from 'rxjs';
+import { Subject, Subscription, filter, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/shared/redux/app.reducer';
 import * as authActions from 'src/app/shared/redux/auth.actions'
 import { UserService } from 'src/app/services/user.service';
 import { ImageUploadService } from 'src/app/services/image-upload.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ViewDocumentModalComponent } from '../../modals/view-document-modal/view-document-modal/view-document-modal.component';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from 'src/app/material.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ImagenDocPathPipe } from "../../../pipe/imagen-doc-path.pipe";
+import { FileTypePipe } from "../../../pipe/file-type.pipe";
+import { ContextMenuComponent } from "../../context-menu/context-menu/context-menu.component";
+import { UploadDocumentModalComponent } from '../../modals/upload-document-modal/upload-document-modal/upload-document-modal.component';
 
 @Component({
-  selector: 'app-documents',
-  standalone: true,
-  imports: [],
-  templateUrl: './documents.component.html',
-  styleUrl: './documents.component.scss'
+    selector: 'app-documents',
+    standalone: true,
+    templateUrl: './documents.component.html',
+    styleUrl: './documents.component.scss',
+    imports: [CommonModule, MaterialModule, PdfViewerModule, ImagenDocPathPipe, FileTypePipe, ContextMenuComponent]
 })
 export class DocumentsComponent {
 
@@ -319,14 +327,11 @@ export class DocumentsComponent {
   }
   
   showModalUploadPdf(){
-  
-      const modalRef = this.modalService.open(UploadDocumentsComponent,{
-           centered: true,
-           windowClass: 'custom-modal-uploadDoc',
-         });
-      modalRef.componentInstance.data =  this.user;
-  
-    
+    this.dialog.open(UploadDocumentModalComponent,{
+      maxWidth: (this.phone) ? "97vw": '900px',
+      maxHeight: (this.phone) ? "90vh": '90vh',
+      data: this.user
+    });
   }
   
   successToast( msg:string){
@@ -339,19 +344,16 @@ export class DocumentsComponent {
   }
   
   onView( doc:any){
-  
-      const modalRef = this.modalService.open(ViewDocumentModalsComponent,{
-        keyboard: true, 
-        backdrop: 'static',
-        size: 'xl',
-      });
-    
-      modalRef.componentInstance.data = { doc, arrDocument: this.arrDocument  }
-  
+
+    this.dialog.open(ViewDocumentModalComponent,{
+      maxWidth: (this.phone) ? "97vw": '800px',
+      maxHeight: (this.phone) ? "90vh": '90vh',
+      data:{ doc, arrDocument: this.arrDocument  }
+    });
+   
   }
   
   ngOnDestroy(): void {
-   
     if(this.subscription){
       this.subscription.unsubscribe();
       this.subscriptionBulk.unsubscribe();

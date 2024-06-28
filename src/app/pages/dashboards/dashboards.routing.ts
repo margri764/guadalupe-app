@@ -30,6 +30,7 @@ import { PropulsoesComponent } from '../propulsoes/propulsoes/propulsoes.compone
 import { CurrienciesComponent } from '../curriencies/curriencies/curriencies.component';
 import { AssignDioceseDrawerComponent } from '../drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component';
 import { BackgroundsComponent } from '../backgrounds/backgrounds/backgrounds.component';
+import { NewDonorFormComponent } from '../new-donor-form/new-donor-form/new-donor-form.component';
 
 export const DashboardsRoutes: Routes = [
   {
@@ -61,6 +62,7 @@ export const DashboardsRoutes: Routes = [
       { path: 'propulsoes', component: PropulsoesComponent,  data: { title: 'Propulsões' } },
       { path: 'moedas', component: CurrienciesComponent,  data: { title: 'Moedas' } },
       { path: 'images-de-fundo', component: BackgroundsComponent,  data: { title: 'Images de fundo' } },
+      { path: 'formulario-do-doador', component: NewDonorFormComponent,  data: { title: 'Formulário do doador' } },
       // { path: 'drawer', component: AssignDioceseDrawerComponent,  data: { title: 'Drawer' } },
       { path: 'editar-usuario/:id',  component: EditUserComponent , data:{ title:"Editar Usuário"}},
     ],

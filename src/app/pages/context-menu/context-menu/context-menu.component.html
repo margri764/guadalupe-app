@@ -1,0 +1,14 @@
+
+<div class="context-menu" *ngIf="showContextMenu" [style.left.px]="contextMenuPosition.x" [style.top.px]="contextMenuPosition.y">
+   
+    <a class="dropdown-item font fs-10 mt-1" (click)="menuItemClicked('selectAll')" [ngClass]="{ 'disabled': selected }"> <i class="far fa-check-square"></i> &nbsp;&nbsp;&nbsp; Selecionar todos</a>
+
+    <a class="dropdown-item font fs-10 mt-1" (click)="menuItemClicked('deselectAll')" [ngClass]="{ 'disabled': !selected }" > <i class="far fa-check-square"></i> &nbsp;&nbsp;&nbsp; Desselecionar todos</a>
+   
+   
+    <a class="dropdown-item font fs-10" (click)="menuItemClicked('deleteAll')" [ngClass]="{ 'disabled': !selected }"> <i class="fas fa-trash-alt"></i> &nbsp;&nbsp;&nbsp; Excluir selecionados </a>
+   
+    <a class="dropdown-item font fs-10" (click)="menuItemClicked('downloadAll')" [ngClass]="{ 'disabled': !downloadAll }"> <i class="fas fa-download"></i> &nbsp;&nbsp;&nbsp; Baixar selecionados </a>
+
+</div>
+  

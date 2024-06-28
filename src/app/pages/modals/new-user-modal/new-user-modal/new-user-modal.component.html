@@ -20,7 +20,7 @@
 
                     <div class="d-flex  justify-content-center align-items-center">
                         <i-tabler name="user-circle" class="icon-20 m-r-8" style="transform: scale(1.2);"></i-tabler>
-                        <span class="font fs-12"> Novo Conta </span>
+                        <span class="font fs-11 text"> Novo Conta </span>
                     </div>
                     
                 </ng-template>
@@ -226,7 +226,7 @@
                     
                     <div class="d-flex  justify-content-center align-items-center">
                         <i-tabler name="shield" class="icon-20 m-r-8" style="transform: scale(1.2);"></i-tabler>
-                        <span class="font fs-12"> Roles </span>
+                        <span class="font fs-11 text"> Roles </span>
                     </div>
                     
                 </ng-template>
@@ -234,16 +234,13 @@
                 <!-- <mat-card-content  style="margin-top: 35px; padding: 20px !important; overflow-x: hidden !important; height: 90vh;" [ngStyle]="phone ? {'width':'97vw'}:{'width':'705px'}" > -->
 
 
-                        <mat-radio-group  class="vertical-radio-group" [(ngModel)]="roleSelected" (change)="handleRoleChange()">
-    
-                            <mat-radio-button value="user"> <span class="mat-radio-button">Usúario </span></mat-radio-button> &nbsp;&nbsp;
-                            
-                            <mat-radio-button value="admin" *ngIf="loggedUser?.role === 'webmaster' || loggedUser?.role === 'super_admin'"><span class="mat-radio-button"> Administrador </span></mat-radio-button> &nbsp;&nbsp;
-                            
-                            <mat-radio-button value="super_admin" *ngIf="loggedUser?.role === 'webmaster'"> <span class="mat-radio-button"> Super Administrador </span> </mat-radio-button> &nbsp;&nbsp;
-                            
-                            <mat-radio-button value="webmaster" *ngIf="loggedUser?.role === 'webmaster'"> <span class="mat-radio-button"> Webmaster </span> </mat-radio-button>
-                        </mat-radio-group>
+                <mat-checkbox (change)="handleRoleChange('user')" [checked]="role === 'user'"> <span class="font fs-10">Usúario </span></mat-checkbox> &nbsp;&nbsp;
+                
+                <mat-checkbox (change)="handleRoleChange('admin')" [checked]="role === 'admin'" *ngIf="loggedUser?.role === 'webmaster' || loggedUser?.role === 'super_admin'"><span class="font fs-10"> Administrador </span></mat-checkbox> &nbsp;&nbsp;
+                
+                <mat-checkbox (change)="handleRoleChange('super_admin')" [checked]="role === 'super_admin'" *ngIf="loggedUser?.role === 'webmaster'"> <span class="font fs-10"> Super Administrador </span> </mat-checkbox> &nbsp;&nbsp;
+                
+                <mat-checkbox (change)="handleRoleChange('webmaster')" [checked]="role === 'webmaster'" *ngIf="loggedUser?.role === 'webmaster'"> <span class="font fs-10"> Webmaster </span> </mat-checkbox>
 
                         
                 </mat-card-content>

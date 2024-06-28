@@ -355,16 +355,15 @@ export class EditUserComponent {
               }
             }
   
-          const Data_Nascimento = this.myForm.get('Data_Nascimento')?.value;
-          const momentDate = new Date( Data_Nascimento.year, Data_Nascimento.month - 1, Data_Nascimento.day );
-  
-          let birthdayFormatted = null;
-          if(Data_Nascimento !== null && Data_Nascimento !== ''){
-            birthdayFormatted = moment(momentDate).format('YYYY-MM-DD');
-          }else{
-            birthdayFormatted = null;
-          }
-  
+            const Data_Nascimento = this.myForm.get('Data_Nascimento')?.value;
+            const momentDate = new Date(Data_Nascimento);
+            let birthdayFormatted = null;
+            if (!isNaN(momentDate.getTime())) {
+              birthdayFormatted = moment(momentDate).format('YYYY-MM-DD');
+            } else {
+                birthdayFormatted = null;
+            }
+
           
           const { dupla,  ...bodyWithOutDupla } = this.userCongregatio;
   
@@ -414,17 +413,16 @@ export class EditUserComponent {
   
           this.isLoading = true;
   
-          const Data_Nascimento = this.myForm.get('Data_Nascimento')?.value;
-          const momentDate = new Date( Data_Nascimento.year, Data_Nascimento.month -1 , Data_Nascimento.day );
           let selectedPropulsao = this.myForm.get('idpropulsao')?.value;  
   
+            const Data_Nascimento = this.myForm.get('Data_Nascimento')?.value;
+            const momentDate = new Date(Data_Nascimento);
             let birthdayFormatted = null;
-          if(Data_Nascimento !== null && Data_Nascimento !== ''){
-            birthdayFormatted = moment(momentDate).format('YYYY-MM-DD');
-          }else{
-            birthdayFormatted = null;
-          }
-  
+            if (!isNaN(momentDate.getTime())) {
+              birthdayFormatted = moment(momentDate).format('YYYY-MM-DD');
+            } else {
+                birthdayFormatted = null;
+            }
           body = {
             ...body,
             Data_Nascimento: birthdayFormatted,
@@ -558,9 +556,10 @@ export class EditUserComponent {
       return [{key:'', value:''}]
     }
   
-    handleRoleChange(  ){
-  
-      const body = {role : this.roleSelected}
+    handleRoleChange( value:string ){
+      this.roleSelected = value;
+      const body = {role : value};
+      this.user.role = value;
       this.userService.setRole( body, this.user.iduser ).subscribe(
         ( {success} )=>{
           if(success){
@@ -867,6 +866,14 @@ export class EditUserComponent {
   
   
   selectedDupla(){
+
+    const authorizedRoles = ['admin', 'super_admin'];
+
+    if( !authorizedRoles.includes(this.user.role)){
+      this.warningToast('Você precisa ser um administrador ou superadministrador para realizar esta ação')
+      return
+    }
+
     const dupla = this.myForm.get('dupla')?.value;
   
     console.log(this.userDupla);
@@ -893,6 +900,7 @@ export class EditUserComponent {
   }
   
   searchUser(){
+
 
     const dialogRef = this.dialog.open(SearchUserModalComponent,{
       maxWidth: (this.phone) ? "97vw": '800px',

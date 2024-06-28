@@ -21,14 +21,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
   
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: 'poppins-regular';
+      font-family: 'poppins-regular' !important;
     }
 
     .swal2-title, .swal2-content, .swal2-footer {
       font-family: 'poppins-regular';
     }
     
-  
   
   .font{
       font-family: 'poppins-regular';
@@ -69,7 +68,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-size: 1.5em;
     }
   
-
   
     .f-w {
       color: white;
@@ -101,15 +99,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       text-align: end;
     }
 
-    
-
-
     textarea{
       border-radius: 5px;
       border-color: rgb(135, 135, 135);
       font-family: 'poppins-regular';
       font-size: 1em;
-
     }
 
     .mat-column-action {
@@ -137,8 +131,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     width: 100%;
   
   }
-  
-
     .acceptButton{
       background-color: rgb(0, 119, 255); 
       border : 1px solid rgb(0, 119, 255) ;
@@ -533,6 +525,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       background-color: rgb(188, 210, 202);
       transition: all 0.2s ease 0s;
       margin-top: 2px;
+      font-family: 'poppins-regular';
+
     }
   
     .select{
@@ -541,6 +535,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-size: 1.1em; 
       border-radius: 5px;
       width: 100%;
+      font-family: 'poppins-regular';
+
     }
     
     
@@ -703,7 +699,12 @@ input{
   }
 
   
-  
+  .invalid{
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    font-size: 0.85em;
+  }
   
   .invalid{
     color: red; 
@@ -854,13 +855,7 @@ input{
   }
   
   
-  .invalid{
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: nowrap;
-    font-size: 0.85em;
-  }
-  
+
   
   .uploadLogo{
     width: 100px; 

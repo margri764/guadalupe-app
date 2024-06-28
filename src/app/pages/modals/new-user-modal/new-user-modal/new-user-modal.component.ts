@@ -256,8 +256,10 @@ onSave(){
         })
 }
    
-handleRoleChange( ){
-  this.role = this.roleSelected;
+
+handleRoleChange( value:string ){
+    this.roleSelected = value;
+    this.role = this.roleSelected;
 }
 
 validField( field: string ) {

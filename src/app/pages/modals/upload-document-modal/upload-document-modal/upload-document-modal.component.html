@@ -1,0 +1,107 @@
+
+
+  <div class="d-flex justify-content-between align-items-center pd-10">
+      <h1 mat-dialog-title style="font-family: poppins-regular;">Arquivos </h1>
+      <span class="material-icons cursor " [ngClass]="backClose ? ' iconSelected':'iconDeselected' " (click)="closeViewModal()">close</span>
+  </div>
+
+  <div class="d-flex justify-content-center w-100 pd-20">
+      <div class="border w-100"></div>
+  </div>    
+    
+  <mat-dialog-content  class="d-flex justify-content-center pd-20" [ngStyle]="phone ? {'width':'97vw'}:{'width':'900px'}">
+      
+      <div class="row w-100 animate__animated animate__fadeIn "  >
+
+          <div class="col-sm-12 col-12 col-md-3" style="padding: 10px; " >
+      
+            <ngx-dropzone (change)="onSelect($event)" >
+              <ngx-dropzone-label>Arraste e solte os arquivos aqui ou clique para selecionar.</ngx-dropzone-label>
+            </ngx-dropzone>
+          </div>
+
+     
+          <div class="col-sm-12 col-12 col-md-9" style="overflow: auto;"   >
+
+            <table mat-table [dataSource]="dataSource"   >
+  
+              <ng-container matColumnDef="name" >
+                  <th mat-header-cell *matHeaderCellDef  > Nome </th>
+                  <td mat-cell *matCellDef="let file"> 
+                      {{ file.name }}
+                 </td>
+                </ng-container>
+         
+      
+              <ng-container matColumnDef="size">
+                  <th mat-header-cell *matHeaderCellDef > Tamanho	 </th>
+                  <td mat-cell *matCellDef="let file"> 
+                       {{ file.size | fileSize }}
+                  </td>
+                </ng-container>
+      
+          
+              <ng-container matColumnDef="progress">
+                  <th mat-header-cell *matHeaderCellDef > Progresso	 </th>
+                  <td mat-cell *matCellDef="let file, let i = index"> 
+                    <div class="progress" >
+                      <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" [style.width.%]="progressBars[i] || bulkProgress"   ></div>
+                  </div>
+              
+                  </td>
+                </ng-container>
+      
+          
+                    
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Ações </th>
+                  <td  mat-cell *matCellDef="let file; let i = index" >
+                      <div class="d-flex justify-content-center align-items-center " >
+                        <div class="border-icon shadow-md" >
+
+                          <span class="material-icons" style="cursor: pointer; text-align: center; font-size: 22px; color: green; " (click)="uploadDocument(file, i)"  [matTooltip]="'Subir arquivo'" [ngClass]="{'uploaded-icon': isFileUploaded[i]}">file_upload</span>
+                    
+                        </div>
+                        <div class="border-icon shadow-md" >
+                        
+                          <!-- falta el ask -->
+                          <span class="material-icons" style="cursor: pointer; text-align: center; font-size: 20px; color: red; " (click)="onRemove(file)" [matTooltip]="'Remover arquivo'" [ngClass]="{'uploaded-icon': isFileUploaded[i]}">delete</span>
+                      
+
+                        </div>
+                     
+                      </div>
+      
+                    </td>
+                </ng-container>
+                    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+          </table>
+      
+          </div>
+          <div #table></div>
+
+        
+      </div>
+
+    </mat-dialog-content>
+  
+    <mat-dialog-actions align="end">
+
+        <div class="d-flex justify-content-end mt-auto" style="position: absolute; bottom: 10px; right: 0; margin-top: auto;"  *ngIf="(files.length - sentDocumentsArray.length) > 1"
+          >
+            <button type="button" class="acceptButton font"  (click)="bulkUploadDocument()" [disabled]="subirTodo"> <i class="fas fa-upload" style="cursor: pointer; text-align: center; font-size: 16px;"  [matTooltip]="'Subir tudo'"  ></i>&nbsp;  Subir tudo</button>
+
+            <button type="button" class="cancelButton font ml-10" [matTooltip]="'Remover tudo'"   (click)="bulkRemove()" [disabled]="subirTodo" > <i class="fas fa-trash" style="cursor: pointer; text-align: center; font-size: 16px; "></i>  &nbsp; Remover tudo</button>
+
+        </div>
+ 
+    </mat-dialog-actions>    
+
+
+
+
+
+

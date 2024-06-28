@@ -11,6 +11,10 @@ export const navItems: NavItem[] = [
     
     children: [
       {
+        childName: 'Formulário',
+        route: '/painel/formulario-do-doador',
+      },
+      {
         childName: 'Envío de arquivos',
         route: '/painel/arquivos',
       },

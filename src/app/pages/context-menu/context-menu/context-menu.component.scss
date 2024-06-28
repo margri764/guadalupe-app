@@ -1,0 +1,42 @@
+.context-menu {
+    position: fixed;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 320px;
+  }
+  
+  .context-menu .dropdown-item:hover {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+
+  }
+
+  a.disabled {
+    pointer-events: none;
+    color: #999; /* O cualquier otro color que desees para indicar que está deshabilitado */
+    text-decoration: none; /* O cualquier otro estilo de texto que desees para indicar que está deshabilitado */
+    cursor: not-allowed;
+  }
+  
+  
+  .sub-menu {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    width: 300px; 
+    margin-top: -10px; 
+    margin-left: 200px;
+    z-index: 1001; /* Asegúrate de que el submenú tenga un índice z mayor para que aparezca sobre el menú */
+  }
+  
+  .sub-menu .dropdown-item:hover {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
