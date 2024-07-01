@@ -119,6 +119,13 @@
       <app-assign-diocese-drawer style="z-index: 100;"></app-assign-diocese-drawer>
     </mat-sidenav> -->
 
+     <mat-sidenav #verifyAccountDrawer mode="over" position="end" [ngStyle]="phone ?{'width':'97vw'}:{'width':'600px'}">
+
+   <app-verify-account-drawer [data]="selectedBank"></app-verify-account-drawer>
+    </mat-sidenav> 
+
+    
+
 
   </mat-sidenav-container>
 

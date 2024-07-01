@@ -1,28 +1,5 @@
 import { createAction, props } from "@ngrx/store";
 
-interface bankAccount{
-    rAgencia : string,
-    rNr_cc: string,
-    bankLogo : string,
-    agenciaName:string,
-    agenciaAddress : string
-}
-
-interface creditCard{
-    cardNumber : string,
-    ccvNumber: string,
-    bankAgreements : string,
-    pathCreditcardLogo:string,
-}
-interface addedPerson{
-    fullName : string,
-    relationship: string,
-    phone : string,
-    segmentation : string
-    titular:boolean,
-    cpf?:string,
-}
-
 
 
 /************************** SET *******************************/
@@ -103,15 +80,15 @@ export const addFormBank = createAction( '[Auth] addFormBank',
 );
 
 export const addFormBankAccount = createAction( '[Auth] addFormBankAccount',
-    props<{ formBankAccount: bankAccount }>()
+    props<{ formBankAccount: any }>()
 );
 
 export const addFormCreditcard = createAction( '[Auth] addFormCreditcard',
-    props<{ formCreditcard: creditCard }>()
+    props<{ formCreditcard: any }>()
 );
 
 export const addFormAddedPerson = createAction( '[Auth] addFormAddedPerson',
-    props<{ formAddedPerson: addedPerson []}>()
+    props<{ formAddedPerson: any []}>()
 );
 
 

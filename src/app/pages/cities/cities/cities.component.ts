@@ -6,7 +6,7 @@ import { EditCityModalComponent } from '../../modals/edit-city-modal/edit-city-m
 import { DeleteModalComponent } from '../../modals/delete-modal/delete-modal/delete-modal.component';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { getDataSS, saveDataLS } from 'src/app/shared/storage';
+import { getDataSS } from 'src/app/shared/storage';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
 import { DiocesisCidadeService } from 'src/app/services/diocesis-cidade.service';

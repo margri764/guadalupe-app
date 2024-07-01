@@ -22,6 +22,7 @@ import { ErrorService } from 'src/app/services/error.service';
 import { AlarmGroupService } from 'src/app/services/alarm-group.service';
 import { DrawersService } from 'src/app/services/drawers.service';
 import { AssignDioceseDrawerComponent } from "../../pages/drawers/assign-diocese-drawer/assign-diocese-drawer/assign-diocese-drawer.component";
+import { VerifyAccountDrawerComponent } from "../../pages/drawers/verify-account-drawer/verify-account-drawer/verify-account-drawer.component";
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -60,11 +61,19 @@ interface quicklinks {
         HeaderComponent,
         AppBreadcrumbComponent,
         CustomizerComponent,
+        AssignDioceseDrawerComponent,
+        VerifyAccountDrawerComponent
     ]
 })
 export class FullComponent implements OnInit {
 
   navItems = navItems;
+  selectedBank : any | null;
+
+  //drwaer en formulario
+  @ViewChild('verifyAccountDrawer') verifyAccountDrawer!: MatDrawer;
+  private subscriptions: Subscription = new Subscription();
+
 
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
@@ -77,6 +86,7 @@ export class FullComponent implements OnInit {
   private isContentWidthFixed = true;
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
+  phone : boolean = false;
 
   // @ViewChild('drawer') drawer!: MatDrawer;
 
@@ -235,6 +245,25 @@ export class FullComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    (screen.width < 800) ? this.phone = true : this.phone = false;
+    //drawer 
+    this.subscriptions.add(
+      this.drawerService.openDrawerVerAccount$.subscribe((selectedBank) => {
+        if (selectedBank) {
+          this.selectedBank = selectedBank;
+          this.verifyAccountDrawer.open();
+        }
+      })
+    )
+    this.subscriptions.add(
+      this.drawerService.closeDrawerVerAcccount$.subscribe((isClose) => {
+        if (isClose) {
+        this.verifyAccountDrawer.close();
+        }
+      })
+    )
 
   }
 

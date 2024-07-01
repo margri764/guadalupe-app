@@ -956,33 +956,44 @@ export class NewDonorFormComponent {
 
   onEmailSelected(email: any, event: MatAutocompleteSelectedEvent) {
     const selectedValue = event.option.value;
-    const pair = this.emailSegmentationPairs.find(pair => pair.email === email.email);
-    if (pair) {
+    const pairIndex = this.emailSegmentationPairs.findIndex(pair => pair.email === email.email);
       const existingPair = this.emailSegmentationPairs.find(item => item.segmentation === selectedValue);
       if (existingPair) {
         this.warningToast('Não é possível repetir uma segmentação')
       } else {
-        pair.segmentation = selectedValue;
+
+        if(pairIndex > -1 ){
+
+        // Crear un nuevo objeto con la segmentación actualizada
+          const updatedPairs = this.emailSegmentationPairs.map((pair, index) => index === pairIndex ? { ...pair, segmentation: selectedValue } : pair
+        );
+        this.emailSegmentationPairs = updatedPairs;
+
+        }
+        
         saveDataLS('form_emails', this.emailSegmentationPairs);
         this.store.dispatch(authActions.addFormEmails({formEmails: this.emailSegmentationPairs}));
 
       }
-    }
     this.checkEmailsSegmentations();
   }
 
   onPhoneSelected(phone:any, event: MatAutocompleteSelectedEvent) {
     const selectedValue = event.option.value;
-    const pair = this.phoneSegmentationPairs.find(pair => pair.phone === phone.phone);
+    // const pair = this.phoneSegmentationPairs.find(pair => pair.phone === phone.phone);
+    const pairIndex = this.phoneSegmentationPairs.findIndex(pair => pair.phone === phone.phone);
     const existingPair = this.phoneSegmentationPairs.find(item => item.segmentation === selectedValue);
     if (existingPair) {
       this.warningToast('Não é possível repetir uma segmentação')
     } else {
-      if(pair){
-         pair.segmentation = selectedValue;
-         pair.segmentation = selectedValue;
-         saveDataLS('form_phones', this.phoneSegmentationPairs);
-         this.store.dispatch(authActions.addFormPhones({formPhones: this.phoneSegmentationPairs}));
+      if(pairIndex > -1 ){
+
+      // Crear un nuevo objeto con la segmentación actualizada
+      const updatedPairs = this.phoneSegmentationPairs.map((pair, index) => index === pairIndex ? { ...pair, segmentation: selectedValue } : pair
+      );
+      this.phoneSegmentationPairs = updatedPairs;
+      saveDataLS('form_phones', this.phoneSegmentationPairs);
+      this.store.dispatch(authActions.addFormPhones({formPhones: this.phoneSegmentationPairs}));
       }
     }
     this.checkPhonesSegmentations();

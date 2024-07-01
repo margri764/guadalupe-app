@@ -1,5 +1,5 @@
 import {  Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription, delay, map, startWith, take } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 interface City {
   name : string,
@@ -29,10 +30,12 @@ interface AddressSegmentationPair {
 }
 
 
+declare var google: any;
+
 @Component({
   selector: 'app-form-address',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule, GoogleMapsModule],
   templateUrl: './form-address.component.html',
   styleUrl: './form-address.component.scss'
 })
@@ -49,9 +52,8 @@ export class FormAddressComponent {
   @ViewChild ("form", {static: true} ) form! : ElementRef;
   @ViewChild ("top", {static: true} ) top! : ElementRef;
 
-  mapa!:google.maps.Map;
-  markers!:google.maps.Marker[];
-  startPosition!: GeolocationPosition;
+  mapa!: google.maps.Map;
+  markers: any[] = [];
 
   myForm!: FormGroup;
   bannerStatus: boolean =false;
@@ -67,7 +69,6 @@ export class FormAddressComponent {
   subscription! : Subscription;
   showLabelAddressError : boolean = false;
   isEditing : boolean = false;
-
   cities : any[]=[];
   city : City | null;
   subscription$ : Subscription;
@@ -120,11 +121,6 @@ export class FormAddressComponent {
  }
 
 
-ngOnDestroy(): void {
-  if(this.subscription){
-    this.subscription.unsubscribe();
-  }
-}
 
 ngOnInit() {
 
@@ -308,63 +304,62 @@ addresByCoords(){
 }
 
 ngAfterViewInit() {
-
   const opciones = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
-  }
+  };
 
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(async(position) => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
       this.lng = position.coords.longitude;
       this.lat = position.coords.latitude;
-      this.cargarMapa (position);
+      this.cargarMapa(position);
       this.cargarAutocomplete();
-  }, null, opciones)
-  }else{
-        console.log('navegador no compatible')
-      }
+    }, null, opciones);
+  } else {
+    console.log('navegador no compatible');
+  }
  }
 
 private cargarAutocomplete(){
 
-  var autocomplete = new google.maps.places.Autocomplete(this.rendered.selectRootElement(this.inputPlaces.nativeElement),
+  const autocomplete = new google.maps.places.Autocomplete(this.inputPlaces.nativeElement, {
+    // types: ['locality'],
+    // fields: ['address_components', 'geometry'],
+    types: ['geocode'], // Cambiado a 'geocode' para obtener direcciones completas
+    fields: ['address_components', 'geometry', 'name'],
+  });
 
-  {
-    // componentRestrictions:{
-    // country: ['ARG']
-    //  },
-    fields: ['address_components', 'geometry'],
-    types: ['address'],
-  })
-
-  google.maps.event.addListener(autocomplete, 'place_changed',()=>{
-    const place : any = autocomplete.getPlace();
-  
-    (place != undefined) ? this.showForm = true  : this.showForm = false;
-
+  autocomplete.addListener('place_changed', () => {
+    const place: any = autocomplete.getPlace();
+    this.showForm = place.geometry !== undefined;
 
       // Guardar las coordenadas de latitud y longitud en selectedLocationCoords
       this.selectedLocationCoords = {
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
-      };
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng()
+    };
 
-      //solo muestra el formulario y el mapa si hay una direccion completa
 
-    this.mapa.setCenter(place.geometry.location);
-    const marker = new google.maps.Marker({
-      position: place.geometry.location
-    });
+    if (this.showForm) {
+      this.mapa.setCenter(place.geometry.location);
+      const marker = new google.maps.Marker({
+        position: place.geometry.location,
+        map: this.mapa,
+        title: 'Selected Location',
+      });
 
-    marker.setMap(this.mapa);
-    this.llenarFormulario(place);
+      this.markers.push(marker);
+      console.log(place);
+      this.llenarFormulario(place);
+    }
+  });
+  
 
     this.goToForm();
 
 
-  })
 }
 
 llenarFormulario(place:any){
@@ -376,9 +371,6 @@ llenarFormulario(place:any){
 
     return component && component.long_name ? component.long_name : '';
   };
-
-
-  
 
   const city = getAddressComp('locality',0);
   const state = getAddressComp('administrative_area_level_1',0);
@@ -564,6 +556,17 @@ showErrorSwal( title : string, msg : string, footer : string) {
     if (result.isConfirmed) {
     }
   });
+}
+
+get f(){
+  return this.myForm.controls;
+}
+
+
+ngOnDestroy(): void {
+  if(this.subscription){
+    this.subscription.unsubscribe();
+  }
 }
 
                   

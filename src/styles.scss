@@ -142,6 +142,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       border-radius: 4px;
       height: 40px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       box-shadow: 3px 7px 10px 0px rgba(53,153,153, 0.75);
       -webkit-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
@@ -165,6 +168,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       height: 40px;
       height: 40px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       box-shadow: 3px 7px 10px 0px rgba(53,153,153, 0.75);
       -webkit-box-shadow: 3px 7px 10px 0px rgba(153,153,153,0.75);
@@ -187,6 +193,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 
     .bold{
       font-weight: bold;
+    }
+
+    .h-41{
+      height: 41px !important;
+      border-radius: 6px;
+      border:1px solid rgb(177, 177, 177);
     }
     
     .border{
@@ -503,7 +515,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
     
 
-    
+   
     
     .error{
       font-family: 'poppins-regular';
@@ -511,6 +523,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-size: 1em;
       font-weight: 700;
     }
+
   
     .icon{
       width: 40px;
@@ -544,7 +557,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
       font-family: 'poppins-regular';
 
     }
-    
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: -15px;
+      margin-left: -15px;
+    }
     
     
     .rectangule{

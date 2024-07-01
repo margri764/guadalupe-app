@@ -21,6 +21,12 @@ export class DrawersService {
   private closeDrawerAdminSubject = new BehaviorSubject<boolean>(false);
   closeDrawerAdmin$: Observable<boolean> = this.closeDrawerAdminSubject.asObservable();
 
+  private openDrawerVerAccountSubject = new BehaviorSubject<any>(false);
+  openDrawerVerAccount$: Observable<boolean> = this.openDrawerVerAccountSubject.asObservable();
+  private closeDrawerVerAccountSubject = new BehaviorSubject<boolean>(false);
+  closeDrawerVerAcccount$: Observable<boolean> = this.closeDrawerVerAccountSubject.asObservable();
+
+
 
 
   
@@ -47,6 +53,14 @@ export class DrawersService {
 
   closeDrawerAdmin() {
     this.closeDrawerAdminSubject.next(true);
+  }
+
+  openDrawerVerAccount(selectedBank :any) {
+    this.openDrawerVerAccountSubject.next(selectedBank) 
+  }
+
+  closeDrawerVerAccount() {
+    this.closeDrawerVerAccountSubject.next(true);
   }
 
 

@@ -1,12 +1,12 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, filter } from 'rxjs';
-import * as authActions from '../../../shared/redux/auth.actions';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { Subscription} from 'rxjs';
 import { AppState } from 'src/app/shared/redux/app.reducer';
 import { Store } from '@ngrx/store';
 import { getDataLS, saveDataLS } from 'src/app/shared/storage';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
+import { AssociationLogoPipe } from "../../../pipe/association-logo.pipe";
 
 interface Person {
   name: string;
@@ -17,11 +17,11 @@ interface Person {
 
 
 @Component({
-  selector: 'app-summary',
-  standalone: true,
-  imports: [CommonModule, MaterialModule],
-  templateUrl: './summary.component.html',
-  styleUrl: './summary.component.scss'
+    selector: 'app-summary',
+    standalone: true,
+    templateUrl: './summary.component.html',
+    styleUrl: './summary.component.scss',
+    imports: [CommonModule, MaterialModule, ReactiveFormsModule, AssociationLogoPipe]
 })
 export class SummaryComponent {
 

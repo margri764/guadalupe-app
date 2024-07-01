@@ -1,1 +1,379 @@
-<p>summary works!</p>
+
+
+
+
+<div class="row d-flex justify-content-center align-items-center"   >
+
+  
+    <span class="d-block font fs-12 mt-10 w-100" style="color: rgb(196, 196, 2);"> <b>1. DADOS PESSOAIS: </b> </span>
+
+      <div class="row font fs-10 mt-30 w-100" > 
+  
+        <div class="col-sm-12 col-12 col-md-8">
+  
+            <span style="display: block; width: 100%; font-size: 1.5em;"> <b> {{tratamento}} {{fullName}}</b>   </span>
+            <span> {{profession}} </span>
+  
+            <table class="col-sm-12 col-12 col-md-12 mt-20" >
+  
+                <tr *ngIf="formAddress && formAddress.length > 0">
+                  
+                  <th class="d-flex align-items-start" >
+                    <span> <b>Endereço: </b> </span> 
+                  </th> 
+                  
+                  <td >  
+                    <div class="d-flex justify-content-start w-100 ml-10">
+                      <span >{{formAddress[0]?.streetName}}  {{formAddress[0]?.streetNumber}}  {{formAddress[0]?.city}} {{formAddress[0]?.province}}</span>
+                      <span class="segmentation"> ({{ formAddress[0]?.segmentation }})</span>
+                    </div>
+  
+                    <div class="d-flex justify-content-start w-100 ml-10" *ngFor="let address of formAddress.slice(1)">
+                      <span style="text-align: start;"> {{address?.streetName}}  {{address?.streetNumber}}  {{address?.city}} {{address?.province}} 
+                      <span class="segmentation"> ({{ address?.segmentation }})</span></span>
+                    </div>  
+                  </td>
+                </tr>
+  
+                <tr>
+                <th class="d-flex align-items-start">CPF</th> 
+                  <td>
+                      <span style="text-align: start; margin-left: 10px;" *ngIf="cpf !== ''"> {{cpf}} </span>
+                      <span style="text-align: start;" class="required ml-10" *ngIf="cpf === ''"> <b>campo requerido!</b> </span>
+                  </td>
+                </tr>
+  
+                <tr *ngIf="formPhones && formPhones.length > 0">
+                  
+                  <th class="d-flex align-items-start" >
+                    <span  > <b>Telefone: </b> </span> 
+                  </th> 
+                  
+                  <td>  
+                    <div class="d-flex justify-content-start w-100 ml-10" >
+                      <span >{{formPhones[0]?.phone}}</span>
+                      <span class="segmentation"> ({{ formPhones[0]?.segmentation }})</span>
+                    </div>
+  
+                    <div class="d-flex justify-content-start w-100 ml-10 "  *ngFor="let phone of formPhones.slice(1)">
+                      <span style="text-align: start;"> {{phone?.phone}} 
+                      <span class="segmentation"> ({{ phone?.segmentation }})</span></span>
+                    </div>  
+                  </td>
+                </tr>
+  
+                <tr *ngIf="formEmails && formEmails.length > 0">
+                  
+                  <th class="d-flex align-items-start" >
+                    <span  > <b>E-mail: </b> </span> 
+                  </th> 
+                  
+                  <td>  
+                    <div class="d-flex justify-content-start w-100 ml-10" >
+                      <span >{{formEmails[0]?.email}}</span>
+                      <span class="segmentation"> ({{ formEmails[0]?.segmentation }})</span>
+                    </div>
+  
+                    <div class="d-flex justify-content-start w-100 ml-10 "  *ngFor="let email of formEmails.slice(1)">
+                      <span style="text-align: start;"> {{email?.email}} 
+                      <span class="segmentation"> ({{ email?.segmentation }})</span></span>
+                    </div>  
+                  </td>
+                </tr>
+                
+                <tr>
+                  <th class="d-flex align-items-start"> Aniversario </th> 
+                    <td>
+                        <span style="text-align: start; margin-left: 10px;" *ngIf="anniversary !== ''"> {{anniversary}} </span>
+                        <span style="text-align: start;" class="required ml-10" *ngIf="anniversary === ''"> <b>campo requerido!</b> </span>
+                    </td>
+                </tr>
+  
+                <tr >
+                  <th class="d-flex align-items-start"> ¿Titular? </th> 
+                    <td>
+                        <span style="text-align: start; margin-left: 10px; color: green;" *ngIf="formOwn === 'formPeople' ">  <b> Sim </b> </span>
+                        <span style="text-align: start; color: red;" class="required ml-10" *ngIf="formOwn === 'relacaoOwn' "> <b> Não</b> </span>
+                        <span style="color: red; font-size: 0.9em; margin-left: 10px;"  *ngIf="formOwn === '' || !formOwn"> <b>campo requerido!</b> </span>
+                    </td>
+                </tr>
+         
+            </table>
+            
+        </div >
+  
+        <div class="col-sm-12 col-12 col-md-4" >
+  
+          <div class="d-flex flex-column justify-content-end w-100">
+              <div class="d-block w-100" style="text-align: end;">
+                <span> <b> Associação:</b>  </span> 
+                <span style="margin-left: 10px;"> {{association}} </span> 
+                <span style="color: red; font-size: 0.9em;" *ngIf="association === ''"> <b>campo requerido!</b> </span>
+              </div>
+            
+            
+              <div class="d-block w-100 mt-30" style="text-align: end;">
+                <img [src]="assoWithLogo | associationLogoPath" alt="img"  class="img-fluid" width="200px" >
+              </div>  
+          </div>
+        </div>
+  
+      </div>
+  
+  
+      <div class="border w-100 mt-30 "></div>
+  
+      <!-- interno -->
+      <div class="row font fs-10 mt-30 w-100" > 
+        <div class="col-sm-12 col-12 col-md-6" >
+          <div class="card" style="border-radius: 7px; padding: 20px; ">
+            <span class="d-block font fs-12 w-100" style="color: rgb(196, 196, 2);"> <b>2. INTERNO: </b> </span>
+  
+            <table class="col-sm-12 col-12 col-md-12 mt-20" >
+  
+              <tr>
+                <th class="d-flex align-items-start"> Diocese:</th> 
+                  <td>
+                      <span style="text-align: start; margin-left: 10px;" *ngIf="diocese !== ''"> {{diocese}} </span>
+                      <span style="text-align: start;" class="required ml-10" *ngIf="diocese === ''"> <b>campo requerido!</b> </span>
+                  </td>
+              </tr>
+              <tr>
+                <th class="d-flex align-items-start"> Cidade: </th> 
+                  <td>
+                      <span style="text-align: start; margin-left: 10px;" *ngIf="city !== ''"> {{city}} </span>
+                      <span style="text-align: start;" class="required ml-10" *ngIf="city === ''"> <b>campo requerido!</b> </span>
+                  </td>
+              </tr>
+              <tr>
+                <th class="d-flex align-items-start"> Fonte: </th> 
+                  <td>
+                      <span style="text-align: start; margin-left: 10px;" *ngIf="fonte !== ''"> {{fonte}} </span>
+                      <span style="text-align: start;" class="required ml-10" *ngIf="fonte === ''"> <b>campo requerido!</b> </span>
+                  </td>
+              </tr>
+              <tr>
+                  <th class="d-flex align-items-start"> Resultado: </th> 
+                  <td>
+                      <span style="text-align: start; margin-left: 10px;" *ngIf="result !== ''"> {{result}} </span>
+                      <span style="text-align: start;" class="required ml-10" *ngIf="result === ''"> <b>campo requerido!</b> </span>
+                  </td>
+              </tr>
+  
+            
+      
+            </table>
+        </div>
+        </div>
+      </div>
+  
+      <div class="border w-100 mt-30"></div>
+  
+      <!-- bank -->
+        <div class="row font fs-10 mt-30 w-100" >
+  
+            <div class="col-sm-12 col-12 col-md-6" >
+              <div class="card" style="border-radius: 7px; padding: 20px; ">
+  
+                <span class="d-block font fs-12 w-100" style="color: rgb(196, 196, 2);"> <b>3. DADOS BANCARIOS: </b> </span>
+  
+                <table class="col-sm-12 col-12 col-md-12 mt-20" >
+  
+                  <tr>
+                    <th class="d-flex align-items-start"> Unidades:</th> 
+                      <td>
+                          <span style="text-align: start; " *ngIf="formUnity !== ''"> {{formUnity}} </span>
+                          <span style="text-align: start;" class="required " *ngIf="formUnity === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                     <th class="d-flex align-items-start"> GV:</th> 
+                      <td>
+                          <span style="text-align: start; " *ngIf="gv !== ''"> {{gv}} </span>
+                          <span style="text-align: start;" class="required " *ngIf="gv === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                     <th class="d-flex align-items-start"> Reajuste:</th> 
+                      <td>
+                          <span style="text-align: start; ;" *ngIf="formAdjustment !== ''"> {{formAdjustment}} </span>
+                          <span style="text-align: start;" class=" " *ngIf="formAdjustment === ''"> <b>--------</b> </span>
+                      </td>
+                  </tr>
+          
+                  <tr>
+                     <th class="d-flex align-items-start"> Prazo fixo:</th> 
+                      <td>
+                          <span style="text-align: start; " *ngIf="formFixedDeposit !== ''"> {{formFixedDeposit}} </span>
+                          <span style="text-align: start;" class=" " *ngIf="formFixedDeposit === ''"> <b>--------</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                     <th class="d-flex align-items-start"> Mês de início (cobrança):</th> 
+                      <td>
+                          <span style="text-align: start; " *ngIf="formPaymentInitMonth !== '' || formPaymentInitMonth "> {{formPaymentInitMonth}} </span>
+                          <span style="text-align: start;" class="required" *ngIf="formFixedDeposit === 'Sim' && (formPaymentInitMonth === '' || !formPaymentInitMonth)"> <b>campo requerido</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                     <th class="d-flex align-items-start">  Meio de pagamento:</th> 
+                      <td>
+                          <span style="text-align: start; " *ngIf="formPaymentMethod !== ''"> {{formPaymentMethod}} </span>
+                          <span style="text-align: start;" class="required " *ngIf="formPaymentMethod === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+          
+                </table>
+              
+              </div>
+            </div>
+  
+            <div class="col-sm-12 col-12 col-md-6"  *ngIf="formPaymentMethod && formPaymentMethod === 'Conta Bancaria' ">
+              <div class="card" style="border-radius: 7px; padding: 20px; ">
+  
+                <span class="d-block font fs-12 w-100" style="color: rgb(196, 196, 2);"> <b>DADOS  CONTA BANCARIA: </b> </span>
+  
+                <table class="col-sm-12 col-12 col-md-12 mt-20" >
+  
+                  <tr>
+                    <th class="d-flex align-items-start"> Agencia:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formBankAccount?.rAgencia}}  </span>
+                          <span style="text-align: start;" class="required " *ngIf="!formBankAccount?.rAgencia || formBankAccount?.rAgencia === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                    <th class="d-flex align-items-start"> Núm. Conta:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formBankAccount?.rNr_cc}}  </span>
+                          <span style="text-align: start;" class="required " *ngIf="!formBankAccount?.rNr_cc || formBankAccount?.rNr_cc === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                    <th class="d-flex align-items-start"> Nome da Agencia:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formBankAccount?.agenciaName}}  </span>
+                          <span style="text-align: start;" class="required " *ngIf="!formBankAccount?.agenciaName || formBankAccount?.agenciaName === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                    <th class="d-flex align-items-start"> Endereço:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formBankAccount?.agenciaAddress}}  </span>
+                          <span style="text-align: start;" class="required " *ngIf="!formBankAccount?.agenciaAddress || formBankAccount?.agenciaAddress === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                
+          
+                </table>
+  
+              </div>
+            </div>
+  
+            <div class="col-sm-12 col-12 col-md-6"  *ngIf="formPaymentMethod && formPaymentMethod === 'Cartão de Crédito' ">
+              <div class="card" style="border-radius: 7px; padding: 20px;"> 
+  
+                <span class="d-block font fs-12 w-100" style="color: rgb(196, 196, 2);"> <b>DADOS CARTÕES DE CRÉDITO: </b> </span>
+  
+                <table class="col-sm-12 col-12 col-md-12 mt-20" >
+  
+                  <tr>
+                    <th class="d-flex align-items-start"> Nome:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formCreditcard?.name}}  </span>
+                          <span style="text-align: start;" class="required " *ngIf="!formCreditcard?.name || formCreditcard?.name === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr >
+                    <th class="d-flex align-items-start "> Número do cartão:</th> 
+                      <td >
+                          <span style="text-align: start; margin-left: 10px;" > {{formCreditcard?.cardNumber}}  </span>
+                          <span style="text-align: start;" class="required" *ngIf="!formCreditcard?.cardNumber || formCreditcard?.cardNumber === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                    <th class="d-flex align-items-start"> CCV:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formCreditcard?.ccvNumber}}  </span>
+                          <span style="text-align: start;" class="required " *ngIf="!formCreditcard?.ccvNumber || formCreditcard?.ccvNumber === ''"> <b>campo requerido!</b> </span>
+                      </td>
+                  </tr>
+                  <tr>
+                    <th class="d-flex align-items-start"> Convênios:</th> 
+                      <td>
+                          <span style="text-align: start; margin-left: 10px;" > {{formCreditcard?.bankAgreements
+                          }} </span>
+                      </td>
+                  </tr>
+          
+                </table>
+              
+              </div>
+            </div>
+        </div>
+  
+      <!-- added peoples -->
+      <div class="row font fs-10 mt-30 mb-20 w-100" *ngIf="formAddedPerson && formAddedPerson.length > 0" >
+        <div class="col-12" >
+  
+          <div class="card" style="border-radius: 7px; padding: 20px; ">
+          
+          <span class="d-block font fs-12 w-100" style="color: rgb(196, 196, 2);"> <b>4. PESSOAS ADICIONADAS: </b> </span>
+  
+            <table class="table mt-30 font fs-10">
+              <thead>
+                <tr>
+                  <th >Nome Completo</th>
+                  <th >Telefone</th>
+                  <th >Relacão</th>
+                  <th >CPF</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let person of formAddedPerson">
+                  <td>
+                    <span > {{ person?.fullName }} </span>
+                  </td>
+                  
+                  <td>
+                    <span > {{ person?.phone }} ({{ person?.segmentation }}) </span>
+                  </td>
+                
+                  <td> {{person?.relationship}} </td>
+  
+                  <td >  <span *ngIf="person.cpf && person.cpf !== ''"> {{ person.cpf }} <b style="font-style: italic;"> (titular) </b></span> </td>
+                  
+            
+                </tr>
+                <tr>
+          
+              </tbody>
+            </table>
+           </div>
+        </div>
+  
+          
+            <!-- <div class="col-sm-12 col-12 col-md-6 " style="border-radius: 7px; padding: 20px;  border: 1px solid rgb(204, 204, 204); " *ngFor="let addedPeople of formAddedPerson">
+              <div class="d-flex justify-content-start align-items-center mt-1 " >
+                <span> <b> Nome Completo: </b>  </span> &nbsp; &nbsp;&nbsp;
+                <span > {{addedPeople?.fullName}} </span> 
+                <span class="required" *ngIf="addedPeople?.fullName === ''"> <b>campo requerido!</b> </span>
+              </div>
+  
+              <div class="d-flex justify-content-start align-items-center mt-1 " >
+                <span> <b> Telefone: </b>  </span> &nbsp; &nbsp;&nbsp;
+                <span > {{addedPeople?.phone}} </span> 
+                <span class="required" *ngIf="addedPeople?.phone === ''"> <b>campo requerido!</b> </span>
+              </div>
+            </div> -->
+  
+      </div>
+  </div>
+  
+  
+     
+    
+  
+      
+  
+  

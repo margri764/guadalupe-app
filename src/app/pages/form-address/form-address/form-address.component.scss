@@ -1,0 +1,101 @@
+
+
+.select{
+    height: 36px; 
+    border-color: rgb(207, 207, 207); 
+    font-size: 1em; 
+    font-family: 'poppins-regular'; 
+    color: gray;
+    padding: 10px;
+    
+  }
+  
+  mat-option{
+    font-size: 1em; 
+    font-family: 'poppins-regular'; 
+    height: 30px !important;
+  }
+  
+  mat-option:hover{
+    background-color: rgb(0, 106, 255) !important;
+    color: white;
+  }
+  
+  option{
+    font-size: 1em; 
+    font-family: 'poppins-regular'; 
+    cursor: pointer;
+    margin-top: 5px;
+  }
+  
+  .maps{
+      width: 100%;
+      height: 250px;
+     
+  }
+  
+  input{
+      font-family:'poppins-regular';
+      height: 38px;
+      border-radius: 6px;
+  }
+  
+  .form-control{
+      height: 45px;
+      font-size: 1.1em;
+  
+  }
+  
+  .text{
+    font-size: 1em;
+  }
+  
+  .hovering{
+    background-color: rgb(241, 241, 241);
+    padding: 10px; 
+    border-bottom: 1px solid rgb(190, 190, 190); 
+    border-top: 1px solid;
+  }
+  
+  .hovering:hover{
+    background-color: white;
+  }
+  
+  
+  .edit{
+      cursor: pointer; 
+      text-align: center; 
+      font-size: 22px;  
+      color: rgb(255, 200, 0);
+    
+    }
+    .edit:hover{
+     filter: drop-shadow(0px 0px 8px rgb(255, 166, 0));
+     transform: scale(1.05);
+    }
+  
+    .add{
+      text-align: center; 
+      font-size: 22px; color: green; 
+      margin-left: 5px;  
+      cursor: pointer;
+  
+    }
+    
+    .add:hover{
+      filter: drop-shadow(0px 0px 14px green);
+      transform: scale(1.05);
+    }
+    
+    .delete{
+      text-align: center; 
+      font-size: 22px; color: red; 
+      margin-left: 5px;  
+      cursor: pointer; 
+    }
+    
+    .delete:hover{
+      filter: drop-shadow(0px 0px 14px red);
+      transform: scale(1.05);
+    }
+    
